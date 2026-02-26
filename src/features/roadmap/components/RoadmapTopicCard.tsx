@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { ChevronDown, Video, FileText, BookOpen, ExternalLink } from 'lucide-react';
 import { usePublishedResources } from '@/hooks/use-public-roadmap';
 import { RoadmapTopicDTO } from '@/services/roadmap-topics';
@@ -12,7 +11,6 @@ interface RoadmapTopicCardProps {
 
 export default function RoadmapTopicCard({ topic, trackColor, isOpen, onToggle }: RoadmapTopicCardProps) {
     const { resources, isLoading } = usePublishedResources(isOpen ? topic.id : undefined);
-    const contentRef = useRef<HTMLDivElement>(null);
 
     const getResourceIcon = (type: string) => {
         switch (type) {
@@ -38,26 +36,15 @@ export default function RoadmapTopicCard({ topic, trackColor, isOpen, onToggle }
 
     const color = getThemeColor();
 
-    const getBorderClass = () => `border-${color}-300 dark:border-${color}-500/30 hover:border-${color}-500 dark:hover:border-${color}-500/60`;
-    const getFocusClass = () => `focus:ring-${color}-500`;
-    const getIconColorClass = () => `text-${color}-500`;
-    const getBgClass = () => `bg-${color}-50 dark:bg-${color}-900/20`;
-
     return (
-        <article className={`rounded-3xl border-2 overflow-hidden transition-all duration-300 bg-white dark:bg-slate-800/50 ${getBorderClass()}`}>
-            <div
+        <article className={`rounded-3xl border-2 overflow-hidden transition-all duration-300 bg-white dark:bg-slate-800/50 border-${color}-300 dark:border-${color}-500/30 hover:border-${color}-500 dark:hover:border-${color}-500/60`}>
+            {/* Header — clickable */}
+            <button
+                type="button"
                 onClick={onToggle}
-                role="button"
-                tabIndex={0}
                 aria-expanded={isOpen}
                 aria-label={`${topic.title} — click to ${isOpen ? 'collapse' : 'expand'} resources`}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        onToggle();
-                    }
-                }}
-                className={`p-5 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-inset ${getFocusClass()} rounded-3xl hover:bg-slate-50 dark:hover:bg-slate-800`}
+                className={`w-full text-left p-5 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-${color}-500 rounded-3xl hover:bg-slate-50 dark:hover:bg-slate-800`}
             >
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex-1">
@@ -70,16 +57,14 @@ export default function RoadmapTopicCard({ topic, trackColor, isOpen, onToggle }
                             </p>
                         )}
                     </div>
-                    <div className={`p-2 rounded-xl ${getBgClass()} transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
-                        <ChevronDown className={`w-5 h-5 ${getIconColorClass()}`} />
+                    <div className={`p-2 rounded-xl bg-${color}-50 dark:bg-${color}-900/20 transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
+                        <ChevronDown className={`w-5 h-5 text-${color}-500`} />
                     </div>
                 </div>
-            </div>
+            </button>
 
-            <div
-                ref={contentRef}
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
-            >
+            {/* Body — strict conditional render */}
+            {isOpen && (
                 <div className={`px-5 pb-5 border-t border-${color}-200 dark:border-${color}-500/20`}>
                     <div className="pt-4 space-y-2">
                         {isLoading ? (
@@ -96,7 +81,7 @@ export default function RoadmapTopicCard({ topic, trackColor, isOpen, onToggle }
                                     href={resource.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className={`flex items-center gap-3 p-3 rounded-2xl transition-all group focus:outline-none focus:ring-2 ${getFocusClass()} bg-slate-50 dark:bg-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700`}
+                                    className={`flex items-center gap-3 p-3 rounded-2xl transition-all group focus:outline-none focus:ring-2 focus:ring-${color}-500 bg-slate-50 dark:bg-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700`}
                                 >
                                     <div className={`p-2 rounded-xl ${resource.type === 'Video' ? 'bg-red-500/10 text-red-500' :
                                         resource.type === 'Article' ? 'bg-blue-500/10 text-blue-500' :
@@ -118,7 +103,7 @@ export default function RoadmapTopicCard({ topic, trackColor, isOpen, onToggle }
                         )}
                     </div>
                 </div>
-            </div>
+            )}
         </article>
     );
 }
