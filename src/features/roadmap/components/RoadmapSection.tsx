@@ -1,4 +1,4 @@
-import { usePublishedTopics } from '@/hooks/use-public-roadmap';
+import { usePublishedTopicsWithResources } from '@/hooks/use-public-roadmap';
 import RoadmapTopicCard from './RoadmapTopicCard';
 import { RoadmapTrackDTO } from '@/services/roadmap-tracks';
 
@@ -10,7 +10,7 @@ interface RoadmapSectionProps {
 }
 
 export default function RoadmapSection({ track, searchQuery, openTopicId, onToggleTopic }: RoadmapSectionProps) {
-    const { topics, isLoading } = usePublishedTopics(track.id);
+    const { topics, isLoading } = usePublishedTopicsWithResources(track.id);
 
     const filteredTopics = topics.filter(topic => {
         if (!searchQuery) return true;
@@ -53,6 +53,7 @@ export default function RoadmapSection({ track, searchQuery, openTopicId, onTogg
                     <RoadmapTopicCard
                         key={topic.id}
                         topic={topic}
+                        resources={topic.roadmap_resources}
                         trackColor={track.color}
                         isOpen={openTopicId === topic.id}
                         onToggle={() => onToggleTopic(topic.id)}

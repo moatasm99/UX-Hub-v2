@@ -14,6 +14,12 @@ export interface RoadmapTopicDTO {
 export type CreateRoadmapTopicInput = Omit<RoadmapTopicDTO, 'id' | 'created_at' | 'updated_at'>;
 export type UpdateRoadmapTopicInput = Partial<CreateRoadmapTopicInput> & { id: string };
 
+import { RoadmapResourceDTO } from './roadmap-resources';
+
+export interface TopicWithResourcesDTO extends RoadmapTopicDTO {
+    roadmap_resources: RoadmapResourceDTO[];
+}
+
 export const roadmapTopicsService = {
     getPublishedByTrack: async (trackId: string) => {
         const { data, error } = await (supabase
@@ -24,6 +30,26 @@ export const roadmapTopicsService = {
             .order('position', { ascending: true });
         if (error) throw error;
         return data as RoadmapTopicDTO[];
+    },
+
+    getPublishedByTrackWithResources: async (trackId: string) => {
+        const { data, error } = await (supabase
+            .from('roadmap_topics' as any) as any)
+            .select(`
+                id, track_id, title, description, position, is_published, created_at, updated_at,
+                roadmap_resources (id, topic_id, title, url, type, position, is_published, created_at, updated_at)
+            `)
+            .eq('track_id', trackId)
+            .eq('is_published', true)
+            .order('position', { ascending: true });
+        if (error) throw error;
+        // Filter to only published resources and sort by position
+        return (data as any[]).map(topic => ({
+            ...topic,
+            roadmap_resources: (topic.roadmap_resources || [])
+                .filter((r: any) => r.is_published)
+                .sort((a: any, b: any) => a.position - b.position),
+        })) as TopicWithResourcesDTO[];
     },
 
     getByTrack: async (trackId: string) => {

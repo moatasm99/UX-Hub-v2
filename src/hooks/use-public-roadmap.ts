@@ -33,7 +33,45 @@ export function usePublishedTracks() {
     return { tracks: query.data ?? [], isLoading: query.isLoading, isError: query.isError };
 }
 
-// ─── Published Topics for a Track ──────────────
+// ─── Published Topics with Nested Resources ──────────────
+export function usePublishedTopicsWithResources(trackId: string | undefined) {
+    const query = useQuery({
+        queryKey: ['public-roadmap-topics-with-resources', trackId],
+        queryFn: () => roadmapTopicsService.getPublishedByTrackWithResources(trackId!),
+        enabled: !!trackId,
+        staleTime: STALE_TIME,
+    });
+
+    const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);
+
+    useEffect(() => {
+        if (!trackId) return;
+        // Listen to both topics and resources changes
+        const channel = supabase
+            .channel(`roadmap-nested-realtime-${trackId}`)
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'roadmap_topics' },
+                (payload: any) => {
+                    if (payload.new?.track_id === trackId || payload.old?.track_id === trackId) {
+                        refetch();
+                    }
+                }
+            )
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'roadmap_resources' },
+                () => refetch()
+            )
+            .subscribe();
+
+        return () => { supabase.removeChannel(channel); };
+    }, [trackId, refetch]);
+
+    return { topics: query.data ?? [], isLoading: query.isLoading, isError: query.isError };
+}
+
+// ─── Published Topics for a Track (legacy) ──────────────
 export function usePublishedTopics(trackId: string | undefined) {
     const query = useQuery({
         queryKey: ['public-roadmap-topics', trackId],

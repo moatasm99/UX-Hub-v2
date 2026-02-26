@@ -1,17 +1,17 @@
+import { memo } from 'react';
 import { ChevronDown, Video, FileText, BookOpen, ExternalLink } from 'lucide-react';
-import { usePublishedResources } from '@/hooks/use-public-roadmap';
 import { RoadmapTopicDTO } from '@/services/roadmap-topics';
+import { RoadmapResourceDTO } from '@/services/roadmap-resources';
 
 interface RoadmapTopicCardProps {
     topic: RoadmapTopicDTO;
+    resources: RoadmapResourceDTO[];
     trackColor?: string | null;
     isOpen: boolean;
     onToggle: () => void;
 }
 
-export default function RoadmapTopicCard({ topic, trackColor, isOpen, onToggle }: RoadmapTopicCardProps) {
-    const { resources, isLoading } = usePublishedResources(isOpen ? topic.id : undefined);
-
+function RoadmapTopicCard({ topic, resources, trackColor, isOpen, onToggle }: RoadmapTopicCardProps) {
     const getResourceIcon = (type: string) => {
         switch (type) {
             case 'Video': return <Video className="w-4 h-4" />;
@@ -63,16 +63,11 @@ export default function RoadmapTopicCard({ topic, trackColor, isOpen, onToggle }
                 </div>
             </button>
 
-            {/* Body — strict conditional render */}
+            {/* Body — instant render, no loading, no fetch */}
             {isOpen && (
                 <div className={`px-5 pb-5 border-t border-${color}-200 dark:border-${color}-500/20`}>
                     <div className="pt-4 space-y-2">
-                        {isLoading ? (
-                            <div className="space-y-2 animate-pulse">
-                                <div className="h-12 bg-muted rounded-2xl"></div>
-                                <div className="h-12 bg-muted rounded-2xl"></div>
-                            </div>
-                        ) : resources.length === 0 ? (
+                        {resources.length === 0 ? (
                             <p className="text-sm text-slate-500 text-center py-2">No resources available yet.</p>
                         ) : (
                             resources.map((resource) => (
@@ -107,3 +102,5 @@ export default function RoadmapTopicCard({ topic, trackColor, isOpen, onToggle }
         </article>
     );
 }
+
+export default memo(RoadmapTopicCard);
