@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Rocket, Filter, Search } from 'lucide-react';
 import RoadmapSection from '../components/RoadmapSection';
 import { usePublishedTracks } from '@/hooks/use-public-roadmap';
@@ -11,6 +11,15 @@ export default function RoadmapPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTrackId, setSelectedTrackId] = useState('All');
     const [openTopicId, setOpenTopicId] = useState<string | null>(null);
+
+    // SEO
+    useEffect(() => {
+        document.title = 'Product Design Roadmap | UX Hub';
+        const meta = document.querySelector('meta[name="description"]');
+        if (meta) {
+            meta.setAttribute('content', 'Complete Product Design Roadmap covering fundamentals, product thinking, UX strategy, and advanced topics.');
+        }
+    }, []);
 
     // Filter tracks based on selected track pill
     const filteredTracks = useMemo(() => {
@@ -40,11 +49,11 @@ export default function RoadmapPage() {
                     </div>
                     <h2 className="text-4xl md:text-5xl font-bold mb-4">
                         <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text text-transparent">
-                            🚀 Product Roadmap
+                            🚀 Product Design Roadmap
                         </span>
                     </h2>
                     <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-slate-600 dark:text-slate-400">
-                        Dynamic strategic product resources: Vision, Launch, Analytics, and Research methods.
+                        Complete Product Design Roadmap covering fundamentals, product thinking, UX strategy, and advanced topics.
                     </p>
                 </div>
 
