@@ -1,0 +1,1 @@
+ALTER TABLE roadmap_tracks ADD COLUMN description TEXT;
