@@ -15,7 +15,7 @@ const navLinks = [
     },
     {
         to: '/roadmap',
-        label: 'Roadmaps',
+        label: 'Product Design Roadmap',
         emoji: '🚀',
         icon: Rocket,
         activeGradient: 'bg-gradient-to-r from-amber-500 to-orange-500',
