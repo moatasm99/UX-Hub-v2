@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { usePublishedTopics } from '@/hooks/use-public-roadmap';
 import RoadmapTopicCard from './RoadmapTopicCard';
 import { RoadmapTrackDTO } from '@/services/roadmap-tracks';
@@ -6,11 +5,12 @@ import { RoadmapTrackDTO } from '@/services/roadmap-tracks';
 interface RoadmapSectionProps {
     track: RoadmapTrackDTO;
     searchQuery?: string;
+    openTopicId: string | null;
+    onToggleTopic: (id: string) => void;
 }
 
-export default function RoadmapSection({ track, searchQuery }: RoadmapSectionProps) {
+export default function RoadmapSection({ track, searchQuery, openTopicId, onToggleTopic }: RoadmapSectionProps) {
     const { topics, isLoading } = usePublishedTopics(track.id);
-    const [openTopicId, setOpenTopicId] = useState<string | null>(null);
 
     const filteredTopics = topics.filter(topic => {
         if (!searchQuery) return true;
@@ -55,7 +55,7 @@ export default function RoadmapSection({ track, searchQuery }: RoadmapSectionPro
                         topic={topic}
                         trackColor={track.color}
                         isOpen={openTopicId === topic.id}
-                        onToggle={() => setOpenTopicId(prev => prev === topic.id ? null : topic.id)}
+                        onToggle={() => onToggleTopic(topic.id)}
                     />
                 ))}
             </div>

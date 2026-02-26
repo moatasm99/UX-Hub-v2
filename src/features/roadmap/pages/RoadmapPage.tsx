@@ -10,6 +10,7 @@ export default function RoadmapPage() {
     // State
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTrackId, setSelectedTrackId] = useState('All');
+    const [openTopicId, setOpenTopicId] = useState<string | null>(null);
 
     // Filter tracks based on selected track pill
     const filteredTracks = useMemo(() => {
@@ -85,6 +86,8 @@ export default function RoadmapPage() {
                                     key={track.id}
                                     track={track}
                                     searchQuery={searchQuery}
+                                    openTopicId={openTopicId}
+                                    onToggleTopic={(id: string) => setOpenTopicId(prev => prev === id ? null : id)}
                                 />
                             ))
                         )}
