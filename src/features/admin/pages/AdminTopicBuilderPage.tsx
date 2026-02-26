@@ -18,7 +18,6 @@ interface ResourceBlock {
     title: string;
     url: string;
     type: 'Video' | 'Article' | 'Book' | 'Podcast' | 'Course' | 'Tool';
-    label: string;
     is_published: boolean;
 }
 
@@ -35,7 +34,6 @@ const createEmptyResource = (): ResourceBlock => ({
     title: '',
     url: '',
     type: 'Video',
-    label: '',
     is_published: true,
 });
 
@@ -103,7 +101,6 @@ export default function AdminTopicBuilderPage() {
                             title: r.title,
                             url: r.url,
                             type: r.type,
-                            label: r.label ?? '',
                             is_published: r.is_published,
                         }))
                         : [createEmptyResource()],
@@ -220,7 +217,6 @@ export default function AdminTopicBuilderPage() {
                     title: r.title.trim(),
                     url: r.url.trim(),
                     type: r.type as any,
-                    label: r.label.trim() || null,
                     position: i,
                     is_published: r.is_published,
                 });
@@ -410,15 +406,6 @@ export default function AdminTopicBuilderPage() {
                                         placeholder="e.g. Laws of UX"
                                         className={inputCls}
                                         required
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className={labelCls}>Label (optional)</label>
-                                    <input
-                                        value={res.label}
-                                        onChange={(e) => updateResource(res.id, 'label', e.target.value)}
-                                        placeholder="e.g. Medium, Nielsen Norman"
-                                        className={inputCls}
                                     />
                                 </div>
                             </div>

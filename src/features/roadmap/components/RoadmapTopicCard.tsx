@@ -109,7 +109,7 @@ export default function RoadmapTopicCard({ topic, trackColor }: RoadmapTopicCard
                                             {resource.title}
                                         </p>
                                         <p className="text-xs text-slate-500">
-                                            {resource.type} • {resource.label || 'Resource'}
+                                            {resource.type}
                                         </p>
                                     </div>
                                     <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-slate-600 dark:text-slate-400" aria-hidden="true" />

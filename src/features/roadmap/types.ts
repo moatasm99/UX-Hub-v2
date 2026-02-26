@@ -2,7 +2,6 @@ export interface RoadmapResource {
     type: 'Video' | 'Article' | 'Book';
     title: string;
     url: string;
-    label?: string; // e.g. "SVPG", "Medium"
 }
 
 export interface RoadmapItem {

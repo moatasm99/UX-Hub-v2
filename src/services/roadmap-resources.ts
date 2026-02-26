@@ -9,7 +9,6 @@ export interface RoadmapResourceDTO {
     title: string;
     url: string;
     type: ResourceType;
-    label: string | null;
     position: number;
     is_published: boolean;
     created_at?: string;
@@ -23,7 +22,7 @@ export const roadmapResourcesService = {
     getPublishedByTopic: async (topicId: string) => {
         const { data, error } = await (supabase
             .from('roadmap_resources' as any) as any)
-            .select('*')
+            .select('id, topic_id, title, url, type, position, is_published, created_at, updated_at')
             .eq('topic_id', topicId)
             .eq('is_published', true)
             .order('position', { ascending: true });
@@ -34,7 +33,7 @@ export const roadmapResourcesService = {
     getByTopic: async (topicId: string) => {
         const { data, error } = await (supabase
             .from('roadmap_resources' as any) as any)
-            .select('*')
+            .select('id, topic_id, title, url, type, position, is_published, created_at, updated_at')
             .eq('topic_id', topicId)
             .order('position', { ascending: true });
 

@@ -47,7 +47,6 @@ function ResourceFormModal({
         title: '',
         url: '',
         type: 'Video',
-        label: '',
         position: 0,
         is_published: false,
     });
@@ -59,7 +58,6 @@ function ResourceFormModal({
                 title: initialData.title,
                 url: initialData.url,
                 type: initialData.type,
-                label: initialData.label || '',
                 position: initialData.position,
                 is_published: initialData.is_published,
             });
@@ -69,7 +67,6 @@ function ResourceFormModal({
                 title: '',
                 url: '',
                 type: 'Video',
-                label: '',
                 position: 0,
                 is_published: false,
             });
@@ -144,16 +141,6 @@ function ResourceFormModal({
                                     <option key={t} value={t}>{t}</option>
                                 ))}
                             </select>
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-400">Label (optional)</label>
-                            <input
-                                name="label"
-                                value={formData.label || ''}
-                                onChange={handleChange}
-                                placeholder="e.g. SVPG, Medium"
-                                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
-                            />
                         </div>
                     </div>
 
@@ -341,11 +328,7 @@ export default function AdminRoadmapResourcesPage() {
                                             </span>
                                         </td>
                                         <td className="p-4">
-                                            {res.label ? (
-                                                <span className="text-slate-400 text-sm">{res.label}</span>
-                                            ) : (
-                                                <span className="text-slate-600 italic text-sm">—</span>
-                                            )}
+                                            <span className="text-slate-400 text-sm">—</span>
                                         </td>
                                         <td className="p-4">
                                             <a
