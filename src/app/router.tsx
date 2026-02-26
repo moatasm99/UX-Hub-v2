@@ -20,6 +20,7 @@ const AdminCourseTasksPage = lazy(() => import('@/features/admin/pages/AdminCour
 const AdminRoadmapTracksPage = lazy(() => import('@/features/admin/pages/AdminRoadmapTracksPage'))
 const AdminRoadmapTopicsPage = lazy(() => import('@/features/admin/pages/AdminRoadmapTopicsPage'))
 const AdminTopicBuilderPage = lazy(() => import('@/features/admin/pages/AdminTopicBuilderPage'))
+const AdminSiteSettingsPage = lazy(() => import('@/features/admin/pages/AdminSiteSettingsPage'))
 const AdminLayout = lazy(() => import('@/features/admin/components/AdminLayout'))
 const AdminGuard = lazy(() => import('@/features/admin/components/AdminGuard'))
 const NotFoundPage = lazy(() => import('@/app/not-found'))
@@ -214,7 +215,14 @@ const router = createBrowserRouter([
                     </PageLoader>
                 ),
             },
-            // Future routes: settings
+            {
+                path: 'settings',
+                element: (
+                    <PageLoader>
+                        <AdminSiteSettingsPage />
+                    </PageLoader>
+                ),
+            },
         ],
     },
 ])
