@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { usePublishedTopics } from '@/hooks/use-public-roadmap';
 import RoadmapTopicCard from './RoadmapTopicCard';
 import { RoadmapTrackDTO } from '@/services/roadmap-tracks';
@@ -9,6 +10,7 @@ interface RoadmapSectionProps {
 
 export default function RoadmapSection({ track, searchQuery }: RoadmapSectionProps) {
     const { topics, isLoading } = usePublishedTopics(track.id);
+    const [openTopicId, setOpenTopicId] = useState<string | null>(null);
 
     const filteredTopics = topics.filter(topic => {
         if (!searchQuery) return true;
@@ -48,7 +50,13 @@ export default function RoadmapSection({ track, searchQuery }: RoadmapSectionPro
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {filteredTopics.map((topic) => (
-                    <RoadmapTopicCard key={topic.id} topic={topic} trackColor={track.color} />
+                    <RoadmapTopicCard
+                        key={topic.id}
+                        topic={topic}
+                        trackColor={track.color}
+                        isOpen={openTopicId === topic.id}
+                        onToggle={() => setOpenTopicId(prev => prev === topic.id ? null : topic.id)}
+                    />
                 ))}
             </div>
         </section>
