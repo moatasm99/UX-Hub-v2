@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
-import { BookMarked, Rocket, Sun, Moon, Menu, X } from 'lucide-react'
+import { BookMarked, Rocket, BookOpen, Sun, Moon, Menu, X } from 'lucide-react'
 import { useTheme } from '@/components/theme-provider'
 import { UltraCelebrationButton } from '@/components/public/UltraCelebrationButton'
 
@@ -19,6 +19,13 @@ const navLinks = [
         emoji: '🚀',
         icon: Rocket,
         activeGradient: 'bg-gradient-to-r from-amber-500 to-orange-500',
+    },
+    {
+        to: '/dictionary',
+        label: 'UX/UI Dictionary',
+        emoji: '📘',
+        icon: BookOpen,
+        activeGradient: 'bg-gradient-to-r from-blue-500 to-cyan-500',
     },
 ] as const
 

@@ -8,6 +8,7 @@ import { LoadingSkeleton } from '@/components/ui/LoadingSkeleton'
 const LandingPage = lazy(() => import('@/features/landing/pages/LandingPage'))
 const RoadmapPage = lazy(() => import('@/features/roadmap/pages/RoadmapPage'))
 const RoadmapDetailPage = lazy(() => import('@/features/roadmap/pages/RoadmapDetailPage'))
+const UXDictionaryPage = lazy(() => import('@/features/dictionary/pages/UXDictionaryPage'))
 const AdminLoginPage = lazy(() => import('@/features/admin/pages/AdminLoginPage'))
 const AdminDashboardPage = lazy(() => import('@/features/admin/pages/AdminDashboardPage'))
 const AdminCourseCategoriesPage = lazy(() => import('@/features/admin/pages/AdminCourseCategoriesPage'))
@@ -74,6 +75,14 @@ const router = createBrowserRouter([
                 element: (
                     <PageLoader>
                         <RoadmapDetailPage />
+                    </PageLoader>
+                ),
+            },
+            {
+                path: 'dictionary',
+                element: (
+                    <PageLoader>
+                        <UXDictionaryPage />
                     </PageLoader>
                 ),
             },
