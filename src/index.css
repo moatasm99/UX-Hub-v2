@@ -14,31 +14,54 @@
   --animate-float: float 6s ease-in-out infinite;
   --animate-fade-in-up: fade-in-up var(--motion-slow) var(--ease-out) both;
 
-  /* Theme Colors for components */
+  /* ─── Semantic Color Tokens (Light by default) ─── */
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-card: #ffffff;
+  --color-card-foreground: #0f172a;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #9333ea;
+
+  /* Brand */
   --color-primary: #9333ea;
   --color-primary-foreground: #ffffff;
+
+  /* Functional */
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+
+  /* Accent */
+  --color-accent: #f1f5f9;
+  --color-accent-foreground: #0f172a;
 }
 
 /* ──────────────────────────────────────────
    Design Tokens — Light Mode (default)
    ────────────────────────────────────────── */
 :root {
-  /* ── Color Tokens ── */
-  --bg-primary: #f8fafc;
-  --bg-secondary: #ffffff;
+  /* ── Background Layers ── */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
   --bg-tertiary: #f1f5f9;
+
+  /* ── Text Hierarchy ── */
   --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-tertiary: #94a3b8;
+  --text-secondary: #334155;
+  --text-tertiary: #64748b;
+
+  /* ── Borders ── */
   --border-color: #e2e8f0;
   --border-hover: #cbd5e1;
 
-  /* Glass */
-  --card-bg: rgba(255, 255, 255, 0.7);
-  --card-border: rgba(0, 0, 0, 0.05);
-  --header-bg: rgba(255, 255, 255, 0.8);
+  /* ── Glass ── */
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(0, 0, 0, 0.06);
+  --header-bg: rgba(255, 255, 255, 0.85);
 
-  /* Accent */
+  /* ── Accent Colors ── */
   --accent-purple: #9333ea;
   --accent-pink: #ec4899;
   --accent-emerald: #10b981;
@@ -83,6 +106,18 @@
   --card-bg: rgba(15, 23, 42, 0.7);
   --card-border: rgba(255, 255, 255, 0.08);
   --header-bg: rgba(2, 6, 23, 0.8);
+
+  /* Override Tailwind semantic tokens for dark */
+  --color-background: #020617;
+  --color-foreground: #f8fafc;
+  --color-card: #0f172a;
+  --color-card-foreground: #f8fafc;
+  --color-muted: #1e293b;
+  --color-muted-foreground: #94a3b8;
+  --color-border: #1e293b;
+  --color-input: #1e293b;
+  --color-accent: #1e293b;
+  --color-accent-foreground: #f8fafc;
 }
 
 /* ──────────────────────────────────────────
@@ -127,7 +162,7 @@ body {
 .glass-card:hover {
   transform: translateY(-4px) scale(1.01);
   border-color: rgba(147, 51, 234, 0.3);
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
 }
 
 .dark .glass-card:hover {
