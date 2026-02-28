@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom'
 import { BookMarked, Rocket, BookOpen, Sun, Moon, Menu, X } from 'lucide-react'
 import { useTheme } from '@/components/theme-provider'
 import { UltraCelebrationButton } from '@/components/public/UltraCelebrationButton'
+import GlobalCommunityFab from '@/features/community/components/GlobalCommunityFab'
 
 /* ─── Navigation Config ─── */
 const navLinks = [
@@ -205,6 +206,9 @@ export function RootLayout() {
             </footer>
             {/* ━━━ CELEBRATION ━━━ */}
             <UltraCelebrationButton />
+
+            {/* ━━━ GLOBAL FEEDBACK ━━━ */}
+            <GlobalCommunityFab />
         </div>
     )
 }

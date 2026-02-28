@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Loader2, CheckCircle, XCircle, Plus, ExternalLink, MessageSquare, Lightbulb, Link2, Clock, ArrowLeft } from 'lucide-react';
+import { Loader2, CheckCircle, XCircle, Plus, ExternalLink, MessageSquare, Lightbulb, Link2, Clock, ArrowLeft, Info } from 'lucide-react';
 import { communitySubmissionsService, CommunitySubmissionDTO, SubmissionStatus } from '@/services/community-submissions';
 import { usePublishedCategories, usePublishedCourses } from '@/hooks/use-public-courses';
 import { courseDaysService, CourseDayDTO } from '@/services/course-days';
@@ -150,8 +150,31 @@ export default function AdminSubmissionsPage() {
                                     className="inline-flex items-center gap-1.5 text-sm text-purple-600 dark:text-purple-400 hover:underline truncate max-w-full"
                                 >
                                     <ExternalLink className="w-3.5 h-3.5 shrink-0" />
-                                    <span className="truncate">{sub.url}</span>
+                                    <span className="truncate text-xs">{sub.url}</span>
                                 </a>
+                            )}
+
+                            {/* Context Origin */}
+                            {(sub.context_title || sub.context_url) && (
+                                <div className="pt-2 mt-1 border-t border-slate-50 dark:border-slate-800/50">
+                                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                                        <Info className="w-3 h-3" />
+                                        Originated from
+                                    </div>
+                                    {sub.context_url ? (
+                                        <a
+                                            href={sub.context_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-xs text-slate-500 hover:text-purple-500 hover:underline flex items-center gap-1 transition-colors"
+                                        >
+                                            <ExternalLink className="w-3 h-3 shrink-0" />
+                                            {sub.context_title || 'Link'}
+                                        </a>
+                                    ) : (
+                                        <span className="text-xs text-slate-500">{sub.context_title}</span>
+                                    )}
+                                </div>
                             )}
 
                             {/* Actions */}

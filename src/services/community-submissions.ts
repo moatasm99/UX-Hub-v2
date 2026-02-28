@@ -10,6 +10,8 @@ export interface CommunitySubmissionDTO {
     message: string | null;
     url: string | null;
     status: SubmissionStatus;
+    context_url: string | null;
+    context_title: string | null;
     created_at: string;
 }
 
@@ -18,6 +20,8 @@ export interface CreateSubmissionInput {
     title: string;
     message?: string;
     url?: string;
+    context_url?: string;
+    context_title?: string;
 }
 
 export const communitySubmissionsService = {
