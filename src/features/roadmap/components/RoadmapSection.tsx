@@ -1,3 +1,4 @@
+import { useMemo, useCallback } from 'react';
 import { usePublishedTopicsWithResources } from '@/hooks/use-public-roadmap';
 import RoadmapTopicCard from './RoadmapTopicCard';
 import { RoadmapTrackDTO } from '@/services/roadmap-tracks';
@@ -12,14 +13,21 @@ interface RoadmapSectionProps {
 export default function RoadmapSection({ track, searchQuery, openTopicId, onToggleTopic }: RoadmapSectionProps) {
     const { topics, isLoading } = usePublishedTopicsWithResources(track.id);
 
-    const filteredTopics = topics.filter(topic => {
-        if (!searchQuery) return true;
+    // Memoize filtered list — only recompute when inputs change
+    const filteredTopics = useMemo(() => {
+        if (!searchQuery) return topics;
         const query = searchQuery.toLowerCase();
-        return (
+        return topics.filter(topic =>
             topic.title.toLowerCase().includes(query) ||
             topic.description?.toLowerCase().includes(query)
         );
-    });
+    }, [topics, searchQuery]);
+
+    // Stable toggle handler — prevents new function on every render
+    // (critical for React.memo on child RoadmapTopicCard)
+    const handleToggle = useCallback((id: string) => {
+        onToggleTopic(id);
+    }, [onToggleTopic]);
 
     if (isLoading) {
         return (
@@ -56,7 +64,8 @@ export default function RoadmapSection({ track, searchQuery, openTopicId, onTogg
                         resources={topic.roadmap_resources}
                         trackColor={track.color}
                         isOpen={openTopicId === topic.id}
-                        onToggle={() => onToggleTopic(topic.id)}
+                        onToggle={handleToggle}
+                        topicId={topic.id}
                     />
                 ))}
             </div>

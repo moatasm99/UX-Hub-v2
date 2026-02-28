@@ -39,7 +39,10 @@ export function usePublishedTopicsWithResources(trackId: string | undefined) {
         queryKey: ['public-roadmap-topics-with-resources', trackId],
         queryFn: () => roadmapTopicsService.getPublishedByTrackWithResources(trackId!),
         enabled: !!trackId,
-        staleTime: STALE_TIME,
+        staleTime: Infinity,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
     });
 
     const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);

@@ -8,7 +8,8 @@ interface RoadmapTopicCardProps {
     resources: RoadmapResourceDTO[];
     trackColor?: string | null;
     isOpen: boolean;
-    onToggle: () => void;
+    onToggle: (id: string) => void;
+    topicId: string;
 }
 
 /* ─── Explicit color class maps (Tailwind-safe, no dynamic interpolation) ─── */
@@ -98,7 +99,7 @@ function resolveColor(trackColor?: string | null): ColorKey {
     return 'amber';
 }
 
-function RoadmapTopicCard({ topic, resources, trackColor, isOpen, onToggle }: RoadmapTopicCardProps) {
+function RoadmapTopicCard({ topic, resources, trackColor, isOpen, onToggle, topicId }: RoadmapTopicCardProps) {
     const c = COLOR_CLASSES[resolveColor(trackColor)];
 
     const getResourceIcon = (type: string) => {
@@ -115,7 +116,7 @@ function RoadmapTopicCard({ topic, resources, trackColor, isOpen, onToggle }: Ro
             {/* Header — clickable */}
             <button
                 type="button"
-                onClick={onToggle}
+                onClick={() => onToggle(topicId)}
                 aria-expanded={isOpen}
                 aria-label={`${topic.title} — click to ${isOpen ? 'collapse' : 'expand'} resources`}
                 className={`w-full text-left p-5 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-inset ${c.ring} rounded-3xl hover:bg-slate-50 dark:hover:bg-slate-800`}
