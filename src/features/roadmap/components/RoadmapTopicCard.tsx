@@ -1,4 +1,4 @@
-import { memo } from 'react';
+ import { memo } from 'react';
 import { ChevronDown, Video, FileText, BookOpen, ExternalLink } from 'lucide-react';
 import { RoadmapTopicDTO } from '@/services/roadmap-topics';
 import { RoadmapResourceDTO } from '@/services/roadmap-resources';

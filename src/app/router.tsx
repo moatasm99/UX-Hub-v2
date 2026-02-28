@@ -22,6 +22,7 @@ const AdminRoadmapTracksPage = lazy(() => import('@/features/admin/pages/AdminRo
 const AdminRoadmapTopicsPage = lazy(() => import('@/features/admin/pages/AdminRoadmapTopicsPage'))
 const AdminTopicBuilderPage = lazy(() => import('@/features/admin/pages/AdminTopicBuilderPage'))
 const AdminSiteSettingsPage = lazy(() => import('@/features/admin/pages/AdminSiteSettingsPage'))
+const AdminSubmissionsPage = lazy(() => import('@/features/admin/pages/AdminSubmissionsPage'))
 const AdminLayout = lazy(() => import('@/features/admin/components/AdminLayout'))
 const AdminGuard = lazy(() => import('@/features/admin/components/AdminGuard'))
 const NotFoundPage = lazy(() => import('@/app/not-found'))
@@ -229,6 +230,14 @@ const router = createBrowserRouter([
                 element: (
                     <PageLoader>
                         <AdminSiteSettingsPage />
+                    </PageLoader>
+                ),
+            },
+            {
+                path: 'submissions',
+                element: (
+                    <PageLoader>
+                        <AdminSubmissionsPage />
                     </PageLoader>
                 ),
             },

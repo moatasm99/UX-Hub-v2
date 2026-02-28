@@ -11,8 +11,10 @@ import {
     Layout,
     Link as LinkIcon,
     Loader2,
-    AlertCircle
+    AlertCircle,
+    MessageSquare
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function AdminDashboardPage() {
     const { user } = useAdminAuth();
@@ -137,6 +139,27 @@ export default function AdminDashboardPage() {
                     data={distributions.lessonTypes}
                     title="Lesson Content Breakdown"
                 />
+            </section>
+
+            {/* Submissions Management */}
+            <section className="bg-slate-900 overflow-hidden border border-slate-800 rounded-2xl">
+                <div className="p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="flex items-center gap-6">
+                        <div className="w-16 h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500">
+                            <MessageSquare className="w-8 h-8" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-bold text-white">Community Submissions</h2>
+                            <p className="text-slate-400 mt-1">Review feedback, suggestions, and learning resources from users.</p>
+                        </div>
+                    </div>
+                    <Link
+                        to="/admin/submissions"
+                        className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-purple-500/20 whitespace-nowrap"
+                    >
+                        Review Submissions
+                    </Link>
+                </div>
             </section>
         </div>
     );

@@ -3,6 +3,7 @@ import { CreatorSection } from '@/components/ui/CreatorSection'
 import { usePublishedCategories, usePublishedCourses } from '@/hooks/use-public-courses'
 import CourseContainer from '../../courses/components/CourseContainer'
 import type { CourseCategoryDTO } from '@/services/course-categories'
+import CommunitySubmissionForm from '@/features/community/components/CommunitySubmissionForm'
 
 // ─── Category Section (dynamic) ───────────────────
 const CATEGORY_ICONS = ['🧠', '🎨', '✍️', '💻', '📊', '🔍', '🚀', '📱'];
@@ -102,6 +103,21 @@ export default function LandingPage() {
                     </div>
                 ))
             )}
+
+            {/* Community Contribution Section */}
+            <section id="community" className="px-4 sm:px-6 lg:px-8 py-20 bg-slate-50 dark:bg-slate-900/50">
+                <div className="max-w-7xl mx-auto">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
+                            🤝 Grow Together
+                        </h2>
+                        <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                            Know a great resource or have ideas to make the platform better? We'd love to hear from you!
+                        </p>
+                    </div>
+                    <CommunitySubmissionForm />
+                </div>
+            </section>
         </>
     )
 }
