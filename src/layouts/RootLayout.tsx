@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { BookMarked, Rocket, BookOpen, Sun, Moon, Menu, X } from 'lucide-react'
 import { useTheme } from '@/components/theme-provider'
-import { UltraCelebrationButton } from '@/components/public/UltraCelebrationButton'
+import { GlobalCommunityFab } from '@/features/community/components/GlobalCommunityFab'
 
 /* ─── Navigation Config ─── */
 const navLinks = [
@@ -203,8 +203,8 @@ export function RootLayout() {
             >
                 UX Design Hub 2.0 — Built with ❤️ for ITI
             </footer>
-            {/* ━━━ CELEBRATION ━━━ */}
-            <UltraCelebrationButton />
+            {/* ━━━ COMMUNITY FAB ━━━ */}
+            <GlobalCommunityFab />
 
         </div>
     )
