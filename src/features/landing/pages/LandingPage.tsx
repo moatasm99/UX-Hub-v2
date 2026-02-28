@@ -3,7 +3,7 @@ import { CreatorSection } from '@/components/ui/CreatorSection'
 import { usePublishedCategories, usePublishedCourses } from '@/hooks/use-public-courses'
 import CourseContainer from '../../courses/components/CourseContainer'
 import type { CourseCategoryDTO } from '@/services/course-categories'
-import CommunitySubmissionForm from '@/features/community/components/CommunitySubmissionForm'
+import { CommunityFeedbackSection } from '@/features/community/components/CommunityFeedbackSection'
 
 // ─── Category Section (dynamic) ───────────────────
 const CATEGORY_ICONS = ['🧠', '🎨', '✍️', '💻', '📊', '🔍', '🚀', '📱'];
@@ -45,13 +45,8 @@ function CategorySection({ category, index }: { category: CourseCategoryDTO; ind
                 <p className="text-center text-slate-500 py-8">No courses available yet.</p>
             ) : (
                 <div className="flex flex-col space-y-4">
-                    {courses.map((course, idx) => (
-                        <div key={course.id} className="relative pl-0 md:pl-4 transition-all duration-300">
-                            {idx !== courses.length - 1 && (
-                                <div className="absolute left-[50%] md:left-[35px] top-full h-4 w-0.5 bg-emerald-500/20 hidden md:block" />
-                            )}
-                            <CourseContainer course={course} />
-                        </div>
+                    {courses.map((course) => (
+                        <CourseContainer key={course.id} course={course} />
                     ))}
                 </div>
             )}
@@ -105,19 +100,9 @@ export default function LandingPage() {
             )}
 
             {/* Community Contribution Section */}
-            <section id="community" className="px-4 sm:px-6 lg:px-8 py-20 bg-slate-50 dark:bg-slate-900/50">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
-                            🤝 Grow Together
-                        </h2>
-                        <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                            Know a great resource or have ideas to make the platform better? We'd love to hear from you!
-                        </p>
-                    </div>
-                    <CommunitySubmissionForm />
-                </div>
-            </section>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 border-t border-slate-200/50 dark:border-slate-800/50 mt-12">
+                <CommunityFeedbackSection />
+            </div>
         </>
     )
 }

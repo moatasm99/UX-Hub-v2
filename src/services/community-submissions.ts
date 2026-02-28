@@ -47,6 +47,18 @@ export const communitySubmissionsService = {
         return data as CommunitySubmissionDTO[];
     },
 
+    // Admin: get by type and status
+    getByTypeAndStatus: async (type: SubmissionType, status: SubmissionStatus) => {
+        const { data, error } = await (supabase
+            .from('community_submissions' as any) as any)
+            .select('*')
+            .eq('type', type)
+            .eq('status', status)
+            .order('created_at', { ascending: false });
+        if (error) throw error;
+        return data as CommunitySubmissionDTO[];
+    },
+
     // Admin: update status
     updateStatus: async (id: string, status: SubmissionStatus) => {
         const { data, error } = await (supabase

@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Rocket, Filter, Search } from 'lucide-react';
 import RoadmapSection from '../components/RoadmapSection';
 import { usePublishedTracks } from '@/hooks/use-public-roadmap';
+import { CommunityFeedbackSection } from '@/features/community/components/CommunityFeedbackSection';
 
 export default function RoadmapPage() {
     // Dynamic data
@@ -100,6 +101,10 @@ export default function RoadmapPage() {
                                 />
                             ))
                         )}
+                    </div>
+
+                    <div className="mt-20 border-t border-slate-200/50 dark:border-slate-800/50">
+                        <CommunityFeedbackSection />
                     </div>
                 </div>
             </main>

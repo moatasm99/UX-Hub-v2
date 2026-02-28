@@ -22,7 +22,9 @@ const AdminRoadmapTracksPage = lazy(() => import('@/features/admin/pages/AdminRo
 const AdminRoadmapTopicsPage = lazy(() => import('@/features/admin/pages/AdminRoadmapTopicsPage'))
 const AdminTopicBuilderPage = lazy(() => import('@/features/admin/pages/AdminTopicBuilderPage'))
 const AdminSiteSettingsPage = lazy(() => import('@/features/admin/pages/AdminSiteSettingsPage'))
-const AdminSubmissionsPage = lazy(() => import('@/features/admin/pages/AdminSubmissionsPage'))
+const AdminFeedbackPage = lazy(() => import('@/features/admin/pages/AdminFeedbackPage'))
+const AdminSuggestionsPage = lazy(() => import('@/features/admin/pages/AdminSuggestionsPage'))
+const AdminResourceSubmissionsPage = lazy(() => import('@/features/admin/pages/AdminResourceSubmissionsPage'))
 const AdminLayout = lazy(() => import('@/features/admin/components/AdminLayout'))
 const AdminGuard = lazy(() => import('@/features/admin/components/AdminGuard'))
 const NotFoundPage = lazy(() => import('@/app/not-found'))
@@ -234,12 +236,33 @@ const router = createBrowserRouter([
                 ),
             },
             {
-                path: 'submissions',
-                element: (
-                    <PageLoader>
-                        <AdminSubmissionsPage />
-                    </PageLoader>
-                ),
+                path: 'community',
+                children: [
+                    {
+                        path: 'feedback',
+                        element: (
+                            <PageLoader>
+                                <AdminFeedbackPage />
+                            </PageLoader>
+                        ),
+                    },
+                    {
+                        path: 'suggestions',
+                        element: (
+                            <PageLoader>
+                                <AdminSuggestionsPage />
+                            </PageLoader>
+                        ),
+                    },
+                    {
+                        path: 'resources',
+                        element: (
+                            <PageLoader>
+                                <AdminResourceSubmissionsPage />
+                            </PageLoader>
+                        ),
+                    },
+                ],
             },
         ],
     },

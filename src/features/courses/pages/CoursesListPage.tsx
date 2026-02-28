@@ -2,6 +2,7 @@ import { Loader2 } from 'lucide-react'
 import { usePublishedCategories, usePublishedCourses } from '@/hooks/use-public-courses'
 import CourseContainer from '../components/CourseContainer'
 import type { CourseCategoryDTO } from '@/services/course-categories'
+import { CommunityFeedbackSection } from '@/features/community/components/CommunityFeedbackSection'
 
 const CATEGORY_ICONS = ['🧠', '🎨', '✍️', '💻', '📊', '🔍', '🚀', '📱'];
 const CATEGORY_COLORS = [
@@ -68,6 +69,10 @@ export default function CoursesListPage() {
                     <CategoryBlock key={category.id} category={category} index={index} />
                 ))
             )}
+
+            <div className="mt-16 border-t border-slate-200/50 dark:border-slate-800/50">
+                <CommunityFeedbackSection />
+            </div>
         </div>
     )
 }

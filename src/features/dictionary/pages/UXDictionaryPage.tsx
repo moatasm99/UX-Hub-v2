@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, memo, useCallback } from 'react';
 import { Search, BookOpen, Copy, Check, Link2 } from 'lucide-react';
 import { uxDictionary, LEVEL_LABELS, LEVEL_DESCRIPTIONS, type DictionaryTerm } from '@/data/ux-dictionary';
+import { CommunityFeedbackSection } from '@/features/community/components/CommunityFeedbackSection';
 
 /* ════════════════════════════════════════════════ */
 /*  Term Card Component                            */
@@ -273,6 +274,10 @@ export default function UXDictionaryPage() {
                             ))}
                         </div>
                     )}
+                </div>
+
+                <div className="max-w-7xl mx-auto px-4 border-t border-slate-200/50 dark:border-slate-800/50">
+                    <CommunityFeedbackSection />
                 </div>
             </main>
         </div>
