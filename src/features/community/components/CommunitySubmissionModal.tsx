@@ -14,6 +14,9 @@ export function CommunitySubmissionModal({ isOpen, onClose }: CommunitySubmissio
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+
     // Form fields
     const [type, setType] = useState<SubmissionType>('feedback');
     const [title, setTitle] = useState('');
@@ -48,6 +51,8 @@ export function CommunitySubmissionModal({ isOpen, onClose }: CommunitySubmissio
                 url: type === 'resource' ? url.trim() : undefined,
                 context_url: window.location.href,
                 context_title: context.label,
+                name: name.trim() || undefined,
+                email: email.trim() || undefined,
             });
             setSubmitted(true);
             setTimeout(() => {
@@ -68,6 +73,8 @@ export function CommunitySubmissionModal({ isOpen, onClose }: CommunitySubmissio
         setMessage('');
         setUrl('');
         setType('feedback');
+        setName('');
+        setEmail('');
     };
 
     if (!isOpen) return null;
@@ -102,6 +109,41 @@ export function CommunitySubmissionModal({ isOpen, onClose }: CommunitySubmissio
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-6 space-y-5">
+                    {/* Contributor Info (Optional) */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest pl-1">Your Name</label>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={e => setName(e.target.value)}
+                                placeholder="Optional"
+                                className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:border-purple-500 focus:outline-none transition-all text-sm font-bold"
+                            />
+                        </div>
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest pl-1">Your Email</label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                                placeholder="Optional"
+                                className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:border-purple-500 focus:outline-none transition-all text-sm font-bold"
+                            />
+                        </div>
+                    </div>
+
+                    {email && (
+                        <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-100 dark:border-purple-500/20 p-3 rounded-2xl flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
+                            <CheckCircle2 className="w-4 h-4 text-purple-500 mt-0.5 shrink-0" />
+                            <p className="text-[10px] text-purple-700 dark:text-purple-300 font-bold leading-relaxed">
+                                Provide your email to earn a <b>Top Contributor</b> badge and track your submissions!
+                            </p>
+                        </div>
+                    )}
+
+                    <div className="h-px bg-slate-100 dark:bg-slate-800" />
+
                     {/* Type Selector */}
                     <div className="grid grid-cols-3 gap-2">
                         {(['feedback', 'suggestion', 'resource'] as const).map(t => (

@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Loader2, CheckCircle } from 'lucide-react';
+import { Loader2, CheckCircle, Globe, Type } from 'lucide-react';
 import { CommunitySubmissionDTO, communitySubmissionsService } from '@/services/community-submissions';
 import { usePublishedCategories, usePublishedCourses } from '@/hooks/use-public-courses';
 import { courseDaysService, CourseDayDTO } from '@/services/course-days';
-import { courseLessonsService } from '@/services/course-lessons';
-import { roadmapTracksService } from '@/services/roadmap-tracks';
+import { roadmapTracksService, RoadmapTrackDTO } from '@/services/roadmap-tracks';
 import { roadmapTopicsService, RoadmapTopicDTO } from '@/services/roadmap-topics';
-import { roadmapResourcesService } from '@/services/roadmap-resources';
 import { detectResourceType } from '@/utils/resource-detection';
-import type { RoadmapTrackDTO } from '@/services/roadmap-tracks';
+import { supabase } from '@/lib/supabase';
 
 type DestinationType = 'course' | 'roadmap';
 
@@ -82,21 +80,19 @@ export function AddResourceModal({ submission, onClose, onSuccess }: AddResource
         setDays([]);
     }, [selectedCategoryId]);
 
-    const resourceType = detectResourceType(submission.url || '') || 'Article';
+    const [editTitle, setEditTitle] = useState(submission.title);
+    const [editUrl, setEditUrl] = useState(submission.url || '');
+
+    const resourceType = detectResourceType(editUrl) || 'Article';
 
     const canConfirm =
-        destinationType === 'course'
-            ? !!selectedDayId
-            : destinationType === 'roadmap'
-                ? !!selectedTopicId
-                : false;
+        (destinationType === 'course' ? !!selectedDayId : !!selectedTopicId) && !!editUrl && !!editTitle;
 
     const getDestinationLabel = () => {
         if (destinationType === 'course') {
-            const cat = categories.find(c => c.id === selectedCategoryId);
             const course = courses.find(c => c.id === selectedCourseId);
             const day = days.find(d => d.id === selectedDayId);
-            return [cat?.title, course?.title, day?.title].filter(Boolean).join(' → ');
+            return [course?.title, day?.title].filter(Boolean).join(' → ');
         }
         if (destinationType === 'roadmap') {
             const track = tracks.find(t => t.id === selectedTrackId);
@@ -111,33 +107,23 @@ export function AddResourceModal({ submission, onClose, onSuccess }: AddResource
         setSubmitting(true);
 
         try {
-            if (destinationType === 'course' && selectedDayId) {
-                const existing = await courseLessonsService.getAll(selectedDayId);
-                await courseLessonsService.create({
-                    day_id: selectedDayId,
-                    title: submission.title,
-                    url: submission.url!,
-                    type: resourceType as 'Video' | 'Article',
-                    duration: null,
-                    position: existing.length + 1,
-                });
-            } else if (destinationType === 'roadmap' && selectedTopicId) {
-                const existing = await roadmapResourcesService.getByTopic(selectedTopicId);
-                await roadmapResourcesService.create({
-                    topic_id: selectedTopicId,
-                    title: submission.title,
-                    url: submission.url!,
-                    type: resourceType as any,
-                    position: existing.length + 1,
-                    is_published: true,
-                });
-            }
+            // 1. Update the submission with selected target metadata and potentially edited fields
+            await (supabase.from('community_submissions' as any) as any).update({
+                title: editTitle,
+                url: editUrl,
+                target_type: destinationType,
+                target_day_id: destinationType === 'course' ? selectedDayId : null,
+                target_topic_id: destinationType === 'roadmap' ? selectedTopicId : null,
+                resource_type: resourceType.toLowerCase() // Aligning with enum in DB
+            } as any).eq('id', submission.id);
 
-            await communitySubmissionsService.updateStatus(submission.id, 'approved');
+            // 2. Call the RPC to handle conversion, audit, and status
+            await communitySubmissionsService.addToTarget(submission.id);
+
             onSuccess();
         } catch (err) {
             console.error(err);
-            alert('Failed to add resource. Check console.');
+            alert('Failed to add resource. Usually this means a duplicate URL or missing target ID.');
         } finally {
             setSubmitting(false);
         }
@@ -158,6 +144,36 @@ export function AddResourceModal({ submission, onClose, onSuccess }: AddResource
                 </div>
 
                 <div className="p-6 space-y-5 max-h-[60vh] overflow-y-auto">
+                    {/* Editable Fields */}
+                    <div className="space-y-4 pt-1">
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest flex items-center gap-1.5">
+                                <Type className="w-3 h-3" /> Resource Title
+                            </label>
+                            <input
+                                type="text"
+                                value={editTitle}
+                                onChange={(e) => setEditTitle(e.target.value)}
+                                className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-sm font-bold focus:border-purple-500 focus:outline-none transition-all"
+                                placeholder="Enter final title..."
+                            />
+                        </div>
+                        <div className="space-y-1.5">
+                            <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest flex items-center gap-1.5">
+                                <Globe className="w-3 h-3" /> Resource URL
+                            </label>
+                            <input
+                                type="url"
+                                value={editUrl}
+                                onChange={(e) => setEditUrl(e.target.value)}
+                                className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-sm font-bold focus:border-purple-500 focus:outline-none transition-all"
+                                placeholder="Enter public URL..."
+                            />
+                        </div>
+                    </div>
+
+                    <div className="h-px bg-slate-100 dark:bg-slate-800" />
+
                     <div className="space-y-2">
                         <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Destination Type</label>
                         <div className="grid grid-cols-2 gap-3">
