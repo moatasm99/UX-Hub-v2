@@ -44,16 +44,11 @@ export function RootLayout() {
     const toggleTheme = () => setTheme(isDark ? 'light' : 'dark')
 
     return (
-        <div className="min-h-screen transition-colors"
-            style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+        <div className="min-h-screen transition-colors duration-300 bg-[var(--bg-app)] text-[var(--text-main)]">
 
             {/* ━━━ HEADER ━━━ */}
             <header
-                className="sticky top-0 z-50 border-b backdrop-blur-xl transition-colors"
-                style={{
-                    backgroundColor: 'var(--header-bg)',
-                    borderColor: 'var(--border-color)',
-                }}
+                className="sticky top-0 z-50 border-b border-[var(--border-main)] bg-[var(--glass-bg)] backdrop-blur-xl transition-colors duration-300"
             >
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-6">
 
@@ -72,7 +67,7 @@ export function RootLayout() {
                             </h1>
                             <p
                                 className="text-xs"
-                                style={{ color: 'var(--text-tertiary)' }}
+                                style={{ color: 'var(--text-muted)' }}
                             >
                                 Your path to UX mastery
                             </p>
@@ -82,7 +77,7 @@ export function RootLayout() {
                     {/* ── Desktop Tab Navigation ── */}
                     <nav
                         className="hidden items-center gap-1.5 rounded-2xl p-1 md:flex"
-                        style={{ backgroundColor: 'var(--bg-tertiary)' }}
+                        style={{ backgroundColor: 'var(--bg-muted)' }}
                     >
                         {navLinks.map((link) => {
                             // Custom active logic:
@@ -98,7 +93,7 @@ export function RootLayout() {
                                     key={link.to}
                                     to={link.to}
                                     className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all
-                                        focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500
+                                        focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]
                                         ${isActive
                                             ? `${link.activeGradient} text-white shadow-lg`
                                             : 'hover:bg-[var(--bg-secondary)]'
@@ -120,9 +115,9 @@ export function RootLayout() {
                         {/* Theme Toggle */}
                         <button
                             onClick={toggleTheme}
-                            className="rounded-2xl p-2.5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                            className="rounded-2xl p-2.5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]"
                             style={{
-                                backgroundColor: 'var(--bg-tertiary)',
+                                backgroundColor: 'var(--bg-muted)',
                                 color: isDark ? '#facc15' : 'var(--text-secondary)',
                                 transitionDuration: 'var(--motion-normal)',
                             }}
@@ -134,9 +129,9 @@ export function RootLayout() {
                         {/* Mobile Menu Toggle */}
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="rounded-2xl p-2.5 transition-all md:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                            className="rounded-2xl p-2.5 transition-all md:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]"
                             style={{
-                                backgroundColor: 'var(--bg-tertiary)',
+                                backgroundColor: 'var(--bg-muted)',
                                 color: 'var(--text-secondary)',
                                 transitionDuration: 'var(--motion-normal)',
                             }}
@@ -169,13 +164,13 @@ export function RootLayout() {
                                     to={link.to}
                                     onClick={() => setMobileMenuOpen(false)}
                                     className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl px-4 py-3 text-xs font-medium transition-all
-                                        focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500
+                                        focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]
                                         ${isActive
                                             ? `${link.activeGradient} text-white shadow-lg`
                                             : ''
                                         }`}
                                     style={{
-                                        backgroundColor: isActive ? undefined : 'var(--bg-tertiary)',
+                                        backgroundColor: isActive ? undefined : 'var(--bg-muted)',
                                         color: isActive ? undefined : 'var(--text-secondary)',
                                         transitionDuration: 'var(--motion-normal)',
                                     }}
@@ -198,8 +193,8 @@ export function RootLayout() {
             <footer
                 className="border-t py-6 text-center text-sm"
                 style={{
-                    borderColor: 'var(--border-color)',
-                    color: 'var(--text-tertiary)',
+                    borderColor: 'var(--border-main)',
+                    color: 'var(--text-muted)',
                 }}
             >
                 UX Design Hub 2.0 — Built with ❤️ for ITI

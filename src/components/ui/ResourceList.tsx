@@ -35,7 +35,7 @@ function ResourceSection({
 }) {
     return (
         <div>
-            <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400">
+            <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                 {title}
             </h4>
             <ul className="space-y-1.5">
@@ -45,12 +45,12 @@ function ResourceSection({
                             href={item.resource.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-gray-700 transition-colors hover:bg-blue-50 hover:text-blue-700"
+                            className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--accent-primary)]/10 hover:text-[var(--accent-primary)]"
                         >
                             <span>{typeIcons[item.resource.type] ?? '📎'}</span>
                             <span className="flex-1">{item.resource.title}</span>
                             {item.resource.provider && (
-                                <span className="text-xs text-gray-400">
+                                <span className="text-xs text-[var(--text-muted)]">
                                     {item.resource.provider}
                                 </span>
                             )}

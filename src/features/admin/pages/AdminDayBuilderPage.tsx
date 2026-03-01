@@ -49,10 +49,10 @@ const INITIAL_STATE: DayFormState = {
 
 // ─── Shared Styles ────────────────────────────────────
 const inputCls =
-    'w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all';
-const labelCls = 'text-sm font-medium text-slate-400';
+    'w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] placeholder:[var(--text-muted)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-bold';
+const labelCls = 'text-sm font-bold text-[var(--text-muted)] uppercase tracking-wider';
 const sectionCls =
-    'bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-5';
+    'bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl p-6 space-y-5 shadow-sm';
 
 // ─── Component ────────────────────────────────────────
 export default function AdminDayBuilderPage() {
@@ -324,16 +324,16 @@ export default function AdminDayBuilderPage() {
                 <div className="flex items-center gap-4">
                     <Link
                         to={`/admin/courses/${categoryId}/${courseId}`}
-                        className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+                        className="p-2 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-muted)] rounded-lg transition-colors"
                     >
                         <ArrowLeft className="w-5 h-5" />
                     </Link>
                     <div>
-                        <p className="text-sm text-slate-500">
-                            {category?.title} → {course?.title}
+                        <p className="text-sm text-[var(--text-muted)] font-medium">
+                            {category?.title} <span className="opacity-50 mx-1">→</span> {course?.title}
                         </p>
-                        <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-                            <Calendar className="w-6 h-6 text-blue-400" />
+                        <h1 className="text-2xl font-bold text-[var(--text-main)] flex items-center gap-3">
+                            <Calendar className="w-6 h-6 text-[var(--accent-primary)]" />
                             {isEditing ? 'Edit Day' : 'Create New Day'}
                         </h1>
                     </div>
@@ -341,7 +341,7 @@ export default function AdminDayBuilderPage() {
                 <button
                     onClick={handleSave}
                     disabled={submitting}
-                    className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow-lg shadow-blue-900/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    className="px-6 py-2.5 bg-[var(--accent-primary)] hover:opacity-90 text-white font-bold rounded-xl shadow-lg shadow-[var(--accent-primary)]/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
                 >
                     {submitting ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -366,8 +366,8 @@ export default function AdminDayBuilderPage() {
 
             {/* ═══ SECTION 1 — Day Settings ═══════════ */}
             <section className={sectionCls}>
-                <h2 className="flex items-center gap-2 text-lg font-semibold text-white">
-                    <Calendar className="w-5 h-5 text-blue-400" />
+                <h2 className="flex items-center gap-2 text-lg font-bold text-[var(--text-main)]">
+                    <Calendar className="w-5 h-5 text-[var(--accent-primary)]" />
                     Day Settings
                 </h2>
 
@@ -420,10 +420,10 @@ export default function AdminDayBuilderPage() {
             {/* ═══ SECTION 2 — Lessons Builder ════════ */}
             <section className={sectionCls}>
                 <div className="flex items-center justify-between">
-                    <h2 className="flex items-center gap-2 text-lg font-semibold text-white">
-                        <PlayCircle className="w-5 h-5 text-purple-400" />
+                    <h2 className="flex items-center gap-2 text-lg font-bold text-[var(--text-main)]">
+                        <PlayCircle className="w-5 h-5 text-purple-500" />
                         Lessons
-                        <span className="text-sm font-normal text-slate-500">
+                        <span className="text-sm font-bold text-[var(--text-muted)]">
                             ({form.lessons.length})
                         </span>
                     </h2>
@@ -433,18 +433,18 @@ export default function AdminDayBuilderPage() {
                     {form.lessons.map((lesson, index) => (
                         <div
                             key={lesson.id}
-                            className="bg-slate-950 border border-slate-800 rounded-lg p-5 space-y-4 relative group transition-all hover:border-slate-700"
+                            className="bg-[var(--bg-muted)]/50 border border-[var(--border-main)] rounded-lg p-5 space-y-4 relative group transition-all hover:border-[var(--accent-primary)]/50 shadow-sm"
                         >
                             {/* Lesson number badge */}
                             <div className="flex items-center justify-between">
-                                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
                                     Lesson {index + 1}
                                 </span>
                                 {form.lessons.length > 1 && (
                                     <button
                                         type="button"
                                         onClick={() => removeLesson(lesson.id)}
-                                        className="p-1.5 text-slate-600 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                                        className="p-1.5 text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
                                         title="Delete lesson"
                                     >
                                         <Trash2 className="w-4 h-4" />
@@ -477,8 +477,8 @@ export default function AdminDayBuilderPage() {
                                     required
                                 />
                                 {lesson.url && lesson.type && (
-                                    <p className="text-[11px] text-slate-500 font-medium px-1 flex items-center gap-1.5 opacity-70">
-                                        {lesson.type === 'Video' ? <Video className="w-3.5 h-3.5" /> : <FileText className="w-3.5 h-3.5" />}
+                                    <p className="text-[10px] text-[var(--text-muted)] font-bold px-1 flex items-center gap-1.5 opacity-80 uppercase tracking-wider">
+                                        {lesson.type === 'Video' ? <Video className="w-3.5 h-3.5 text-purple-500" /> : <FileText className="w-3.5 h-3.5 text-blue-500" />}
                                         Detected as {lesson.type}
                                     </p>
                                 )}
@@ -492,9 +492,9 @@ export default function AdminDayBuilderPage() {
                                         onClick={() =>
                                             updateLesson(lesson.id, 'type', 'Video')
                                         }
-                                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border text-[11px] font-bold uppercase tracking-wider transition-all ${lesson.type === 'Video'
-                                            ? 'bg-purple-600/20 border-purple-500/50 text-purple-400'
-                                            : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
+                                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg border text-[10px] font-bold uppercase tracking-wider transition-all ${lesson.type === 'Video'
+                                            ? 'bg-purple-500/10 border-purple-500 text-purple-500 shadow-lg shadow-purple-500/10'
+                                            : 'bg-[var(--bg-card)] border-[var(--border-main)] text-[var(--text-muted)] hover:border-[var(--accent-primary)]/50'
                                             }`}
                                     >
                                         <Video className="w-3.5 h-3.5" />
@@ -505,9 +505,9 @@ export default function AdminDayBuilderPage() {
                                         onClick={() =>
                                             updateLesson(lesson.id, 'type', 'Article')
                                         }
-                                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border text-[11px] font-bold uppercase tracking-wider transition-all ${lesson.type === 'Article'
-                                            ? 'bg-blue-600/20 border-blue-500/50 text-blue-400'
-                                            : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
+                                        className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg border text-[10px] font-bold uppercase tracking-wider transition-all ${lesson.type === 'Article'
+                                            ? 'bg-blue-500/10 border-blue-500 text-blue-500 shadow-lg shadow-blue-500/10'
+                                            : 'bg-[var(--bg-card)] border-[var(--border-main)] text-[var(--text-muted)] hover:border-[var(--accent-primary)]/50'
                                             }`}
                                     >
                                         <FileText className="w-3.5 h-3.5" />
@@ -523,19 +523,19 @@ export default function AdminDayBuilderPage() {
                 <button
                     type="button"
                     onClick={addLesson}
-                    className="w-full py-3 border-2 border-dashed border-slate-700 hover:border-purple-500/50 rounded-lg text-slate-400 hover:text-purple-300 font-medium flex items-center justify-center gap-2 transition-all hover:bg-purple-500/5"
+                    className="w-full py-4 border-2 border-dashed border-[var(--border-main)] hover:border-[var(--accent-primary)] rounded-lg text-[var(--text-muted)] hover:text-[var(--accent-primary)] font-bold flex items-center justify-center gap-2 transition-all hover:bg-[var(--accent-primary)]/5 active:scale-[0.99]"
                 >
-                    <Plus className="w-4 h-4" />
+                    <Plus className="w-5 h-5" />
                     Add Lesson
                 </button>
             </section>
 
             {/* ═══ SECTION 3 — Task ══════════════════ */}
             <section className={sectionCls}>
-                <h2 className="flex items-center gap-2 text-lg font-semibold text-white">
-                    <ClipboardList className="w-5 h-5 text-emerald-400" />
+                <h2 className="flex items-center gap-2 text-lg font-bold text-[var(--text-main)]">
+                    <ClipboardList className="w-5 h-5 text-emerald-500" />
                     Task
-                    <span className="text-xs font-normal text-slate-500">(optional)</span>
+                    <span className="text-sm font-bold text-[var(--text-muted)] lowercase">(optional)</span>
                 </h2>
 
                 <div className="space-y-4">
@@ -560,17 +560,17 @@ export default function AdminDayBuilderPage() {
             </section>
 
             {/* ── Bottom Save Button ─────────────────── */}
-            <div className="flex items-center justify-end gap-3 pt-2">
+            <div className="flex items-center justify-end gap-3 pt-6 border-t border-[var(--border-main)]">
                 <Link
                     to={`/admin/courses/${categoryId}/${courseId}`}
-                    className="px-5 py-2.5 text-slate-400 hover:text-white font-medium hover:bg-slate-800 rounded-lg transition-colors"
+                    className="px-6 py-2.5 text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold hover:bg-[var(--bg-muted)] rounded-xl transition-colors"
                 >
                     Cancel
                 </Link>
                 <button
                     onClick={handleSave}
                     disabled={submitting}
-                    className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow-lg shadow-blue-900/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    className="px-8 py-2.5 bg-[var(--accent-primary)] hover:opacity-90 text-white font-bold rounded-xl shadow-lg shadow-[var(--accent-primary)]/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
                 >
                     {submitting ? (
                         <Loader2 className="w-4 h-4 animate-spin" />

@@ -22,12 +22,12 @@ const TYPE_ICONS: Record<SubmissionType, string> = {
 };
 
 const MODE_COLORS: Record<string, string> = {
-    pending: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200 dark:border-blue-900/50',
-    approved: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/50',
-    rejected: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 border-red-200 dark:border-red-900/50',
-    added: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400 border-purple-200 dark:border-purple-900/50',
-    spam: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border-amber-200 dark:border-amber-900/50',
-    trash: 'bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-400 border-slate-200 dark:border-slate-800',
+    pending: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
+    approved: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
+    rejected: 'bg-red-500/10 text-red-600 border-red-500/20',
+    added: 'bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] border-[var(--accent-primary)]/20',
+    spam: 'bg-amber-500/10 text-amber-600 border-amber-500/20',
+    trash: 'bg-[var(--bg-muted)] text-[var(--text-muted)] border-[var(--border-main)]',
 };
 
 export function SubmissionCard({
@@ -58,10 +58,10 @@ export function SubmissionCard({
 
     return (
         <div className={`
-            relative rounded-2xl border-2 transition-all group
+            relative rounded-2xl border transition-all group shadow-sm
             ${isSelected
-                ? 'border-purple-500 bg-purple-50/30 dark:bg-purple-900/5 ring-4 ring-purple-500/10'
-                : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 hover:border-slate-300 dark:hover:border-slate-600'
+                ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5 ring-4 ring-[var(--accent-primary)]/10'
+                : 'border-[var(--border-main)] bg-[var(--bg-card)] hover:border-[var(--border-strong)]'
             }
             ${isLocked ? 'opacity-90' : ''}
         `}>
@@ -74,7 +74,7 @@ export function SubmissionCard({
                     type="checkbox"
                     checked={isSelected}
                     onChange={() => onSelect?.(submission.id)}
-                    className="w-6 h-6 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-purple-600 focus:ring-purple-500 cursor-pointer shadow-sm transition-transform active:scale-90"
+                    className="w-6 h-6 rounded-lg border-2 border-[var(--border-main)] bg-[var(--bg-card)] text-[var(--accent-primary)] focus:ring-[var(--accent-primary)] cursor-pointer shadow-md transition-transform active:scale-90"
                 />
             </div>
 
@@ -95,25 +95,25 @@ export function SubmissionCard({
                         )}
 
                         {isLocked && (
-                            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black uppercase bg-slate-900 text-white">
+                            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black uppercase bg-[var(--text-main)] text-[var(--bg-card)]">
                                 <Lock className="w-2.5 h-2.5" />
                                 Locked
                             </span>
                         )}
                     </div>
-                    <span className="text-xs text-slate-400 font-medium">
+                    <span className="text-xs text-[var(--text-muted)] font-medium">
                         {new Date(submission.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                 </div>
 
                 {/* Submitter info */}
                 {submission.email && (
-                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                    <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
                         <User className="w-3 h-3" />
-                        <span className="font-bold">{submission.name || 'Anonymous'}</span>
+                        <span className="font-bold text-[var(--text-secondary)]">{submission.name || 'Anonymous'}</span>
                         <span className="opacity-60 truncate">({submission.email})</span>
                         {submission.contributor_count && (
-                            <span className="ml-auto px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-bold">
+                            <span className="ml-auto px-1.5 py-0.5 rounded-md bg-[var(--bg-muted)] text-[10px] font-bold">
                                 {submission.contributor_count} total
                             </span>
                         )}
@@ -121,14 +121,14 @@ export function SubmissionCard({
                 )}
 
                 {/* Title */}
-                <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <h3 className="font-bold text-[var(--text-main)] flex items-center gap-2">
                     {submission.title}
                     {submission.status === 'spam' && <ShieldAlert className="w-4 h-4 text-amber-500" />}
                 </h3>
 
                 {/* Message */}
                 {submission.message && (
-                    <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed bg-slate-50/50 dark:bg-slate-900/20 p-3 rounded-xl border border-slate-100 dark:border-slate-800/50 italic">
+                    <p className="text-sm text-[var(--text-secondary)] line-clamp-3 leading-relaxed bg-[var(--bg-muted)]/50 p-3 rounded-xl border border-[var(--border-main)] italic">
                         "{submission.message}"
                     </p>
                 )}
@@ -139,7 +139,7 @@ export function SubmissionCard({
                         href={submission.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-xs text-purple-600 dark:text-purple-400 hover:underline font-bold transition-all bg-purple-50 dark:bg-purple-900/10 px-3 py-1.5 rounded-lg border border-purple-100 dark:border-purple-900/20"
+                        className="inline-flex items-center gap-2 text-xs text-[var(--accent-primary)] hover:underline font-bold transition-all bg-[var(--accent-primary)]/10 px-3 py-1.5 rounded-lg border border-[var(--accent-primary)]/20"
                     >
                         <ExternalLink className="w-3.5 h-3.5" />
                         <span className="truncate max-w-[200px]">{submission.url}</span>
@@ -149,18 +149,18 @@ export function SubmissionCard({
                 {/* Admin Notes */}
                 <div className="pt-2">
                     <div className="flex items-center justify-between mb-1">
-                        <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Admin Notes</span>
+                        <span className="text-[10px] font-black uppercase text-[var(--text-muted)] tracking-widest">Admin Notes</span>
                         {!isEditingNotes ? (
                             <button
                                 onClick={() => setIsEditingNotes(true)}
-                                className="text-[10px] font-bold text-purple-600 hover:underline"
+                                className="text-[10px] font-bold text-[var(--accent-primary)] hover:underline"
                             >
                                 Edit
                             </button>
                         ) : (
                             <div className="flex gap-2">
                                 <button onClick={handleSaveNotes} className="text-[10px] font-bold text-emerald-600 hover:underline">Save</button>
-                                <button onClick={() => setIsEditingNotes(false)} className="text-[10px] font-bold text-slate-400 hover:underline">Cancel</button>
+                                <button onClick={() => setIsEditingNotes(false)} className="text-[10px] font-bold text-[var(--text-muted)] hover:underline">Cancel</button>
                             </div>
                         )}
                     </div>
@@ -168,11 +168,11 @@ export function SubmissionCard({
                         <textarea
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
-                            className="w-full h-20 p-2 text-xs rounded-lg border-2 border-purple-200 dark:border-purple-900/30 bg-white dark:bg-slate-900 focus:border-purple-500 outline-none transition-all"
+                            className="w-full h-20 p-2 text-xs rounded-lg border border-[var(--border-main)] bg-[var(--bg-card)] focus:border-[var(--accent-primary)] outline-none transition-all text-[var(--text-main)]"
                             placeholder="Add internal notes..."
                         />
                     ) : (
-                        <p className={`text-[11px] ${notes ? 'text-slate-600 dark:text-slate-300' : 'text-slate-400 italic'}`}>
+                        <p className={`text-[11px] ${notes ? 'text-[var(--text-secondary)]' : 'text-[var(--text-muted)] italic'}`}>
                             {notes || 'No admin notes yet.'}
                         </p>
                     )}
@@ -180,11 +180,11 @@ export function SubmissionCard({
 
                 {/* Context Origin */}
                 {(submission.context_title || submission.context_url) && (
-                    <div className="pt-2 flex items-center gap-2 text-[10px] text-slate-400">
+                    <div className="pt-2 flex items-center gap-2 text-[10px] text-[var(--text-muted)]">
                         <Info className="w-3 h-3" />
                         <span>Source:</span>
                         {submission.context_url ? (
-                            <a href={submission.context_url} target="_blank" rel="noopener noreferrer" className="text-purple-500 hover:underline font-bold">
+                            <a href={submission.context_url} target="_blank" rel="noopener noreferrer" className="text-[var(--accent-primary)] hover:underline font-bold">
                                 {submission.context_title || 'View Page'}
                             </a>
                         ) : (
@@ -194,14 +194,14 @@ export function SubmissionCard({
                 )}
 
                 {/* Actions Footer */}
-                <div className="flex gap-2 pt-3 border-t border-slate-100 dark:border-slate-700/50">
+                <div className="flex gap-2 pt-4 border-t border-[var(--border-main)]">
                     {/* TRASH VIEW ACTIONS */}
                     {activeTab === 'trash' ? (
                         <>
                             <button
                                 onClick={() => onRestore?.(submission.id)}
                                 disabled={actionLoading === submission.id}
-                                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 transition-all border border-emerald-100 dark:border-emerald-900/30"
+                                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 transition-all border border-emerald-500/20"
                             >
                                 <RotateCcw className="w-3.5 h-3.5" />
                                 Restore
@@ -209,7 +209,7 @@ export function SubmissionCard({
                             <button
                                 onClick={() => onPermanentDelete?.(submission.id)}
                                 disabled={actionLoading === submission.id}
-                                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 transition-all border border-red-100 dark:border-red-900/30"
+                                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-red-500/10 text-red-600 hover:bg-red-500/20 transition-all border border-red-500/20"
                             >
                                 <Trash2 className="w-3.5 h-3.5" />
                                 Delete Forever
@@ -224,7 +224,7 @@ export function SubmissionCard({
                                         <button
                                             onClick={() => onStatusChange(submission.id, 'approved')}
                                             disabled={actionLoading === submission.id}
-                                            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 transition-all border border-emerald-100 dark:border-emerald-900/30"
+                                            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 transition-all border border-emerald-500/20"
                                         >
                                             <CheckCircle className="w-3.5 h-3.5" />
                                             Approve
@@ -234,7 +234,7 @@ export function SubmissionCard({
                                         <button
                                             onClick={() => onStatusChange(submission.id, 'rejected')}
                                             disabled={actionLoading === submission.id}
-                                            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-slate-50 text-slate-700 hover:bg-slate-100 dark:bg-slate-900/40 dark:text-slate-400 transition-all border border-slate-100 dark:border-slate-800"
+                                            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold bg-[var(--bg-muted)] text-[var(--text-secondary)] hover:bg-[var(--border-main)] transition-all border border-[var(--border-main)]"
                                         >
                                             <XCircle className="w-3.5 h-3.5" />
                                             Reject
@@ -244,7 +244,7 @@ export function SubmissionCard({
                                         <button
                                             onClick={() => onStatusChange(submission.id, 'spam')}
                                             disabled={actionLoading === submission.id}
-                                            className="flex items-center justify-center p-2.5 rounded-xl bg-amber-50 text-amber-700 hover:bg-amber-100 dark:bg-amber-900/20 dark:text-amber-400 transition-all border border-amber-100 dark:border-amber-900/30"
+                                            className="flex items-center justify-center p-2.5 rounded-xl bg-amber-500/10 text-amber-600 hover:bg-amber-500/20 transition-all border border-amber-500/20"
                                             title="Mark as Spam"
                                         >
                                             <ShieldAlert className="w-4 h-4" />
@@ -256,7 +256,7 @@ export function SubmissionCard({
                             {submission.type === 'resource' && submission.url && !isLocked && onAddResource && (
                                 <button
                                     onClick={() => onAddResource(submission)}
-                                    className="flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl text-xs font-black bg-purple-600 text-white hover:bg-purple-700 shadow-lg shadow-purple-500/20 transition-all"
+                                    className="flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl text-xs font-black bg-[var(--accent-primary)] text-white hover:opacity-90 shadow-lg shadow-[var(--accent-primary)]/20 transition-all ml-auto hover:scale-105 active:scale-95"
                                 >
                                     <Plus className="w-4 h-4" />
                                     Convert
@@ -266,7 +266,7 @@ export function SubmissionCard({
                             <button
                                 onClick={() => onSoftDelete?.(submission.id)}
                                 disabled={actionLoading === submission.id}
-                                className="flex items-center justify-center p-2.5 rounded-xl bg-slate-50 text-slate-400 hover:bg-red-50 hover:text-red-500 dark:bg-slate-900/40 dark:hover:bg-red-900/20 transition-all border border-slate-100 dark:border-slate-800"
+                                className="flex items-center justify-center p-2.5 rounded-xl bg-[var(--bg-muted)] text-[var(--text-muted)] hover:bg-red-500/10 hover:text-red-500 transition-all border border-[var(--border-main)]"
                                 title="Move to Trash"
                             >
                                 <Trash2 className="w-4 h-4" />

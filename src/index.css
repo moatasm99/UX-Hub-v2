@@ -14,19 +14,22 @@
   --animate-float: float 6s ease-in-out infinite;
   --animate-fade-in-up: fade-in-up var(--motion-slow) var(--ease-out) both;
 
-  /* ─── Semantic Color Tokens (Light by default) ─── */
-  --color-background: #ffffff;
-  --color-foreground: #0f172a;
-  --color-card: #ffffff;
-  --color-card-foreground: #0f172a;
-  --color-muted: #f1f5f9;
-  --color-muted-foreground: #64748b;
-  --color-border: #e2e8f0;
-  --color-input: #e2e8f0;
-  --color-ring: #9333ea;
+  /* ─── Semantic Color Tokens (Mapped to CSS Variables) ─── */
+  --color-background: var(--bg-app);
+  --color-foreground: var(--text-main);
+
+  --color-card: var(--bg-card);
+  --color-card-foreground: var(--text-main);
+
+  --color-muted: var(--bg-muted);
+  --color-muted-foreground: var(--text-muted);
+
+  --color-border: var(--border-main);
+  --color-input: var(--border-main);
+  --color-ring: var(--accent-primary);
 
   /* Brand */
-  --color-primary: #9333ea;
+  --color-primary: var(--accent-primary);
   --color-primary-foreground: #ffffff;
 
   /* Functional */
@@ -34,51 +37,65 @@
   --color-destructive-foreground: #ffffff;
 
   /* Accent */
-  --color-accent: #f1f5f9;
-  --color-accent-foreground: #0f172a;
+  --color-accent: var(--bg-muted);
+  --color-accent-foreground: var(--text-main);
 }
 
 /* ──────────────────────────────────────────
-   Design Tokens — Light Mode (default)
+   Design Tokens — Light Mode (Production Grade)
    ────────────────────────────────────────── */
 :root {
-  /* ── Background Layers ── */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
+  /* ── Background Layers (Soft Neutrals, No Pure White) ── */
+  --bg-app: #fcfcfd;
+  --bg-secondary: #f4f4f7;
+  --bg-muted: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-elevated: #ffffff;
 
-  /* ── Text Hierarchy ── */
-  --text-primary: #0f172a;
+  /* ── Text Hierarchy (WCAG AA Compliant) ── */
+  --text-main: #0f172a;
+  /* Very High Contrast */
   --text-secondary: #334155;
-  --text-tertiary: #64748b;
+  /* High Contrast */
+  --text-muted: #64748b;
+  /* Muted but Readable */
+  --text-disabled: #94a3b8;
 
   /* ── Borders ── */
-  --border-color: #e2e8f0;
-  --border-hover: #cbd5e1;
+  --border-main: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --border-accent: rgba(147, 51, 234, 0.2);
 
-  /* ── Glass ── */
-  --card-bg: rgba(255, 255, 255, 0.85);
-  --card-border: rgba(0, 0, 0, 0.06);
-  --header-bg: rgba(255, 255, 255, 0.85);
+  /* ─── Accent Tokens (Standardized) ─── */
+  --accent-primary: #7c3aed;
+  /* Darker Violet for better contrast */
+  --accent-violet: #8b5cf6;
+  --accent-indigo: #6366f1;
+  --accent-emerald: #059669;
+  /* Darker Emerald for better contrast */
+  --accent-teal: #0d9488;
+  --accent-cyan: #0891b2;
+  --accent-amber: #d97706;
+  /* Darker Amber for better contrast */
+  --accent-rose: #e11d48;
+  --accent-pink: #db2777;
 
-  /* ── Accent Colors ── */
-  --accent-purple: #9333ea;
-  --accent-pink: #ec4899;
-  --accent-emerald: #10b981;
-  --accent-teal: #14b8a6;
-  --accent-amber: #f59e0b;
-  --accent-orange: #f97316;
-
-  /* ── Motion Tokens ── */
+  /* ── Motion & Glass ── */
   --motion-fast: 150ms;
   --motion-normal: 250ms;
   --motion-slow: 350ms;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* ── Typography ── */
+  --glass-bg: rgba(252, 252, 253, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.05);
+
+  /* ── Typography Resets ── */
   font-family: "Inter", system-ui, sans-serif;
-  line-height: 1.5;
+  font-size: 16px;
+  /* Base 16px */
+  line-height: 1.6;
+  /* Comfortable line height */
   font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -86,38 +103,46 @@
   -moz-osx-font-smoothing: grayscale;
 
   color-scheme: light dark;
-  color: var(--text-primary);
-  background-color: var(--bg-primary);
+  color: var(--text-main);
+  background-color: var(--bg-app);
 }
 
 /* ──────────────────────────────────────────
    Design Tokens — Dark Mode
    ────────────────────────────────────────── */
 .dark {
-  --bg-primary: #020617;
+  /* ── Background Layers ── */
+  --bg-app: #020617;
   --bg-secondary: #0f172a;
-  --bg-tertiary: #1e293b;
-  --text-primary: #f8fafc;
+  --bg-muted: #1e293b;
+  --bg-card: #0f172a;
+  --bg-elevated: #1e293b;
+
+  /* ── Text Hierarchy ── */
+  --text-main: #f8fafc;
   --text-secondary: #cbd5e1;
-  --text-tertiary: #64748b;
-  --border-color: #1e293b;
-  --border-hover: #334155;
+  --text-muted: #94a3b8;
+  --text-disabled: #475569;
 
-  --card-bg: rgba(15, 23, 42, 0.7);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --header-bg: rgba(2, 6, 23, 0.8);
+  /* ── Borders ── */
+  --border-main: #1e293b;
+  --border-strong: #334155;
+  --border-accent: rgba(168, 85, 247, 0.3);
 
-  /* Override Tailwind semantic tokens for dark */
-  --color-background: #020617;
-  --color-foreground: #f8fafc;
-  --color-card: #0f172a;
-  --color-card-foreground: #f8fafc;
-  --color-muted: #1e293b;
-  --color-muted-foreground: #94a3b8;
-  --color-border: #1e293b;
-  --color-input: #1e293b;
-  --color-accent: #1e293b;
-  --color-accent-foreground: #f8fafc;
+  /* ── Glass ── */
+  --glass-bg: rgba(2, 6, 23, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  /* ── Dark Mode Accents (Slightly brighter for dark bg) ── */
+  --accent-primary: #a78bfa;
+  --accent-violet: #a78bfa;
+  --accent-indigo: #818cf8;
+  --accent-emerald: #34d399;
+  --accent-teal: #2dd4bf;
+  --accent-cyan: #22d3ee;
+  --accent-amber: #fbbf24;
+  --accent-rose: #fb7185;
+  --accent-pink: #f472b6;
 }
 
 /* ──────────────────────────────────────────
@@ -126,8 +151,8 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--bg-app);
+  color: var(--text-main);
   transition: background-color var(--motion-slow) ease,
     color var(--motion-slow) ease;
 }
@@ -136,7 +161,7 @@ body {
    Global Focus-Visible (Accessibility)
    ────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--accent-purple);
+  outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -242,16 +267,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--bg-app);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background: var(--border-strong);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-tertiary);
+  background: var(--text-muted);
 }
 
 /* ──────────────────────────────────────────
@@ -282,7 +307,7 @@ body {
    Prose Themed — Markdown content styling
    ────────────────────────────────────────── */
 .prose-themed {
-  color: var(--text-primary);
+  color: var(--text-main);
   line-height: 1.75;
   max-width: 72ch;
 }
@@ -291,7 +316,7 @@ body {
 .prose-themed h2,
 .prose-themed h3,
 .prose-themed h4 {
-  color: var(--text-primary);
+  color: var(--text-main);
   font-weight: 700;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
@@ -312,25 +337,25 @@ body {
 }
 
 .prose-themed a {
-  color: var(--accent-purple);
+  color: var(--accent-primary);
   text-decoration: underline;
 }
 
 .prose-themed code {
   font-family: "Fira Code", "JetBrains Mono", monospace;
-  background: var(--bg-tertiary);
+  background: var(--bg-muted);
   padding: 0.15em 0.4em;
   border-radius: 4px;
   font-size: 0.875em;
 }
 
 .prose-themed pre {
-  background: var(--bg-tertiary);
+  background: var(--bg-muted);
   padding: 1em;
   border-radius: 8px;
   overflow-x: auto;
   margin-bottom: 1em;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-main);
 }
 
 .prose-themed pre code {
@@ -339,7 +364,7 @@ body {
 }
 
 .prose-themed blockquote {
-  border-left: 3px solid var(--accent-purple);
+  border-left: 3px solid var(--accent-primary);
   padding-left: 1em;
   margin-left: 0;
   color: var(--text-secondary);

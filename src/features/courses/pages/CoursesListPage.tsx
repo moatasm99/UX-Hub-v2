@@ -18,16 +18,16 @@ function CategoryBlock({ category, index }: { category: CourseCategoryDTO; index
 
     return (
         <div className="relative mb-12">
-            <div className="flex items-center gap-4 mb-6 pb-4 border-b dark:border-slate-800 border-slate-200">
+            <div className="flex items-center gap-4 mb-6 pb-4 border-b border-[var(--border-main)]">
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg text-2xl shrink-0 ${color}`}>
                     {icon}
                 </div>
                 <div>
-                    <h2 className="text-xl md:text-2xl font-bold dark:text-white text-slate-900">
+                    <h2 className="text-xl md:text-2xl font-bold text-[var(--text-main)]">
                         {category.title}
                     </h2>
                     {category.description && (
-                        <p className="text-sm md:text-base dark:text-slate-400 text-slate-600">{category.description}</p>
+                        <p className="text-sm md:text-base text-[var(--text-secondary)]">{category.description}</p>
                     )}
                 </div>
             </div>
@@ -39,7 +39,7 @@ function CategoryBlock({ category, index }: { category: CourseCategoryDTO; index
                 loadingFallback={
                     <div className="flex flex-col space-y-4 animate-pulse">
                         {[1, 2].map(i => (
-                            <div key={i} className="h-32 bg-slate-100 dark:bg-slate-800/50 rounded-3xl" />
+                            <div key={i} className="h-32 bg-[var(--bg-muted)] rounded-3xl" />
                         ))}
                     </div>
                 }
@@ -73,7 +73,7 @@ export default function CoursesListPage() {
                 loadingFallback={
                     <div className="space-y-12 animate-pulse">
                         {[1, 2].map(i => (
-                            <div key={i} className="h-64 bg-slate-100 dark:bg-slate-800/50 rounded-3xl" />
+                            <div key={i} className="h-64 bg-[var(--bg-muted)] rounded-3xl" />
                         ))}
                     </div>
                 }
@@ -87,7 +87,7 @@ export default function CoursesListPage() {
                 )}
             </SafeQuery>
 
-            <div className="mt-16 border-t border-slate-200/50 dark:border-slate-800/50">
+            <div className="mt-16 border-t border-[var(--border-main)]">
                 <CommunityFeedbackSection />
             </div>
         </div>

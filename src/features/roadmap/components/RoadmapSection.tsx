@@ -38,7 +38,7 @@ export default function RoadmapSection({ track, searchQuery, openTopicId, onTogg
             loadingFallback={
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 animate-pulse">
                     {[1, 2, 3].map(i => (
-                        <div key={i} className="h-48 bg-slate-100 dark:bg-slate-800/50 rounded-3xl" />
+                        <div key={i} className="h-48 bg-[var(--bg-muted)] rounded-3xl" />
                     ))}
                 </div>
             }
@@ -47,10 +47,10 @@ export default function RoadmapSection({ track, searchQuery, openTopicId, onTogg
                 <section className="space-y-4" aria-label={`${track.title} track`}>
                     <div className="flex items-center gap-3">
                         <span className="text-2xl" aria-hidden="true">{track.icon || '🎯'}</span>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                        <h3 className="text-xl font-bold text-[var(--text-main)]">
                             {track.title}
                         </h3>
-                        <span className="text-sm px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
+                        <span className="text-sm px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
                             {topics.length} topics
                         </span>
                     </div>

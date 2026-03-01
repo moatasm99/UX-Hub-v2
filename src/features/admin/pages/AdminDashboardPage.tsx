@@ -23,19 +23,19 @@ export default function AdminDashboardPage() {
     if (isLoading) {
         return (
             <div className="flex flex-col items-center justify-center py-32 space-y-4">
-                <Loader2 className="w-12 h-12 text-blue-500 animate-spin" />
-                <p className="text-slate-400 font-medium">Loading Dashboard Analytics...</p>
+                <Loader2 className="w-12 h-12 text-[var(--accent-primary)] animate-spin" />
+                <p className="text-[var(--text-muted)] font-medium">Loading Dashboard Analytics...</p>
             </div>
         );
     }
 
     if (isError) {
         return (
-            <div className="flex flex-col items-center justify-center py-32 space-y-4 bg-red-500/5 border border-red-500/20 rounded-xl">
+            <div className="flex flex-col items-center justify-center py-32 space-y-4 bg-red-500/5 border border-red-500/20 rounded-xl max-w-2xl mx-auto shadow-sm">
                 <AlertCircle className="w-12 h-12 text-red-500" />
-                <div className="text-center">
-                    <h3 className="text-xl font-bold text-white">Failed to Load Analytics</h3>
-                    <p className="text-red-400 mt-2">{(error as Error)?.message}</p>
+                <div className="text-center px-6">
+                    <h3 className="text-xl font-bold text-[var(--text-main)]">Failed to Load Analytics</h3>
+                    <p className="text-red-400 mt-2 font-medium">{(error as Error)?.message}</p>
                 </div>
             </div>
         );
@@ -46,17 +46,17 @@ export default function AdminDashboardPage() {
     const { totals, distributions } = analytics;
 
     return (
-        <div className="text-white space-y-10">
+        <div className="text-[var(--text-main)] space-y-10">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight">System Overview</h1>
-                    <p className="text-slate-400 mt-1">
-                        Welcome back, <span className="text-white font-medium">{user?.email}</span>. Live analytics for <span className="text-blue-400 font-medium">UX Design Hub</span>.
+                    <h1 className="text-3xl font-bold tracking-tight text-[var(--text-main)]">System Overview</h1>
+                    <p className="text-[var(--text-muted)] mt-1 font-medium">
+                        Welcome back, <span className="text-[var(--text-main)] font-bold">{user?.email}</span>. Live analytics for <span className="text-[var(--accent-primary)] font-bold">UX Design Hub</span>.
                     </p>
                 </div>
-                <div className="flex items-center gap-3 px-4 py-2 bg-slate-900 border border-slate-800 rounded-lg">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-sm font-medium text-slate-300">Real-time Sync Active</span>
+                <div className="flex items-center gap-3 px-4 py-2 bg-[var(--bg-card)] border border-[var(--border-main)] rounded-2xl shadow-sm">
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/50" />
+                    <span className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider">Real-time Sync Active</span>
                 </div>
             </header>
 
@@ -67,63 +67,63 @@ export default function AdminDashboardPage() {
                     value={totals.courses}
                     icon={BookOpen}
                     description={`${totals.publishedCourses} Published, ${totals.draftCourses} Draft`}
-                    colorClass="text-blue-400 bg-blue-500/10"
+                    colorClass="text-[var(--accent-primary)] bg-[var(--accent-primary)]/10"
                 />
                 <StatsCard
                     title="Intensive Days"
                     value={totals.courseDays}
                     icon={Layout}
                     description="Structured learning units"
-                    colorClass="text-purple-400 bg-purple-500/10"
+                    colorClass="text-purple-500 bg-purple-500/10"
                 />
                 <StatsCard
                     title="Total Lessons"
                     value={totals.lessons}
                     icon={FileText}
                     description="Across all courses"
-                    colorClass="text-pink-400 bg-pink-500/10"
+                    colorClass="text-[var(--accent-pink)] bg-[var(--accent-pink)]/10"
                 />
                 <StatsCard
                     title="Total Tasks"
                     value={totals.tasks}
                     icon={CheckSquare}
                     description="Practical exercises"
-                    colorClass="text-emerald-400 bg-emerald-500/10"
+                    colorClass="text-emerald-500 bg-emerald-500/10"
                 />
             </section>
 
             {/* Roadmap Specifics */}
-            <section className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl">
-                <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
-                    <Map className="w-5 h-5 text-blue-400" />
+            <section className="bg-[var(--bg-card)] border border-[var(--border-main)] p-8 rounded-2xl shadow-sm">
+                <h2 className="text-xl font-bold mb-8 flex items-center gap-3 text-[var(--text-main)]">
+                    <Map className="w-6 h-6 text-[var(--accent-primary)]" />
                     Roadmap Ecosystem
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="flex items-center gap-4 p-4 bg-slate-950 border border-slate-800 rounded-xl">
-                        <div className="p-3 bg-amber-500/10 rounded-lg text-amber-500">
-                            <Layers className="w-5 h-5" />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="flex items-center gap-5 p-5 bg-[var(--bg-muted)]/50 border border-[var(--border-main)] rounded-2xl group hover:border-[var(--accent-primary)]/30 transition-all">
+                        <div className="p-4 bg-amber-500/10 rounded-xl text-amber-600 shadow-sm group-hover:scale-110 transition-transform">
+                            <Layers className="w-6 h-6" />
                         </div>
                         <div>
-                            <p className="text-slate-500 text-xs font-medium uppercase">Tracks</p>
-                            <p className="text-xl font-bold text-white">{totals.roadmapTracks}</p>
+                            <p className="text-[var(--text-muted)] text-[10px] font-bold uppercase tracking-widest mb-1">Tracks</p>
+                            <p className="text-2xl font-black text-[var(--text-main)] tabular-nums">{totals.roadmapTracks}</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-4 p-4 bg-slate-950 border border-slate-800 rounded-xl">
-                        <div className="p-3 bg-cyan-500/10 rounded-lg text-cyan-500">
-                            <Layout className="w-5 h-5" />
+                    <div className="flex items-center gap-5 p-5 bg-[var(--bg-muted)]/50 border border-[var(--border-main)] rounded-2xl group hover:border-[var(--accent-primary)]/30 transition-all">
+                        <div className="p-4 bg-cyan-500/10 rounded-xl text-cyan-600 shadow-sm group-hover:scale-110 transition-transform">
+                            <Layout className="w-6 h-6" />
                         </div>
                         <div>
-                            <p className="text-slate-500 text-xs font-medium uppercase">Topics</p>
-                            <p className="text-xl font-bold text-white">{totals.roadmapTopics}</p>
+                            <p className="text-[var(--text-muted)] text-[10px] font-bold uppercase tracking-widest mb-1">Topics</p>
+                            <p className="text-2xl font-black text-[var(--text-main)] tabular-nums">{totals.roadmapTopics}</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-4 p-4 bg-slate-950 border border-slate-800 rounded-xl">
-                        <div className="p-3 bg-rose-500/10 rounded-lg text-rose-500">
-                            <LinkIcon className="w-5 h-5" />
+                    <div className="flex items-center gap-5 p-5 bg-[var(--bg-muted)]/50 border border-[var(--border-main)] rounded-2xl group hover:border-[var(--accent-primary)]/30 transition-all">
+                        <div className="p-4 bg-rose-500/10 rounded-xl text-rose-500 shadow-sm group-hover:scale-110 transition-transform">
+                            <LinkIcon className="w-6 h-6" />
                         </div>
                         <div>
-                            <p className="text-slate-500 text-xs font-medium uppercase">Resources</p>
-                            <p className="text-xl font-bold text-white">{totals.roadmapResources}</p>
+                            <p className="text-[var(--text-muted)] text-[10px] font-bold uppercase tracking-widest mb-1">Resources</p>
+                            <p className="text-2xl font-black text-[var(--text-main)] tabular-nums">{totals.roadmapResources}</p>
                         </div>
                     </div>
                 </div>
@@ -142,20 +142,20 @@ export default function AdminDashboardPage() {
             </section>
 
             {/* Submissions Management */}
-            <section className="bg-slate-900 overflow-hidden border border-slate-800 rounded-2xl">
-                <div className="p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="flex items-center gap-6">
-                        <div className="w-16 h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500">
-                            <MessageSquare className="w-8 h-8" />
+            <section className="bg-[var(--bg-card)] overflow-hidden border border-[var(--border-main)] rounded-2xl shadow-sm">
+                <div className="p-8 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+                        <div className="w-20 h-20 rounded-2xl bg-[var(--accent-primary)]/10 flex items-center justify-center text-[var(--accent-primary)] shadow-sm">
+                            <MessageSquare className="w-10 h-10" />
                         </div>
-                        <div>
-                            <h2 className="text-xl font-bold text-white">Community Submissions</h2>
-                            <p className="text-slate-400 mt-1">Review feedback, suggestions, and learning resources from users.</p>
+                        <div className="space-y-1">
+                            <h2 className="text-2xl font-black text-[var(--text-main)]">Community Submissions</h2>
+                            <p className="text-[var(--text-muted)] font-medium max-w-xl">Review feedback, suggestions, and learning resources from users to improve the platform content.</p>
                         </div>
                     </div>
                     <Link
                         to="/admin/submissions"
-                        className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-purple-500/20 whitespace-nowrap"
+                        className="px-8 py-3.5 bg-[var(--accent-primary)] hover:opacity-90 text-white font-bold rounded-2xl transition-all shadow-lg shadow-[var(--accent-primary)]/20 whitespace-nowrap active:scale-95"
                     >
                         Review Submissions
                     </Link>

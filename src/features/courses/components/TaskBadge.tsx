@@ -30,20 +30,20 @@ const TaskBadge: React.FC<TaskBadgeProps> = ({ task }) => {
 
             {/* Content */}
             <div className="p-4 space-y-3">
-                <h4 className="font-bold text-lg dark:text-amber-300 text-amber-800">
+                <h4 className="font-bold text-lg text-amber-900 dark:text-amber-300">
                     {task.title}
                 </h4>
-                <div className="text-sm border-none dark:text-slate-300 text-slate-700">
+                <div className="text-sm border-none text-[var(--text-secondary)]">
                     <MarkdownRenderer content={task.description} />
                 </div>
 
                 {/* Deliverable */}
-                <div className="flex items-center gap-2 pt-2 border-t dark:border-amber-500/20 border-amber-200">
-                    <FileCheck className="w-4 h-4 dark:text-emerald-400 text-emerald-600" />
-                    <span className="text-xs font-medium dark:text-slate-400 text-slate-600">
+                <div className="flex items-center gap-2 pt-2 border-t border-amber-200 dark:border-amber-500/20">
+                    <FileCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                    <span className="text-xs font-medium text-[var(--text-muted)]">
                         Deliverable:
                     </span>
-                    <span className="text-xs font-bold dark:text-emerald-400 text-emerald-700">
+                    <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400">
                         {task.deliverable}
                     </span>
                 </div>

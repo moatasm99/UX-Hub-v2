@@ -47,10 +47,10 @@ const INITIAL_STATE: TopicFormState = {
 
 // ─── Shared Styles ────────────────────────────────────
 const inputCls =
-    'w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all';
-const labelCls = 'text-sm font-medium text-slate-400';
+    'w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] placeholder:[var(--text-muted)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-medium';
+const labelCls = 'text-sm font-semibold text-[var(--text-secondary)]';
 const sectionCls =
-    'bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-5';
+    'bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl p-6 space-y-5 shadow-sm';
 
 // ─── Component ────────────────────────────────────────
 export default function AdminTopicBuilderPage() {
@@ -242,7 +242,7 @@ export default function AdminTopicBuilderPage() {
     if (loading) {
         return (
             <div className="flex items-center justify-center py-32">
-                <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+                <Loader2 className="w-8 h-8 text-[var(--accent-primary)] animate-spin" />
             </div>
         );
     }
@@ -254,16 +254,16 @@ export default function AdminTopicBuilderPage() {
                 <div className="flex items-center gap-4">
                     <Link
                         to={`/admin/roadmap/${trackId}`}
-                        className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+                        className="p-2 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-muted)] rounded-lg transition-colors"
                     >
                         <ArrowLeft className="w-5 h-5" />
                     </Link>
                     <div>
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-[var(--text-muted)] font-medium">
                             Roadmap → {track?.title || 'Track'}
                         </p>
-                        <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-                            <Settings className="w-6 h-6 text-blue-400" />
+                        <h1 className="text-2xl font-bold text-[var(--text-main)] flex items-center gap-3">
+                            <Settings className="w-6 h-6 text-[var(--accent-primary)]" />
                             {isEditing ? 'Edit Topic' : 'Create New Topic'}
                         </h1>
                     </div>
@@ -271,7 +271,7 @@ export default function AdminTopicBuilderPage() {
                 <button
                     onClick={handleSave}
                     disabled={submitting}
-                    className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow-lg shadow-blue-900/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    className="px-6 py-2.5 bg-[var(--accent-primary)] hover:opacity-90 text-white font-bold rounded-lg shadow-lg shadow-[var(--accent-primary)]/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
                 >
                     {submitting ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -296,8 +296,8 @@ export default function AdminTopicBuilderPage() {
 
             {/* ═══ SECTION 1 — Topic Settings ═══════════ */}
             <section className={sectionCls}>
-                <h2 className="flex items-center gap-2 text-lg font-semibold text-white">
-                    <Settings className="w-5 h-5 text-blue-400" />
+                <h2 className="flex items-center gap-2 text-lg font-bold text-[var(--text-main)]">
+                    <Settings className="w-5 h-5 text-[var(--accent-primary)]" />
                     Topic Settings
                 </h2>
 
@@ -325,7 +325,7 @@ export default function AdminTopicBuilderPage() {
                         <div className="space-y-2">
                             <label className={labelCls}>Position</label>
                             <div className="relative">
-                                <Hash className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                                <Hash className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
                                 <input
                                     type="number"
                                     value={form.position}
@@ -337,15 +337,15 @@ export default function AdminTopicBuilderPage() {
                             </div>
                         </div>
                         <div className="flex items-end">
-                            <label className="flex items-center gap-3 cursor-pointer p-2.5 bg-slate-950 border border-slate-800 rounded-lg w-full">
+                            <label className="flex items-center gap-3 cursor-pointer p-2.5 bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg w-full group">
                                 <button
                                     type="button"
                                     onClick={() => setForm(p => ({ ...p, is_published: !p.is_published }))}
-                                    className={`w-10 h-5 rounded-full p-1 transition-colors relative ${form.is_published ? 'bg-blue-600' : 'bg-slate-700'}`}
+                                    className={`w-10 h-5 rounded-full p-1 transition-colors relative ${form.is_published ? 'bg-[var(--accent-primary)]' : 'bg-[var(--border-main)]'}`}
                                 >
-                                    <div className={`w-3 h-3 rounded-full bg-white transform transition-transform ${form.is_published ? 'translate-x-5' : 'translate-x-0'}`} />
+                                    <div className={`w-3 h-3 rounded-full bg-white transform transition-transform ${form.is_published ? 'translate-x-5' : 'translate-x-0'} shadow-sm`} />
                                 </button>
-                                <span className="text-sm font-medium text-slate-300">
+                                <span className="text-sm font-bold text-[var(--text-main)] group-hover:text-[var(--accent-primary)] transition-colors">
                                     {form.is_published ? 'Published' : 'Draft'}
                                 </span>
                             </label>
@@ -357,10 +357,10 @@ export default function AdminTopicBuilderPage() {
             {/* ═══ SECTION 2 — Resources Builder ════════ */}
             <section className={sectionCls}>
                 <div className="flex items-center justify-between">
-                    <h2 className="flex items-center gap-2 text-lg font-semibold text-white">
-                        <PlayCircle className="w-5 h-5 text-purple-400" />
+                    <h2 className="flex items-center gap-2 text-lg font-bold text-[var(--text-main)]">
+                        <PlayCircle className="w-5 h-5 text-[var(--accent-pink)]" />
                         Resources
-                        <span className="text-sm font-normal text-slate-500">
+                        <span className="text-sm font-normal text-[var(--text-muted)]">
                             ({form.resources.length})
                         </span>
                     </h2>
@@ -370,17 +370,17 @@ export default function AdminTopicBuilderPage() {
                     {form.resources.map((res, index) => (
                         <div
                             key={res.id}
-                            className="bg-slate-950 border border-slate-800 rounded-lg p-5 space-y-4 relative group transition-all hover:border-slate-700"
+                            className="bg-[var(--bg-muted)]/30 border border-[var(--border-main)] rounded-lg p-5 space-y-4 relative group transition-all hover:border-[var(--accent-primary)]/30 shadow-sm"
                         >
                             <div className="flex items-center justify-between">
-                                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
                                     Resource {index + 1}
                                 </span>
                                 <div className="flex items-center gap-2">
                                     <button
                                         type="button"
                                         onClick={() => updateResource(res.id, 'is_published', !res.is_published)}
-                                        className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-bold uppercase transition-all ${res.is_published ? 'bg-blue-500/10 text-blue-400' : 'bg-slate-800 text-slate-500'}`}
+                                        className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-bold uppercase transition-all ${res.is_published ? 'bg-[var(--accent-primary)]/10 text-[var(--accent-primary)]' : 'bg-[var(--bg-muted)] text-[var(--text-muted)]'}`}
                                     >
                                         {res.is_published ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
                                         {res.is_published ? 'Live' : 'Hidden'}
@@ -389,7 +389,7 @@ export default function AdminTopicBuilderPage() {
                                         <button
                                             type="button"
                                             onClick={() => removeResource(res.id)}
-                                            className="p-1.5 text-slate-600 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                                            className="p-1.5 text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
                                         >
                                             <Trash2 className="w-4 h-4" />
                                         </button>
@@ -422,10 +422,10 @@ export default function AdminTopicBuilderPage() {
                                     />
                                     {res.url && (
                                         <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                                            <span className="text-[10px] font-bold uppercase text-slate-500 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                                            <span className="text-[10px] font-bold uppercase text-[var(--accent-primary)] bg-[var(--accent-primary)]/10 px-2 py-0.5 rounded border border-[var(--accent-primary)]/20">
                                                 {res.type}
                                             </span>
-                                            <a href={res.url} target="_blank" rel="noreferrer" className="text-blue-400 hover:text-blue-300">
+                                            <a href={res.url} target="_blank" rel="noreferrer" className="text-[var(--accent-primary)] hover:opacity-80">
                                                 <ExternalLink className="w-3.5 h-3.5" />
                                             </a>
                                         </div>
@@ -440,8 +440,8 @@ export default function AdminTopicBuilderPage() {
                                         type="button"
                                         onClick={() => updateResource(res.id, 'type', type)}
                                         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-[10px] font-bold uppercase tracking-wider transition-all ${res.type === type
-                                            ? 'bg-blue-600/20 border-blue-500/50 text-blue-400'
-                                            : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
+                                            ? 'bg-[var(--accent-primary)]/20 border-[var(--accent-primary)]/50 text-[var(--accent-primary)]'
+                                            : 'bg-[var(--bg-muted)] border-[var(--border-main)] text-[var(--text-muted)] hover:border-[var(--accent-primary)]/30'
                                             }`}
                                     >
                                         {type === 'Video' ? <Video className="w-3 h-3" /> : <FileText className="w-3 h-3" />}
@@ -456,7 +456,7 @@ export default function AdminTopicBuilderPage() {
                 <button
                     type="button"
                     onClick={addResource}
-                    className="w-full py-4 border-2 border-dashed border-slate-800 hover:border-blue-500/50 rounded-xl text-slate-500 hover:text-blue-400 font-medium flex items-center justify-center gap-2 transition-all hover:bg-blue-500/5 mt-4"
+                    className="w-full py-4 border-2 border-dashed border-[var(--border-main)] hover:border-[var(--accent-primary)]/50 rounded-xl text-[var(--text-muted)] hover:text-[var(--accent-primary)] font-bold flex items-center justify-center gap-2 transition-all hover:bg-[var(--accent-primary)]/5 mt-4"
                 >
                     <Plus className="w-5 h-5" />
                     Add Resource
@@ -464,17 +464,17 @@ export default function AdminTopicBuilderPage() {
             </section>
 
             {/* ── Bottom Actions ───────────────────── */}
-            <div className="flex items-center justify-end gap-3 pt-4">
+            <div className="flex items-center justify-end gap-3 pt-6 border-t border-[var(--border-main)]">
                 <Link
                     to={`/admin/roadmap/${trackId}`}
-                    className="px-5 py-2.5 text-slate-400 hover:text-white font-medium hover:bg-slate-800 rounded-lg transition-colors"
+                    className="px-5 py-2.5 text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold hover:bg-[var(--bg-muted)] rounded-lg transition-colors"
                 >
                     Cancel
                 </Link>
                 <button
                     onClick={handleSave}
                     disabled={submitting}
-                    className="px-8 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg shadow-lg shadow-blue-900/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
+                    className="px-8 py-2.5 bg-[var(--accent-primary)] hover:opacity-90 text-white font-bold rounded-lg shadow-lg shadow-[var(--accent-primary)]/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
                 >
                     {submitting ? (
                         <Loader2 className="w-4 h-4 animate-spin" />

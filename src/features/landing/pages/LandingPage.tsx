@@ -8,8 +8,8 @@ import { CommunityFeedbackSection } from '@/features/community/components/Commun
 // ─── Category Section (dynamic) ───────────────────
 const CATEGORY_ICONS = ['🧠', '🎨', '✍️', '💻', '📊', '🔍', '🚀', '📱'];
 const CATEGORY_COLORS = [
-    'bg-emerald-500', 'bg-violet-500', 'bg-pink-500', 'bg-blue-500',
-    'bg-amber-500', 'bg-cyan-500', 'bg-rose-500', 'bg-indigo-500'
+    'bg-[var(--accent-emerald)]', 'bg-[var(--accent-violet)]', 'bg-[var(--accent-pink)]', 'bg-[var(--accent-primary)]',
+    'bg-[var(--accent-amber)]', 'bg-[var(--accent-cyan)]', 'bg-[var(--accent-rose)]', 'bg-[var(--accent-indigo)]'
 ];
 
 function CategorySection({ category, index }: { category: CourseCategoryDTO; index: number }) {
@@ -20,16 +20,16 @@ function CategorySection({ category, index }: { category: CourseCategoryDTO; ind
     return (
         <div className="relative">
             {/* Section Header */}
-            <div className="flex items-center gap-4 mb-6 pb-4 border-b dark:border-slate-800 border-slate-200">
+            <div className="flex items-center gap-4 mb-6 pb-4 border-b border-[var(--border-main)]">
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg text-2xl shrink-0 ${color}`}>
                     {icon}
                 </div>
                 <div>
-                    <h2 className="text-xl md:text-2xl font-bold dark:text-white text-slate-900">
+                    <h2 className="text-xl md:text-2xl font-bold text-[var(--text-main)]">
                         {category.title}
                     </h2>
                     {category.description && (
-                        <p className="text-sm md:text-base dark:text-slate-400 text-slate-600">
+                        <p className="text-sm md:text-base text-[var(--text-secondary)]">
                             {category.description}
                         </p>
                     )}
@@ -39,10 +39,10 @@ function CategorySection({ category, index }: { category: CourseCategoryDTO; ind
             {/* Course List */}
             {isLoading ? (
                 <div className="flex items-center justify-center py-12">
-                    <Loader2 className="w-6 h-6 text-purple-500 animate-spin" />
+                    <Loader2 className="w-6 h-6 text-[var(--accent-primary)] animate-spin" />
                 </div>
             ) : courses.length === 0 ? (
-                <p className="text-center text-slate-500 py-8">No courses available yet.</p>
+                <p className="text-center text-[var(--text-muted)] py-8">No courses available yet.</p>
             ) : (
                 <div className="flex flex-col space-y-4">
                     {courses.map((course) => (
@@ -62,20 +62,20 @@ export default function LandingPage() {
         <>
             <section className="py-16 px-4">
                 <div className="max-w-4xl mx-auto text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 mb-6">
-                        <BookMarked className="w-4 h-4 text-emerald-500" />
-                        <span className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--accent-emerald)]/10 border border-[var(--accent-emerald)]/20 mb-6 font-display">
+                        <BookMarked className="w-4 h-4 text-[var(--accent-emerald)]" />
+                        <span className="text-sm font-bold text-[var(--accent-emerald)] uppercase tracking-wider">
                             4-Month ITI Professional Diploma
                         </span>
                     </div>
 
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                        <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 bg-clip-text text-transparent">
+                    <h2 className="text-4xl md:text-5xl font-black mb-4 font-display">
+                        <span className="bg-gradient-to-r from-[var(--accent-emerald)] via-[var(--accent-cyan)] to-[var(--accent-primary)] bg-clip-text text-transparent">
                             📚 Intensive Courses
                         </span>
                     </h2>
 
-                    <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-slate-600 dark:text-slate-400">
+                    <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-[var(--text-secondary)]">
                         Deep-dive courses with Video lectures, Articles, and Mandatory Tasks (V.A.T. Model).
                     </p>
                 </div>
@@ -89,7 +89,7 @@ export default function LandingPage() {
             {/* Dynamic Category Sections */}
             {isLoading ? (
                 <div className="flex items-center justify-center py-20">
-                    <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
+                    <Loader2 className="w-8 h-8 text-[var(--accent-emerald)] animate-spin" />
                 </div>
             ) : (
                 categories.map((category, index) => (
@@ -100,7 +100,7 @@ export default function LandingPage() {
             )}
 
             {/* Community Contribution Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 border-t border-slate-200/50 dark:border-slate-800/50 mt-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 border-t border-[var(--border-main)] mt-12">
                 <CommunityFeedbackSection />
             </div>
         </>

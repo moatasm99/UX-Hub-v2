@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Loader2, CheckCircle, Globe, Type } from 'lucide-react';
+import { Loader2, CheckCircle, Globe, Type, MoreVertical } from 'lucide-react';
 import { CommunitySubmissionDTO, communitySubmissionsService } from '@/services/community-submissions';
 import { usePublishedCategories, usePublishedCourses } from '@/hooks/use-public-courses';
 import { courseDaysService, CourseDayDTO } from '@/services/course-days';
@@ -131,14 +131,14 @@ export function AddResourceModal({ submission, onClose, onSuccess }: AddResource
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-            <div className="relative w-full max-w-lg rounded-3xl border-2 border-purple-200 dark:border-purple-500/30 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
-                <div className="px-6 py-4 bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/30 dark:to-violet-900/30 border-b border-purple-100 dark:border-purple-500/20">
-                    <h2 className="text-lg font-bold text-slate-900 dark:text-white">➕ Add Resource to Platform</h2>
-                    <p className="text-sm text-slate-500 mt-0.5">{submission.title}</p>
-                    <div className="flex items-center gap-2 mt-3">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+            <div className="relative w-full max-w-lg rounded-3xl border border-[var(--border-main)] bg-[var(--bg-card)] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+                <div className="px-6 py-5 bg-[var(--bg-muted)] border-b border-[var(--border-main)]">
+                    <h2 className="text-lg font-bold text-[var(--text-main)]">➕ Add Resource to Platform</h2>
+                    <p className="text-sm text-[var(--text-muted)] mt-0.5">{submission.title}</p>
+                    <div className="flex items-center gap-2 mt-4">
                         {[1, 2, 3].map(s => (
-                            <div key={s} className={`h-1.5 flex-1 rounded-full transition-colors ${s <= step ? 'bg-purple-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
+                            <div key={s} className={`h-1.5 flex-1 rounded-full transition-colors ${s <= step ? 'bg-[var(--accent-primary)]' : 'bg-[var(--border-main)]'}`} />
                         ))}
                     </div>
                 </div>
@@ -147,51 +147,51 @@ export function AddResourceModal({ submission, onClose, onSuccess }: AddResource
                     {/* Editable Fields */}
                     <div className="space-y-4 pt-1">
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest flex items-center gap-1.5">
+                            <label className="text-[10px] font-black uppercase text-[var(--text-muted)] tracking-widest flex items-center gap-1.5">
                                 <Type className="w-3 h-3" /> Resource Title
                             </label>
                             <input
                                 type="text"
                                 value={editTitle}
                                 onChange={(e) => setEditTitle(e.target.value)}
-                                className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-sm font-bold focus:border-purple-500 focus:outline-none transition-all"
+                                className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-main)] bg-[var(--bg-muted)] text-sm font-bold text-[var(--text-main)] focus:border-[var(--accent-primary)] focus:outline-none transition-all placeholder-[var(--text-muted)]"
                                 placeholder="Enter final title..."
                             />
                         </div>
                         <div className="space-y-1.5">
-                            <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest flex items-center gap-1.5">
+                            <label className="text-[10px] font-black uppercase text-[var(--text-muted)] tracking-widest flex items-center gap-1.5">
                                 <Globe className="w-3 h-3" /> Resource URL
                             </label>
                             <input
                                 type="url"
                                 value={editUrl}
                                 onChange={(e) => setEditUrl(e.target.value)}
-                                className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-sm font-bold focus:border-purple-500 focus:outline-none transition-all"
+                                className="w-full px-4 py-2.5 rounded-xl border border-[var(--border-main)] bg-[var(--bg-muted)] text-sm font-bold text-[var(--text-main)] focus:border-[var(--accent-primary)] focus:outline-none transition-all placeholder-[var(--text-muted)]"
                                 placeholder="Enter public URL..."
                             />
                         </div>
                     </div>
 
-                    <div className="h-px bg-slate-100 dark:bg-slate-800" />
+                    <div className="h-px bg-[var(--border-main)]" />
 
                     <div className="space-y-2">
-                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Destination Type</label>
+                        <label className="text-sm font-semibold text-[var(--text-secondary)]">Destination Type</label>
                         <div className="grid grid-cols-2 gap-3">
                             <button
                                 type="button"
                                 onClick={() => { setDestinationType('course'); setStep(2); }}
-                                className={`p-4 rounded-xl border-2 text-left transition-all ${destinationType === 'course' ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300'}`}
+                                className={`p-4 rounded-xl border-2 text-left transition-all ${destinationType === 'course' ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5' : 'border-[var(--border-main)] hover:border-[var(--border-strong)]'}`}
                             >
                                 <div className="text-lg mb-1">📚</div>
-                                <div className="text-sm font-bold text-slate-900 dark:text-white">Intensive Course</div>
+                                <div className="text-sm font-bold text-[var(--text-main)]">Intensive Course</div>
                             </button>
                             <button
                                 type="button"
                                 onClick={() => { setDestinationType('roadmap'); setStep(2); }}
-                                className={`p-4 rounded-xl border-2 text-left transition-all ${destinationType === 'roadmap' ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300'}`}
+                                className={`p-4 rounded-xl border-2 text-left transition-all ${destinationType === 'roadmap' ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5' : 'border-[var(--border-main)] hover:border-[var(--border-strong)]'}`}
                             >
                                 <div className="text-lg mb-1">🚀</div>
-                                <div className="text-sm font-bold text-slate-900 dark:text-white">Product Design Roadmap</div>
+                                <div className="text-sm font-bold text-[var(--text-main)]">Product Design Roadmap</div>
                             </button>
                         </div>
                     </div>
@@ -249,23 +249,23 @@ export function AddResourceModal({ submission, onClose, onSuccess }: AddResource
                     )}
 
                     {canConfirm && (
-                        <div className="rounded-xl border-2 border-emerald-200 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-900/20 p-4 space-y-2">
-                            <h4 className="text-sm font-bold text-emerald-700 dark:text-emerald-400">Preview</h4>
-                            <div className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
+                        <div className="rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-4 space-y-2">
+                            <h4 className="text-sm font-bold text-emerald-500">Preview</h4>
+                            <div className="text-sm text-[var(--text-secondary)] space-y-1">
                                 <p><span className="font-medium">Title:</span> {submission.title}</p>
-                                <p><span className="font-medium">URL:</span> <span className="text-purple-600 dark:text-purple-400">{submission.url}</span></p>
+                                <p><span className="font-medium">URL:</span> <span className="text-[var(--accent-primary)]">{submission.url}</span></p>
                                 <p><span className="font-medium">Destination:</span> {getDestinationLabel()}</p>
                             </div>
                         </div>
                     )}
                 </div>
 
-                <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700 flex gap-3 justify-end">
-                    <button onClick={onClose} className="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cancel</button>
+                <div className="px-6 py-5 border-t border-[var(--border-main)] flex gap-3 justify-end bg-[var(--bg-muted)]/30">
+                    <button onClick={onClose} className="px-4 py-2.5 rounded-xl text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--bg-muted)] transition-colors">Cancel</button>
                     <button
                         onClick={handleConfirm}
                         disabled={!canConfirm || submitting}
-                        className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all ${canConfirm && !submitting ? 'bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 shadow-lg shadow-purple-500/25' : 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed'}`}
+                        className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all ${canConfirm && !submitting ? 'bg-[var(--accent-primary)] hover:opacity-90 shadow-lg shadow-[var(--accent-primary)]/25' : 'bg-[var(--border-main)] cursor-not-allowed opacity-50'}`}
                     >
                         {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle className="w-4 h-4" />}
                         {submitting ? 'Adding...' : 'Confirm & Add Resource'}
@@ -288,18 +288,23 @@ interface SelectFieldProps {
 function SelectField({ label, value, onChange, options, placeholder = 'Select...', disabled }: SelectFieldProps) {
     return (
         <div className="space-y-1.5">
-            <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">{label}</label>
-            <select
-                value={value}
-                onChange={e => onChange(e.target.value)}
-                disabled={disabled}
-                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-purple-500 focus:outline-none transition-colors disabled:opacity-50 appearance-none"
-            >
-                <option value="">{placeholder}</option>
-                {options.map((opt) => (
-                    <option key={opt.value} value={opt.value}>{opt.label}</option>
-                ))}
-            </select>
+            <label className="text-sm font-semibold text-[var(--text-secondary)]">{label}</label>
+            <div className="relative">
+                <select
+                    value={value}
+                    onChange={e => onChange(e.target.value)}
+                    disabled={disabled}
+                    className="w-full px-4 py-3 rounded-xl border border-[var(--border-main)] bg-[var(--bg-card)] text-[var(--text-main)] focus:border-[var(--accent-primary)] focus:outline-none transition-colors disabled:opacity-50 appearance-none font-bold text-sm"
+                >
+                    <option value="">{placeholder}</option>
+                    {options.map((opt) => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]">
+                    <MoreVertical className="w-4 h-4 rotate-90" />
+                </div>
+            </div>
         </div>
     );
 }

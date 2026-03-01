@@ -35,7 +35,7 @@ const TermCard = memo(function TermCard({ term, highlight }: { term: DictionaryT
     return (
         <article
             id={term.slug}
-            className="group relative rounded-2xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-800/50 p-6 transition-all duration-200 hover:border-amber-400/50 dark:hover:border-amber-500/40 hover:shadow-lg hover:shadow-amber-500/5"
+            className="group relative rounded-2xl border border-[var(--border-main)] bg-[var(--bg-card)] p-6 transition-all duration-200 hover:border-[var(--accent-primary)]/50 hover:shadow-lg hover:shadow-[var(--accent-primary)]/5"
         >
             {/* Category badge */}
             <div className="flex items-center justify-between gap-2 mb-3">
@@ -46,14 +46,14 @@ const TermCard = memo(function TermCard({ term, highlight }: { term: DictionaryT
                     <button
                         onClick={copyTerm}
                         title="Copy term"
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-amber-500 hover:bg-amber-500/10 transition-colors"
+                        className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/10 transition-colors"
                     >
                         {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                     </button>
                     <a
                         href={`#${term.slug}`}
                         title="Anchor link"
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-amber-500 hover:bg-amber-500/10 transition-colors"
+                        className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--accent-primary)] hover:bg-[var(--accent-primary)]/10 transition-colors"
                     >
                         <Link2 className="w-3.5 h-3.5" />
                     </a>
@@ -61,12 +61,12 @@ const TermCard = memo(function TermCard({ term, highlight }: { term: DictionaryT
             </div>
 
             {/* English term */}
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 leading-snug">
+            <h3 className="text-lg font-bold text-[var(--text-main)] mb-2 leading-snug">
                 {highlightText(term.term, highlight)}
             </h3>
 
             {/* Arabic definition */}
-            <p className="text-[15px] leading-relaxed text-slate-600 dark:text-slate-300" dir="rtl" lang="ar" style={{ fontFamily: "'Noto Sans Arabic', 'Segoe UI', sans-serif" }}>
+            <p className="text-[15px] leading-relaxed text-[var(--text-secondary)]" dir="rtl" lang="ar" style={{ fontFamily: "'Noto Sans Arabic', 'Segoe UI', sans-serif" }}>
                 {highlightText(term.definition, highlight)}
             </p>
         </article>
@@ -130,20 +130,20 @@ export default function UXDictionaryPage() {
     const levelTabStyles: Record<number, { active: string; inactive: string }> = {
         1: {
             active: 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25',
-            inactive: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700',
+            inactive: 'bg-[var(--bg-muted)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]',
         },
         2: {
             active: 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25',
-            inactive: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700',
+            inactive: 'bg-[var(--bg-muted)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]',
         },
         3: {
             active: 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25',
-            inactive: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700',
+            inactive: 'bg-[var(--bg-muted)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]',
         },
     };
 
     return (
-        <div className="min-h-screen transition-colors duration-300 bg-background text-foreground">
+        <div className="min-h-screen transition-colors duration-300 bg-[var(--bg-app)] text-[var(--text-main)]">
 
             {/* Hero */}
             <section className="py-16 px-4">
@@ -159,30 +159,30 @@ export default function UXDictionaryPage() {
                             📘 UX/UI Dictionary
                         </span>
                     </h1>
-                    <p className="text-lg md:text-xl max-w-2xl mx-auto mb-4 text-slate-600 dark:text-slate-400">
+                    <p className="text-lg md:text-xl max-w-2xl mx-auto mb-4 text-[var(--text-secondary)]">
                         Complete UX/UI glossary covering beginner to expert terminology in Product Design.
                     </p>
-                    <p className="text-sm max-w-xl mx-auto text-slate-500 dark:text-slate-500" dir="rtl">
+                    <p className="text-sm max-w-xl mx-auto text-[var(--text-muted)]" dir="rtl">
                         {LEVEL_DESCRIPTIONS[activeLevel]}
                     </p>
                 </div>
 
                 {/* Search */}
                 <div className="relative max-w-xl mx-auto mt-8">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
                     <input
                         type="text"
                         placeholder="Search terms or definitions..."
                         value={searchQuery}
                         onChange={(e) => { setSearchQuery(e.target.value); setActiveLetter(null); }}
-                        className="w-full pl-12 pr-4 py-4 rounded-3xl border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-amber-500/20 text-lg bg-white dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:border-amber-500 text-slate-900 dark:text-white placeholder-slate-400"
+                        className="w-full pl-12 pr-4 py-4 rounded-3xl border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[var(--accent-primary)]/20 text-lg bg-[var(--bg-card)] border-[var(--border-main)] focus:border-[var(--accent-primary)] text-[var(--text-main)] placeholder-[var(--text-muted)]"
                         aria-label="Search dictionary"
                     />
                 </div>
             </section>
 
             {/* Level Tabs + Alphabet */}
-            <div className="sticky top-0 z-30 bg-background/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50">
+            <div className="sticky top-0 z-30 bg-[var(--glass-bg)] backdrop-blur-xl border-b border-[var(--border-main)]">
                 <div className="max-w-7xl mx-auto px-4 py-3">
                     {/* Level tabs */}
                     <div className="flex flex-wrap gap-2 mb-3">
@@ -198,7 +198,7 @@ export default function UXDictionaryPage() {
                                 {LEVEL_LABELS[level]}
                             </button>
                         ))}
-                        <span className="ml-auto self-center text-sm text-slate-500 dark:text-slate-400">
+                        <span className="ml-auto self-center text-sm text-[var(--text-muted)]">
                             {filteredTerms.length} terms
                         </span>
                     </div>
@@ -208,8 +208,8 @@ export default function UXDictionaryPage() {
                         <button
                             onClick={() => setActiveLetter(null)}
                             className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${!activeLetter
-                                ? 'bg-amber-500 text-white shadow-sm'
-                                : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                ? 'bg-[var(--accent-primary)] text-white shadow-sm'
+                                : 'text-[var(--text-muted)] hover:bg-[var(--bg-secondary)]'
                                 }`}
                         >
                             All
@@ -223,10 +223,10 @@ export default function UXDictionaryPage() {
                                     onClick={() => isAvailable && setActiveLetter(isActive ? null : letter)}
                                     disabled={!isAvailable}
                                     className={`w-8 h-8 rounded-lg text-xs font-bold transition-all ${isActive
-                                        ? 'bg-amber-500 text-white shadow-sm'
+                                        ? 'bg-[var(--accent-primary)] text-white shadow-sm'
                                         : isAvailable
-                                            ? 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                                            : 'text-slate-300 dark:text-slate-700 cursor-not-allowed'
+                                            ? 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
+                                            : 'text-[var(--text-disabled)] cursor-not-allowed'
                                         }`}
                                 >
                                     {letter}
@@ -253,17 +253,17 @@ export default function UXDictionaryPage() {
                 <div className="max-w-7xl mx-auto">
                     {filteredTerms.length === 0 ? (
                         <div className="text-center py-20">
-                            <p className="text-xl text-slate-500 dark:text-slate-400 mb-2">No terms found</p>
-                            <p className="text-sm text-slate-400">Try a different search or level.</p>
+                            <p className="text-xl text-[var(--text-muted)] mb-2">No terms found</p>
+                            <p className="text-sm text-[var(--text-disabled)]">Try a different search or level.</p>
                         </div>
                     ) : (
                         <div className="space-y-10">
                             {Object.entries(groupedTerms).map(([category, terms]) => (
                                 <section key={category}>
-                                    <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
-                                        <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-amber-500 to-orange-500"></span>
+                                    <h2 className="text-lg font-bold text-[var(--text-main)] mb-4 flex items-center gap-2">
+                                        <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-[var(--accent-primary)] to-[var(--accent-primary)]/80"></span>
                                         {category}
-                                        <span className="text-xs font-normal text-slate-400 ml-1">({terms.length})</span>
+                                        <span className="text-xs font-normal text-[var(--text-muted)] ml-1">({terms.length})</span>
                                     </h2>
                                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                                         {terms.map(term => (
@@ -276,7 +276,7 @@ export default function UXDictionaryPage() {
                     )}
                 </div>
 
-                <div className="max-w-7xl mx-auto px-4 border-t border-slate-200/50 dark:border-slate-800/50">
+                <div className="max-w-7xl mx-auto px-4 border-t border-[var(--border-main)]">
                     <CommunityFeedbackSection />
                 </div>
             </main>

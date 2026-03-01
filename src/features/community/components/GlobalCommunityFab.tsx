@@ -16,13 +16,13 @@ export function GlobalCommunityFab() {
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-lg shadow-purple-500/25 hover:scale-110 active:scale-95 transition-all duration-200 group"
+                className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-r from-purple-600 to-violet-600 text-white shadow-lg shadow-purple-500/25 hover:scale-110 active:scale-95 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:ring-offset-2 dark:focus:ring-offset-slate-900"
                 aria-label="Send Feedback"
             >
                 <MessageSquarePlus className="w-6 h-6 transition-transform group-hover:rotate-12" />
 
                 {/* Tooltip */}
-                <span className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-bold opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-xl">
+                <span className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-[var(--text-main)] text-[var(--bg-app)] text-xs font-bold opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-xl">
                     Give Feedback 💬
                 </span>
             </button>

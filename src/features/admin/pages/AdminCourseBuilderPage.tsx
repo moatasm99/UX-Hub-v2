@@ -23,8 +23,8 @@ const BADGE_PRESETS = [
 
 // ─── Shared styles ─────────────────────────────────────
 const inputCls =
-    'w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all';
-const labelCls = 'text-sm font-medium text-slate-400';
+    'w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-medium';
+const labelCls = 'text-sm font-bold text-[var(--text-muted)]';
 
 // ────────────────────────────────────────────────────────
 export default function AdminCourseBuilderPage() {
@@ -103,7 +103,7 @@ export default function AdminCourseBuilderPage() {
     if (isEdit && loadingCourse) {
         return (
             <div className="flex items-center justify-center py-32">
-                <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+                <Loader2 className="w-8 h-8 text-[var(--accent-primary)] animate-spin" />
             </div>
         );
     }
@@ -111,32 +111,32 @@ export default function AdminCourseBuilderPage() {
     return (
         <div className="space-y-6 max-w-3xl">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-sm text-slate-500">
-                <Link to="/admin" className="hover:text-white transition-colors"><Home className="w-4 h-4" /></Link>
+            <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)] font-medium">
+                <Link to="/admin" className="hover:text-[var(--text-main)] transition-colors"><Home className="w-4 h-4" /></Link>
                 <ChevronRight className="w-3.5 h-3.5" />
-                <Link to="/admin/courses" className="hover:text-white transition-colors">Categories</Link>
+                <Link to="/admin/courses" className="hover:text-[var(--text-main)] transition-colors">Categories</Link>
                 <ChevronRight className="w-3.5 h-3.5" />
-                <Link to={`/admin/courses/${categoryId}`} className="hover:text-white transition-colors">
+                <Link to={`/admin/courses/${categoryId}`} className="hover:text-[var(--text-main)] transition-colors">
                     {category?.title ?? 'Courses'}
                 </Link>
                 <ChevronRight className="w-3.5 h-3.5" />
-                <span className="text-slate-300">{isEdit ? 'Edit Course' : 'New Course'}</span>
+                <span className="text-[var(--text-secondary)] font-bold">{isEdit ? 'Edit Course' : 'New Course'}</span>
             </nav>
 
             {/* Header */}
             <div className="flex items-center gap-4">
                 <Link
                     to={`/admin/courses/${categoryId}`}
-                    className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+                    className="p-2 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-muted)] rounded-lg transition-colors"
                 >
                     <ArrowLeft className="w-5 h-5" />
                 </Link>
                 <div>
-                    <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-                        <BookOpen className="w-7 h-7 text-blue-400" />
+                    <h1 className="text-2xl font-bold text-[var(--text-main)] flex items-center gap-3">
+                        <BookOpen className="w-7 h-7 text-[var(--accent-primary)]" />
                         {isEdit ? 'Edit Course' : 'New Course'}
                     </h1>
-                    <p className="text-slate-400 mt-0.5 text-sm">
+                    <p className="text-[var(--text-muted)] mt-0.5 text-sm font-medium">
                         {isEdit ? `Editing "${existingCourse?.title}"` : `Adding to ${category?.title ?? 'category'}`}
                     </p>
                 </div>
@@ -145,9 +145,9 @@ export default function AdminCourseBuilderPage() {
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-8">
                 {/* ═══ Section 1: Basic Info ═══ */}
-                <section className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-5">
-                    <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                        <BookOpen className="w-5 h-5 text-blue-400" />
+                <section className="bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl p-6 space-y-5 shadow-sm">
+                    <h2 className="text-lg font-bold text-[var(--text-main)] flex items-center gap-2">
+                        <BookOpen className="w-5 h-5 text-[var(--accent-primary)]" />
                         Basic Information
                     </h2>
 
@@ -199,21 +199,21 @@ export default function AdminCourseBuilderPage() {
                     {/* Publish toggle */}
                     <div className="flex items-center gap-3 pt-2">
                         <div
-                            className={`w-12 h-6 rounded-full p-1 transition-colors cursor-pointer ${form.is_published ? 'bg-blue-600' : 'bg-slate-700'}`}
+                            className={`w-12 h-6 rounded-full p-1 transition-colors cursor-pointer ${form.is_published ? 'bg-[var(--accent-primary)]' : 'bg-[var(--bg-strong)]'}`}
                             onClick={() => setForm(p => ({ ...p, is_published: !p.is_published }))}
                         >
-                            <div className={`w-4 h-4 rounded-full bg-white transform transition-transform ${form.is_published ? 'translate-x-6' : 'translate-x-0'}`} />
+                            <div className={`w-4 h-4 rounded-full bg-white shadow-sm transform transition-transform ${form.is_published ? 'translate-x-6' : 'translate-x-0'}`} />
                         </div>
-                        <span className="text-sm font-medium text-slate-300">
+                        <span className="text-sm font-bold text-[var(--text-secondary)]">
                             {form.is_published ? 'Published' : 'Draft'}
                         </span>
                     </div>
                 </section>
 
                 {/* ═══ Section 2: Icon & Visual ═══ */}
-                <section className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-5">
-                    <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                        <Image className="w-5 h-5 text-purple-400" />
+                <section className="bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl p-6 space-y-5 shadow-sm">
+                    <h2 className="text-lg font-bold text-[var(--text-main)] flex items-center gap-2">
+                        <Image className="w-5 h-5 text-[var(--accent-indigo)]" />
                         Icon & Visual
                     </h2>
 
@@ -225,9 +225,9 @@ export default function AdminCourseBuilderPage() {
                     />
 
                     {/* Badge section */}
-                    <div className="border-t border-slate-800 pt-5 space-y-4">
-                        <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-300">
-                            <Tag className="w-4 h-4 text-purple-400" />
+                    <div className="border-t border-[var(--border-main)] pt-6 space-y-4">
+                        <h3 className="flex items-center gap-2 text-sm font-bold text-[var(--text-main)]">
+                            <Tag className="w-4 h-4 text-[var(--accent-indigo)]" />
                             Badge / Tag
                         </h3>
                         <div className="space-y-2">
@@ -254,8 +254,8 @@ export default function AdminCourseBuilderPage() {
                                         type="button"
                                         onClick={() => setForm(p => ({ ...p, badge_color: preset.value }))}
                                         className={`px-3 py-1.5 rounded-lg text-xs font-medium text-white bg-gradient-to-r ${preset.value} transition-all ${form.badge_color === preset.value
-                                                ? 'ring-2 ring-white/60 scale-105'
-                                                : 'opacity-70 hover:opacity-100'
+                                            ? 'ring-2 ring-white/60 scale-105'
+                                            : 'opacity-70 hover:opacity-100'
                                             }`}
                                     >
                                         {preset.name}
@@ -270,14 +270,14 @@ export default function AdminCourseBuilderPage() {
                 <div className="flex items-center justify-between">
                     <Link
                         to={`/admin/courses/${categoryId}`}
-                        className="px-4 py-2 text-slate-400 hover:text-white font-medium hover:bg-slate-800 rounded-lg transition-colors"
+                        className="px-4 py-2 text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold hover:bg-[var(--bg-muted)] rounded-lg transition-colors"
                     >
                         Cancel
                     </Link>
                     <button
                         type="submit"
                         disabled={submitting}
-                        className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow-lg shadow-blue-900/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                        className="px-6 py-2.5 bg-[var(--accent-primary)] hover:opacity-90 text-white font-bold rounded-lg shadow-lg shadow-[var(--accent-primary)]/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
                     >
                         {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                         {isEdit ? 'Update Course' : 'Create Course'}

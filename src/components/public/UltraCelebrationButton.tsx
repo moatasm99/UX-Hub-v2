@@ -67,6 +67,7 @@ export function UltraCelebrationButton() {
                     active:scale-95
                     transition-all duration-300
                     animate-[fadeInUp_0.6s_ease-out_forwards]
+                    focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:ring-offset-2 dark:focus:ring-offset-slate-900
                 "
                 style={{
                     animation: 'fadeInUp 0.6s ease-out forwards, float 4s ease-in-out infinite 0.6s'

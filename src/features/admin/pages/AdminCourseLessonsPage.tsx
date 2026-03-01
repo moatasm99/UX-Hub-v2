@@ -58,19 +58,19 @@ function LessonFormModal({
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-xl shadow-2xl">
-                <div className="flex items-center justify-between p-6 border-b border-slate-800">
-                    <h2 className="text-xl font-bold text-white">{initialData ? 'Edit Lesson' : 'Add Lesson'}</h2>
-                    <button onClick={onClose} className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"><X className="w-5 h-5" /></button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="w-full max-w-lg bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+                <div className="flex items-center justify-between p-6 border-b border-[var(--border-main)]">
+                    <h2 className="text-xl font-bold text-[var(--text-main)]">{initialData ? 'Edit Lesson' : 'Add Lesson'}</h2>
+                    <button onClick={onClose} className="p-2 text-[var(--text-muted)] hover:text-[var(--text-main)] rounded-lg hover:bg-[var(--bg-muted)] transition-colors"><X className="w-5 h-5" /></button>
                 </div>
                 <form onSubmit={handleSubmit} className="p-6 space-y-5">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-400">Title *</label>
-                        <input value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))} className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all" required />
+                        <label className="text-sm font-bold text-[var(--text-muted)]">Title *</label>
+                        <input value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))} className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-medium" required />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-400">URL *</label>
+                        <label className="text-sm font-bold text-[var(--text-muted)]">URL *</label>
                         <input
                             value={form.url}
                             onChange={e => {
@@ -82,11 +82,11 @@ function LessonFormModal({
                                 }
                             }}
                             placeholder="https://..."
-                            className={`w-full bg-slate-950 border rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all ${error && !form.type ? 'border-red-500/50' : 'border-slate-800'}`}
+                            className={`w-full bg-[var(--bg-muted)] border rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-medium ${error && !form.type ? 'border-red-500/50' : 'border-[var(--border-main)]'}`}
                             required
                         />
                         {form.url && form.type && (
-                            <p className="text-[11px] text-slate-500 font-medium px-1 flex items-center gap-1.5 opacity-70">
+                            <p className="text-[11px] text-[var(--text-muted)] font-bold px-1 flex items-center gap-1.5 opacity-70">
                                 {form.type === 'Video' ? <Video className="w-3 h-3" /> : <FileText className="w-3 h-3" />}
                                 Detected as {form.type}
                             </p>
@@ -98,14 +98,14 @@ function LessonFormModal({
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-400">Type *</label>
+                            <label className="text-sm font-bold text-[var(--text-muted)]">Type *</label>
                             <div className="flex gap-2">
                                 <button
                                     type="button"
                                     onClick={() => setForm(p => ({ ...p, type: 'Video' }))}
                                     className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border text-[11px] font-bold uppercase tracking-wider transition-all ${form.type === 'Video'
-                                        ? 'bg-purple-600/20 border-purple-500/50 text-purple-400'
-                                        : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
+                                        ? 'bg-[var(--accent-rose)]/10 border-[var(--accent-rose)]/50 text-[var(--accent-rose)]'
+                                        : 'bg-[var(--bg-muted)] border-[var(--border-main)] text-[var(--text-muted)] hover:border-[var(--text-main)]'
                                         }`}
                                 >
                                     <Video className="w-3.5 h-3.5" />
@@ -115,8 +115,8 @@ function LessonFormModal({
                                     type="button"
                                     onClick={() => setForm(p => ({ ...p, type: 'Article' }))}
                                     className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg border text-[11px] font-bold uppercase tracking-wider transition-all ${form.type === 'Article'
-                                        ? 'bg-blue-600/20 border-blue-500/50 text-blue-400'
-                                        : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'
+                                        ? 'bg-[var(--accent-primary)]/10 border-[var(--accent-primary)]/50 text-[var(--accent-primary)]'
+                                        : 'bg-[var(--bg-muted)] border-[var(--border-main)] text-[var(--text-muted)] hover:border-[var(--text-main)]'
                                         }`}
                                 >
                                     <FileText className="w-3.5 h-3.5" />
@@ -125,19 +125,19 @@ function LessonFormModal({
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-400">Duration</label>
-                            <input value={form.duration} onChange={e => setForm(p => ({ ...p, duration: e.target.value }))} placeholder="e.g. 15:30" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all" />
+                            <label className="text-sm font-bold text-[var(--text-muted)]">Duration</label>
+                            <input value={form.duration} onChange={e => setForm(p => ({ ...p, duration: e.target.value }))} placeholder="e.g. 15:30" className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-medium" />
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-400">Position</label>
-                        <input type="number" value={form.position} onChange={e => setForm(p => ({ ...p, position: parseInt(e.target.value) || 0 }))} className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all" />
+                        <label className="text-sm font-bold text-[var(--text-muted)]">Position</label>
+                        <input type="number" value={form.position} onChange={e => setForm(p => ({ ...p, position: parseInt(e.target.value) || 0 }))} className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-bold" />
                     </div>
 
-                    <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
-                        <button type="button" onClick={onClose} className="px-4 py-2 text-slate-400 hover:text-white font-medium hover:bg-slate-800 rounded-lg transition-colors">Cancel</button>
-                        <button type="submit" disabled={isSubmitting} className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow-lg shadow-blue-900/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                    <div className="flex items-center justify-end gap-3 pt-6 border-t border-[var(--border-main)]">
+                        <button type="button" onClick={onClose} className="px-4 py-2 text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold hover:bg-[var(--bg-muted)] rounded-lg transition-colors">Cancel</button>
+                        <button type="submit" disabled={isSubmitting} className="px-6 py-2.5 bg-[var(--accent-primary)] hover:opacity-90 text-white font-bold rounded-lg shadow-lg shadow-[var(--accent-primary)]/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95">
                             {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                             {initialData ? 'Update' : 'Create'}
                         </button>
@@ -151,12 +151,12 @@ function LessonFormModal({
 // ─── Type Badge ───────────────────────────────────────
 function TypeBadge({ type }: { type: string }) {
     if (type === 'Video') return (
-        <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full border bg-purple-500/10 text-purple-400 border-purple-500/20">
+        <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border bg-[var(--accent-rose)]/10 text-[var(--accent-rose)] border-[var(--accent-rose)]/20 shadow-sm">
             <PlayCircle className="w-3 h-3" /> Video
         </span>
     );
     return (
-        <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full border bg-sky-500/10 text-sky-400 border-sky-500/20">
+        <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] border-[var(--accent-primary)]/20 shadow-sm">
             <FileText className="w-3 h-3" /> Article
         </span>
     );
@@ -198,74 +198,74 @@ export default function AdminCourseLessonsPage() {
     return (
         <div className="space-y-6">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-sm text-slate-500 flex-wrap">
-                <Link to="/admin" className="hover:text-white transition-colors"><Home className="w-4 h-4" /></Link>
+            <nav className="flex items-center gap-2 text-sm text-[var(--text-muted)] flex-wrap font-medium">
+                <Link to="/admin" className="hover:text-[var(--text-main)] transition-colors"><Home className="w-4 h-4" /></Link>
                 <ChevronRight className="w-3.5 h-3.5" />
-                <Link to="/admin/courses" className="hover:text-white transition-colors">Categories</Link>
+                <Link to="/admin/courses" className="hover:text-[var(--text-main)] transition-colors">Categories</Link>
                 <ChevronRight className="w-3.5 h-3.5" />
-                <Link to={`/admin/courses/${categoryId}`} className="hover:text-white transition-colors">{category?.title ?? '...'}</Link>
+                <Link to={`/admin/courses/${categoryId}`} className="hover:text-[var(--text-main)] transition-colors">{category?.title ?? '...'}</Link>
                 <ChevronRight className="w-3.5 h-3.5" />
-                <Link to={`/admin/courses/${categoryId}/${courseId}`} className="hover:text-white transition-colors">{course?.title ?? '...'}</Link>
+                <Link to={`/admin/courses/${categoryId}/${courseId}`} className="hover:text-[var(--text-main)] transition-colors">{course?.title ?? '...'}</Link>
                 <ChevronRight className="w-3.5 h-3.5" />
-                <span className="text-slate-300">{day?.title ?? 'Lessons'}</span>
+                <span className="text-[var(--text-secondary)] font-bold">{day?.title ?? 'Lessons'}</span>
             </nav>
 
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-                        <PlayCircle className="w-7 h-7 text-blue-400" />
+                    <h1 className="text-2xl font-bold text-[var(--text-main)] flex items-center gap-3">
+                        <PlayCircle className="w-7 h-7 text-[var(--accent-primary)]" />
                         {day?.title ?? 'Lessons'}
                     </h1>
-                    <p className="text-slate-400 mt-1">Manage lessons for this day</p>
+                    <p className="text-[var(--text-muted)] mt-1 font-medium">Manage lessons for this day</p>
                 </div>
-                <button onClick={() => { setEditing(null); setModalOpen(true); }} className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow-lg shadow-blue-900/20 flex items-center gap-2 transition-all">
+                <button onClick={() => { setEditing(null); setModalOpen(true); }} className="px-4 py-2 bg-[var(--accent-primary)] hover:opacity-90 text-white font-bold rounded-lg shadow-lg shadow-[var(--accent-primary)]/20 flex items-center gap-2 transition-all active:scale-95">
                     <Plus className="w-4 h-4" /> Add Lesson
                 </button>
             </div>
 
             {/* Search */}
             <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
                 <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search lessons..."
-                    className="w-full bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2.5 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all" />
+                    className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg pl-10 pr-4 py-2.5 text-[var(--text-main)] placeholder:[var(--text-muted)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-medium" />
             </div>
 
             {/* Table */}
             {isLoading ? (
-                <div className="flex items-center justify-center py-20"><Loader2 className="w-8 h-8 text-blue-500 animate-spin" /></div>
+                <div className="flex items-center justify-center py-20"><Loader2 className="w-8 h-8 text-[var(--accent-primary)] animate-spin" /></div>
             ) : filtered.length === 0 ? (
-                <div className="text-center py-20 text-slate-500">{search ? 'No lessons match.' : 'No lessons yet. Add the first one!'}</div>
+                <div className="text-center py-20 text-[var(--text-muted)] font-medium">{search ? 'No lessons match.' : 'No lessons yet. Add the first one!'}</div>
             ) : (
-                <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                <div className="bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl overflow-hidden shadow-sm">
                     <table className="w-full">
                         <thead>
-                            <tr className="border-b border-slate-800 text-left">
-                                <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Title</th>
-                                <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Type</th>
-                                <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Duration</th>
-                                <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-center">Pos</th>
-                                <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Actions</th>
+                            <tr className="border-b border-[var(--border-main)] bg-[var(--bg-muted)]/50 text-left">
+                                <th className="px-6 py-4 text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">Title</th>
+                                <th className="px-6 py-4 text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">Type</th>
+                                <th className="px-6 py-4 text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">Duration</th>
+                                <th className="px-6 py-4 text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider text-center">Pos</th>
+                                <th className="px-6 py-4 text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-800/50">
+                        <tbody className="divide-y divide-[var(--border-main)]">
                             {filtered.map(lesson => (
-                                <tr key={lesson.id} className="hover:bg-slate-800/30 transition-colors">
+                                <tr key={lesson.id} className="hover:bg-[var(--bg-muted)]/50 transition-colors group">
                                     <td className="px-6 py-4">
                                         <Link to={`/admin/courses/${categoryId}/${courseId}/${dayId}/${lesson.id}`}
-                                            className="text-white font-medium hover:text-blue-400 transition-colors flex items-center gap-2">
+                                            className="text-[var(--text-main)] font-bold hover:text-[var(--accent-primary)] transition-colors flex items-center gap-2">
                                             {lesson.title}
-                                            <ExternalLink className="w-3.5 h-3.5 text-slate-600" />
+                                            <ExternalLink className="w-3.5 h-3.5 text-[var(--text-disabled)]" />
                                         </Link>
-                                        <a href={lesson.url} target="_blank" rel="noreferrer" className="text-xs text-blue-500 hover:text-blue-400 truncate block max-w-xs mt-0.5">{lesson.url}</a>
+                                        <a href={lesson.url} target="_blank" rel="noreferrer" className="text-xs text-[var(--accent-primary)] hover:opacity-80 truncate block max-w-xs mt-0.5 font-bold">{lesson.url}</a>
                                     </td>
                                     <td className="px-6 py-4"><TypeBadge type={lesson.type} /></td>
-                                    <td className="px-6 py-4 text-slate-400 text-sm">{lesson.duration || '—'}</td>
-                                    <td className="px-6 py-4 text-center text-slate-400">{lesson.position}</td>
+                                    <td className="px-6 py-4 text-[var(--text-secondary)] text-sm font-bold tabular-nums">{lesson.duration || '—'}</td>
+                                    <td className="px-6 py-4 text-center text-[var(--text-secondary)] font-bold tabular-nums">{lesson.position}</td>
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex items-center justify-end gap-2">
-                                            <button onClick={() => { setEditing(lesson); setModalOpen(true); }} className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-800 rounded-lg transition-colors"><Edit2 className="w-4 h-4" /></button>
-                                            <button onClick={() => setDeleting(lesson)} className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
+                                            <button onClick={() => { setEditing(lesson); setModalOpen(true); }} className="p-2 text-[var(--text-muted)] hover:text-[var(--accent-primary)] hover:bg-[var(--bg-muted)] rounded-lg transition-colors"><Edit2 className="w-4 h-4" /></button>
+                                            <button onClick={() => setDeleting(lesson)} className="p-2 text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -278,13 +278,13 @@ export default function AdminCourseLessonsPage() {
             <LessonFormModal isOpen={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleSubmit} initialData={editing} dayId={dayId!} isSubmitting={submitting} />
 
             {deleting && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                    <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-xl shadow-2xl p-6 space-y-4">
-                        <h3 className="text-lg font-bold text-white">Delete Lesson</h3>
-                        <p className="text-slate-400">Delete <span className="text-white font-medium">"{deleting.title}"</span>? All tasks inside will also be deleted.</p>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="w-full max-w-md bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl shadow-2xl p-6 space-y-4 animate-in zoom-in-95 duration-200">
+                        <h3 className="text-lg font-bold text-[var(--text-main)]">Delete Lesson</h3>
+                        <p className="text-[var(--text-muted)] font-medium">Delete <span className="text-[var(--text-main)] font-bold">"{deleting.title}"</span>? All tasks inside will also be deleted.</p>
                         <div className="flex justify-end gap-3 pt-2">
-                            <button onClick={() => setDeleting(null)} className="px-4 py-2 text-slate-400 hover:text-white font-medium hover:bg-slate-800 rounded-lg transition-colors">Cancel</button>
-                            <button onClick={handleConfirmDelete} className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-medium rounded-lg transition-colors">Delete</button>
+                            <button onClick={() => setDeleting(null)} className="px-4 py-2 text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold hover:bg-[var(--bg-muted)] rounded-lg transition-colors">Cancel</button>
+                            <button onClick={handleConfirmDelete} className="px-6 py-2 bg-red-600 hover:bg-red-500 text-white font-bold rounded-lg transition-all active:scale-95">Delete</button>
                         </div>
                     </div>
                 </div>

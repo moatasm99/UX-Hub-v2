@@ -37,7 +37,7 @@ export default function RoadmapPage() {
     // Given the "Production Ready" requirement, we'll keep it performing well.
 
     return (
-        <div className="min-h-screen transition-colors duration-300 bg-background text-foreground">
+        <div className="min-h-screen transition-colors duration-300 bg-[var(--bg-app)] text-[var(--text-main)]">
 
             {/* Hero Section */}
             <section className="py-16 px-4">
@@ -53,7 +53,7 @@ export default function RoadmapPage() {
                             🚀 Product Design Roadmap
                         </span>
                     </h2>
-                    <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-slate-600 dark:text-slate-400">
+                    <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-[var(--text-secondary)]">
                         Complete Product Design Roadmap covering fundamentals, product thinking, UX strategy, and advanced topics.
                     </p>
                 </div>
@@ -77,17 +77,17 @@ export default function RoadmapPage() {
                             <div className="space-y-12 animate-pulse">
                                 {[1, 2].map(i => (
                                     <div key={i} className="space-y-4">
-                                        <div className="h-8 w-48 bg-muted rounded"></div>
+                                        <div className="h-8 w-48 bg-[var(--bg-muted)] rounded"></div>
                                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                                             {[1, 2, 3].map(j => (
-                                                <div key={j} className="h-32 bg-muted rounded-xl"></div>
+                                                <div key={j} className="h-32 bg-[var(--bg-muted)] rounded-xl"></div>
                                             ))}
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         ) : filteredTracks.length === 0 ? (
-                            <div className="text-center py-16 text-slate-500 dark:text-slate-400">
+                            <div className="text-center py-16 text-[var(--text-muted)]">
                                 <p className="text-lg">No roadmap tracks found.</p>
                             </div>
                         ) : (
@@ -103,7 +103,7 @@ export default function RoadmapPage() {
                         )}
                     </div>
 
-                    <div className="mt-20 border-t border-slate-200/50 dark:border-slate-800/50">
+                    <div className="mt-20 border-t border-[var(--border-main)]">
                         <CommunityFeedbackSection />
                     </div>
                 </div>
@@ -117,24 +117,24 @@ function DynamicRoadmapFilters({ tracks, searchQuery, setSearchQuery, selectedTr
     return (
         <div className="space-y-6">
             <div className="relative max-w-xl mx-auto">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 dark:text-slate-400" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
                 <input
                     type="text"
                     placeholder="Search topics..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 rounded-3xl border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-purple-500/20 text-lg bg-white dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:border-purple-500 text-slate-900 dark:text-white placeholder-slate-500"
+                    className="w-full pl-12 pr-4 py-4 rounded-3xl border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[var(--accent-primary)]/20 text-lg bg-[var(--bg-card)] border-[var(--border-main)] focus:border-[var(--accent-primary)] text-[var(--text-main)] placeholder-[var(--text-muted)]"
                     aria-label="Search roadmap topics"
                 />
             </div>
 
             <section className="px-4">
                 <div className="max-w-7xl mx-auto">
-                    <div className="p-4 rounded-3xl bg-white dark:bg-slate-800/50 shadow-sm dark:shadow-none">
+                    <div className="p-4 rounded-3xl bg-[var(--bg-card)] shadow-sm">
                         <div className="flex flex-wrap items-center gap-4">
                             <div className="flex items-center gap-2">
-                                <Filter className="w-5 h-5 text-slate-500 dark:text-slate-400" />
-                                <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                                <Filter className="w-5 h-5 text-[var(--text-muted)]" />
+                                <span className="text-sm font-medium text-[var(--text-secondary)]">
                                     Filter by Track:
                                 </span>
                             </div>
@@ -144,7 +144,7 @@ function DynamicRoadmapFilters({ tracks, searchQuery, setSearchQuery, selectedTr
                                     onClick={() => setSelectedTrackId('All')}
                                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedTrackId === 'All'
                                         ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg'
-                                        : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
+                                        : 'bg-[var(--bg-muted)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
                                         }`}
                                 >
                                     All
@@ -155,7 +155,7 @@ function DynamicRoadmapFilters({ tracks, searchQuery, setSearchQuery, selectedTr
                                         onClick={() => setSelectedTrackId(track.id)}
                                         className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedTrackId === track.id
                                             ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg'
-                                            : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
+                                            : 'bg-[var(--bg-muted)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
                                             }`}
                                     >
                                         {track.title}

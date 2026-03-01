@@ -33,3 +33,6 @@ build_output.txt
 
 # Supabase local
 supabase/.temp
+
+.vercel
+.env*.local

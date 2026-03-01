@@ -6,17 +6,17 @@ interface CourseCardProps {
 
 export function CourseCard({ course }: CourseCardProps) {
     return (
-        <div className="group rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:border-blue-300 hover:shadow-md">
+        <div className="group rounded-xl border border-[var(--border-main)] bg-[var(--bg-card)] p-6 shadow-sm transition-all hover:border-[var(--accent-primary)]/30 hover:shadow-md">
             <div className="flex items-start gap-3">
                 {course.icon && (
                     <span className="text-2xl">{course.icon}</span>
                 )}
                 <div className="flex-1">
-                    <h3 className="font-semibold text-gray-800 group-hover:text-blue-600">
+                    <h3 className="font-semibold text-[var(--text-main)] group-hover:text-[var(--accent-primary)] transition-colors">
                         {course.title}
                     </h3>
                     {course.description && (
-                        <p className="mt-1 line-clamp-2 text-sm text-gray-500">
+                        <p className="mt-1 line-clamp-2 text-sm text-[var(--text-secondary)]">
                             {course.description}
                         </p>
                     )}
@@ -41,8 +41,8 @@ interface TagBadgeProps {
 function TagBadge({ label, variant = 'primary' }: TagBadgeProps) {
     const styles =
         variant === 'primary'
-            ? 'bg-blue-50 text-blue-700'
-            : 'bg-gray-100 text-gray-600'
+            ? 'bg-[var(--accent-primary)]/10 text-[var(--accent-primary)]'
+            : 'bg-[var(--bg-muted)] text-[var(--text-secondary)]'
 
     return (
         <span

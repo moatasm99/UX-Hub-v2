@@ -26,8 +26,8 @@ export default function CourseDetailPage() {
     if (!course) {
         return (
             <div className="py-12 text-center">
-                <p className="text-gray-500">Course not found.</p>
-                <Link to="/intensive" className="mt-4 inline-block text-blue-600 hover:underline">
+                <p className="text-[var(--text-muted)]">Course not found.</p>
+                <Link to="/intensive" className="mt-4 inline-block text-[var(--accent-primary)] hover:underline">
                     ← Back to courses
                 </Link>
             </div>
@@ -40,22 +40,22 @@ export default function CourseDetailPage() {
             <div>
                 <Link
                     to="/intensive"
-                    className="text-sm text-blue-600 hover:underline"
+                    className="text-sm text-[var(--accent-primary)] hover:underline font-medium"
                 >
                     ← Back to courses
                 </Link>
                 <div className="mt-4 flex items-center gap-3">
                     {course.icon && <span className="text-3xl">{course.icon}</span>}
-                    <h1 className="text-3xl font-bold text-gray-900">{course.title}</h1>
+                    <h1 className="text-3xl font-bold text-[var(--text-main)]">{course.title}</h1>
                 </div>
                 {course.description && (
-                    <p className="mt-2 max-w-2xl text-gray-600">{course.description}</p>
+                    <p className="mt-2 max-w-2xl text-[var(--text-secondary)]">{course.description}</p>
                 )}
             </div>
 
             {/* ─── Modules ─── */}
             <section className="space-y-4">
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className="text-xl font-semibold text-[var(--text-main)]">
                     Modules ({modules?.length ?? 0})
                 </h2>
                 {modules && modules.length > 0 ? (
@@ -65,7 +65,7 @@ export default function CourseDetailPage() {
                         ))}
                     </div>
                 ) : (
-                    <p className="text-gray-500">No modules available yet.</p>
+                    <p className="text-[var(--text-muted)]">No modules available yet.</p>
                 )}
             </section>
         </div>

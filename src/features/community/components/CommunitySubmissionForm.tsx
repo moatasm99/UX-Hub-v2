@@ -44,13 +44,13 @@ export default function CommunitySubmissionForm() {
 
     return (
         <section className="max-w-2xl mx-auto">
-            <div className="rounded-3xl border-2 overflow-hidden bg-white dark:bg-slate-800/50 border-purple-200 dark:border-purple-500/30">
+            <div className="rounded-3xl border-2 overflow-hidden bg-[var(--bg-card)] border-[var(--border-accent)]">
                 {/* Header */}
-                <div className="px-6 py-5 bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/30 dark:to-violet-900/30 border-b border-purple-100 dark:border-purple-500/20">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <div className="px-6 py-5 bg-[var(--bg-muted)] border-b border-[var(--border-main)]">
+                    <h3 className="text-xl font-bold text-[var(--text-main)] flex items-center gap-2">
                         💬 Suggest Improvement or Submit Resource
                     </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                    <p className="text-sm text-[var(--text-secondary)] mt-1">
                         Help us improve! Share feedback, ideas, or useful resources.
                     </p>
                 </div>
@@ -58,7 +58,7 @@ export default function CommunitySubmissionForm() {
                 <form onSubmit={handleSubmit} className="p-6 space-y-5">
                     {/* Type Selector */}
                     <div className="space-y-2">
-                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                        <label className="text-sm font-semibold text-[var(--text-main)]">
                             Type
                         </label>
                         <div className="grid grid-cols-3 gap-2">
@@ -69,8 +69,8 @@ export default function CommunitySubmissionForm() {
                                     onClick={() => setType(opt.value)}
                                     className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all text-center
                                         ${type === opt.value
-                                            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300'
-                                            : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-400'
+                                            ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10 text-[var(--accent-primary)]'
+                                            : 'border-[var(--border-main)] hover:border-[var(--border-strong)] text-[var(--text-secondary)]'
                                         }`}
                                 >
                                     {opt.icon}
@@ -82,7 +82,7 @@ export default function CommunitySubmissionForm() {
 
                     {/* Title */}
                     <div className="space-y-2">
-                        <label htmlFor="submission-title" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                        <label htmlFor="submission-title" className="text-sm font-semibold text-[var(--text-main)]">
                             Title <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -91,7 +91,7 @@ export default function CommunitySubmissionForm() {
                             value={title}
                             onChange={e => setTitle(e.target.value)}
                             placeholder={type === 'resource' ? 'Resource name...' : 'Brief description...'}
-                            className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 focus:border-purple-500 focus:outline-none transition-colors"
+                            className="w-full px-4 py-3 rounded-xl border-2 border-[var(--border-main)] bg-[var(--bg-muted)] text-[var(--text-main)] placeholder-[var(--text-muted)] focus:border-[var(--accent-primary)] focus:outline-none transition-colors"
                             required
                         />
                     </div>
@@ -99,7 +99,7 @@ export default function CommunitySubmissionForm() {
                     {/* URL — only for resource type */}
                     {type === 'resource' && (
                         <div className="space-y-2">
-                            <label htmlFor="submission-url" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                            <label htmlFor="submission-url" className="text-sm font-semibold text-[var(--text-main)]">
                                 URL <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -108,7 +108,7 @@ export default function CommunitySubmissionForm() {
                                 value={url}
                                 onChange={e => setUrl(e.target.value)}
                                 placeholder="https://..."
-                                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 focus:border-purple-500 focus:outline-none transition-colors"
+                                className="w-full px-4 py-3 rounded-xl border-2 border-[var(--border-main)] bg-[var(--bg-muted)] text-[var(--text-main)] placeholder-[var(--text-muted)] focus:border-[var(--accent-primary)] focus:outline-none transition-colors"
                                 required
                             />
                         </div>
@@ -116,8 +116,8 @@ export default function CommunitySubmissionForm() {
 
                     {/* Message */}
                     <div className="space-y-2">
-                        <label htmlFor="submission-message" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                            Message <span className="text-slate-400">(optional)</span>
+                        <label htmlFor="submission-message" className="text-sm font-semibold text-[var(--text-main)]">
+                            Message <span className="text-[var(--text-muted)]">(optional)</span>
                         </label>
                         <textarea
                             id="submission-message"
@@ -125,7 +125,7 @@ export default function CommunitySubmissionForm() {
                             onChange={e => setMessage(e.target.value)}
                             placeholder="Tell us more..."
                             rows={3}
-                            className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 focus:border-purple-500 focus:outline-none transition-colors resize-none"
+                            className="w-full px-4 py-3 rounded-xl border-2 border-[var(--border-main)] bg-[var(--bg-muted)] text-[var(--text-main)] placeholder-[var(--text-muted)] focus:border-[var(--accent-primary)] focus:outline-none transition-colors resize-none"
                         />
                     </div>
 
@@ -136,7 +136,7 @@ export default function CommunitySubmissionForm() {
                         className={`w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold text-white transition-all
                             ${isValid && !isSubmitting
                                 ? 'bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 shadow-lg shadow-purple-500/25 cursor-pointer'
-                                : 'bg-slate-300 dark:bg-slate-700 cursor-not-allowed'
+                                : 'bg-[var(--bg-muted)] text-[var(--text-muted)] cursor-not-allowed'
                             }`}
                     >
                         {isSubmitting ? (

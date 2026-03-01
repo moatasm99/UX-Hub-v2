@@ -33,21 +33,21 @@ export default function AdminLoginPage() {
 
     if (authLoading) {
         return (
-            <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-                <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+            <div className="min-h-screen bg-[var(--bg-app)] flex items-center justify-center">
+                <Loader2 className="w-8 h-8 text-[var(--accent-primary)] animate-spin" />
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
+        <div className="min-h-screen bg-[var(--bg-app)] flex items-center justify-center p-4">
+            <div className="w-full max-w-md bg-[var(--bg-card)] border border-[var(--border-main)] rounded-2xl p-8 shadow-2xl">
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-500/10 mb-4">
-                        <Lock className="w-6 h-6 text-blue-500" />
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[var(--accent-primary)]/10 mb-4">
+                        <Lock className="w-6 h-6 text-[var(--accent-primary)]" />
                     </div>
-                    <h1 className="text-2xl font-bold text-white mb-2">Admin Access</h1>
-                    <p className="text-slate-400 text-sm">Sign in to manage UX Design Hub</p>
+                    <h1 className="text-2xl font-bold text-[var(--text-main)] mb-2">Admin Access</h1>
+                    <p className="text-[var(--text-muted)] text-sm">Sign in to manage UX Design Hub</p>
                 </div>
 
                 {error && (
@@ -59,14 +59,14 @@ export default function AdminLoginPage() {
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-300">Email</label>
+                        <label className="text-sm font-medium text-[var(--text-secondary)]">Email</label>
                         <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                                className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-xl py-2.5 pl-10 pr-4 text-[var(--text-main)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] transition-all"
                                 placeholder="admin@uxdesignhub.com"
                                 required
                             />
@@ -74,14 +74,14 @@ export default function AdminLoginPage() {
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-300">Password</label>
+                        <label className="text-sm font-medium text-[var(--text-secondary)]">Password</label>
                         <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-10 pr-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                                className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-xl py-2.5 pl-10 pr-4 text-[var(--text-main)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] transition-all"
                                 placeholder="••••••••"
                                 required
                             />
@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-[var(--accent-primary)] hover:opacity-90 text-white font-medium py-2.5 rounded-xl shadow-lg shadow-[var(--accent-primary)]/25 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isSubmitting ? (
                             <>

@@ -34,11 +34,11 @@ export default function RoadmapDetailPage() {
             <div>
                 <Link
                     to="/roadmap"
-                    className="text-sm text-blue-600 hover:underline"
+                    className="text-sm text-[var(--accent-primary)] hover:underline font-medium"
                 >
                     ← Back to roadmaps
                 </Link>
-                <h1 className="mt-4 text-3xl font-bold text-gray-900">
+                <h1 className="mt-4 text-3xl font-bold text-[var(--text-main)]">
                     {decodedCategory}
                 </h1>
             </div>
@@ -50,7 +50,7 @@ export default function RoadmapDetailPage() {
                     ))}
                 </div>
             ) : (
-                <p className="py-12 text-center text-gray-500">
+                <p className="py-12 text-center text-[var(--text-muted)] font-medium">
                     No courses in this category yet.
                 </p>
             )}

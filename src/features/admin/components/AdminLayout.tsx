@@ -29,31 +29,31 @@ export default function AdminLayout() {
     ];
 
     return (
-        <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500/30">
+        <div className="min-h-screen bg-[var(--bg-app)] text-[var(--text-main)] font-sans selection:bg-[var(--accent-primary)]/30">
             {/* Mobile Header */}
-            <div className="lg:hidden p-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/50 backdrop-blur-sm sticky top-0 z-50">
-                <span className="font-bold text-white">UX Hub Admin</span>
+            <div className="lg:hidden p-4 border-b border-[var(--border-main)] flex items-center justify-between bg-[var(--bg-card)]/80 backdrop-blur-sm sticky top-0 z-50">
+                <span className="font-bold text-[var(--text-main)]">UX Hub Admin</span>
                 <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="p-2 hover:bg-slate-800 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-500"
+                    className="p-2 hover:bg-[var(--bg-muted)] rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]"
                     aria-label={isMobileMenuOpen ? 'Close sidebar menu' : 'Open sidebar menu'}
                     aria-expanded={isMobileMenuOpen}
                 >
-                    {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                    {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 text-[var(--text-main)]" />}
                 </button>
             </div>
 
             <div className="flex h-screen overflow-hidden">
                 {/* Sidebar */}
                 <aside className={`
-                    fixed lg:static inset-y-0 left-0 z-40 w-64 bg-slate-900 border-r border-slate-800 transform transition-transform duration-200 ease-in-out
+                    fixed lg:static inset-y-0 left-0 z-40 w-64 bg-[var(--bg-card)] border-r border-[var(--border-main)] transform transition-transform duration-200 ease-in-out
                     ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
                 `}>
                     <div className="flex flex-col h-full">
                         {/* Sidebar Header */}
-                        <div className="p-6 border-b border-slate-800">
-                            <h1 className="text-xl font-bold text-white tracking-tight">UX Design Hub</h1>
-                            <span className="text-xs font-medium text-blue-400 uppercase tracking-wider">Admin Portal</span>
+                        <div className="p-6 border-b border-[var(--border-main)]">
+                            <h1 className="text-xl font-bold text-[var(--text-main)] tracking-tight">UX Design Hub</h1>
+                            <span className="text-xs font-medium text-[var(--accent-primary)] uppercase tracking-wider">Admin Portal</span>
                         </div>
 
                         {/* Navigation */}
@@ -67,8 +67,8 @@ export default function AdminLayout() {
                                     className={({ isActive }) => `
                                         flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200
                                         ${isActive
-                                            ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20'
-                                            : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                                            ? 'bg-[var(--accent-primary)] text-white shadow-lg shadow-[var(--accent-primary)]/20'
+                                            : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-muted)]'
                                         }
                                     `}
                                 >
@@ -83,8 +83,8 @@ export default function AdminLayout() {
                                     onClick={() => setIsCommunityOpen(!isCommunityOpen)}
                                     className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200
                                         ${location.pathname.includes('/admin/community')
-                                            ? 'text-white bg-slate-800/50'
-                                            : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                                            ? 'text-[var(--text-main)] bg-[var(--bg-muted)]'
+                                            : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-muted)]'
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">
@@ -95,7 +95,7 @@ export default function AdminLayout() {
                                 </button>
 
                                 {isCommunityOpen && (
-                                    <div className="mt-1 ml-4 border-l-2 border-slate-800 pl-2 space-y-1 animate-in slide-in-from-top-2 duration-200">
+                                    <div className="mt-1 ml-4 border-l-2 border-[var(--border-main)] pl-2 space-y-1 animate-in slide-in-from-top-2 duration-200">
                                         {communityItems.map((item) => (
                                             <NavLink
                                                 key={item.path}
@@ -104,8 +104,8 @@ export default function AdminLayout() {
                                                 className={({ isActive }) => `
                                                     flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200
                                                     ${isActive
-                                                        ? 'bg-blue-600/10 text-blue-400 border border-blue-500/20'
-                                                        : 'text-slate-500 hover:text-slate-300 hover:bg-slate-800/50'
+                                                        ? 'bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] border border-[var(--accent-primary)]/20'
+                                                        : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-[var(--bg-muted)]'
                                                     }
                                                 `}
                                             >
@@ -123,8 +123,8 @@ export default function AdminLayout() {
                                 className={({ isActive }) => `
                                     flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 mt-2
                                     ${isActive
-                                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20'
-                                        : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                                        ? 'bg-[var(--accent-primary)] text-white shadow-lg shadow-[var(--accent-primary)]/20'
+                                        : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-muted)]'
                                     }
                                 `}
                             >
@@ -134,19 +134,19 @@ export default function AdminLayout() {
                         </nav>
 
                         {/* User Profile & Logout */}
-                        <div className="p-4 border-t border-slate-800 bg-slate-900/50">
+                        <div className="p-4 border-t border-[var(--border-main)] bg-[var(--bg-muted)]/50">
                             <div className="flex items-center gap-3 mb-4 px-2">
-                                <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-xs font-bold ring-2 ring-blue-500/10">
+                                <div className="w-8 h-8 rounded-full bg-[var(--accent-primary)]/20 flex items-center justify-center text-[var(--accent-primary)] text-xs font-bold ring-2 ring-[var(--accent-primary)]/10">
                                     {user?.email?.charAt(0).toUpperCase()}
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-white truncate">Admin</p>
-                                    <p className="text-xs text-slate-500 truncate">{user?.email}</p>
+                                    <p className="text-sm font-medium text-[var(--text-main)] truncate">Admin</p>
+                                    <p className="text-xs text-[var(--text-muted)] truncate">{user?.email}</p>
                                 </div>
                             </div>
                             <button
                                 onClick={() => logout()}
-                                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-slate-800 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20 border border-slate-700 rounded-lg text-sm font-medium transition-all duration-200 text-slate-300 focus-visible:ring-2 focus-visible:ring-red-500"
+                                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-[var(--bg-card)] hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20 border border-[var(--border-main)] rounded-lg text-sm font-medium transition-all duration-200 text-[var(--text-secondary)] focus-visible:ring-2 focus-visible:ring-red-500"
                                 aria-label="Sign out of admin"
                             >
                                 <LogOut className="w-4 h-4" />
@@ -157,7 +157,7 @@ export default function AdminLayout() {
                 </aside>
 
                 {/* Main Content */}
-                <main className="flex-1 overflow-y-auto bg-slate-950 relative w-full">
+                <main className="flex-1 overflow-y-auto bg-[var(--bg-app)] relative w-full">
                     {/* Overlay for mobile sidebar */}
                     {isMobileMenuOpen && (
                         <div

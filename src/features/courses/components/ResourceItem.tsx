@@ -21,9 +21,7 @@ const ResourceItem: React.FC<ResourceItemProps> = ({ resource }) => {
             href={resource.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`group flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900
-                dark:bg-slate-800/50 dark:border-slate-700 dark:hover:border-slate-500 dark:hover:bg-slate-800
-                bg-white border-slate-200 hover:border-slate-300 hover:shadow-md`}
+            className="group flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:ring-offset-2 dark:focus:ring-offset-slate-900 bg-[var(--bg-card)] border-[var(--border-main)] hover:border-[var(--border-strong)] hover:shadow-md"
         >
             {/* Icon */}
             <div className={`flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center ${isVideo
@@ -41,24 +39,24 @@ const ResourceItem: React.FC<ResourceItemProps> = ({ resource }) => {
                         {isVideo ? '📺 Video' : '📄 Article'}
                     </span>
                     {resource.duration && (
-                        <span className="text-xs flex items-center gap-1 dark:text-slate-500 text-slate-600">
+                        <span className="text-xs flex items-center gap-1 text-[var(--text-muted)]">
                             <Clock className="w-3 h-3" />
                             {resource.duration}
                         </span>
                     )}
                     {resource.source && (
-                        <span className="text-xs px-2 py-0.5 rounded-full dark:bg-slate-700 dark:text-slate-400 bg-slate-100 text-slate-600">
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--bg-muted)] text-[var(--text-secondary)]">
                             {resource.source}
                         </span>
                     )}
                 </div>
-                <p className="font-medium truncate dark:text-white text-slate-900">
+                <p className="font-medium truncate text-[var(--text-main)]">
                     {resource.title}
                 </p>
             </div>
 
             {/* External Link Icon */}
-            <ExternalLink className="w-4 h-4 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity dark:text-slate-400 text-slate-600" />
+            <ExternalLink className="w-4 h-4 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--text-secondary)]" />
         </a>
     );
 };

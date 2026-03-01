@@ -73,12 +73,12 @@ export default function CourseFormModal({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden">
-                <div className="flex items-center justify-between p-6 border-b border-slate-800">
-                    <h2 className="text-xl font-bold text-white">
+            <div className="w-full max-w-2xl bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+                <div className="flex items-center justify-between p-6 border-b border-[var(--border-main)] bg-[var(--bg-muted)]/30">
+                    <h2 className="text-xl font-bold text-[var(--text-main)]">
                         {initialData ? 'Edit Course' : 'Add New Course'}
                     </h2>
-                    <button onClick={onClose} className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors">
+                    <button onClick={onClose} className="p-2 text-[var(--text-muted)] hover:text-[var(--text-main)] rounded-lg hover:bg-[var(--bg-muted)] transition-colors">
                         <X className="w-5 h-5" />
                     </button>
                 </div>
@@ -86,12 +86,12 @@ export default function CourseFormModal({
                 <form onSubmit={handleSubmit} className="p-6 space-y-6">
                     {/* Title */}
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-400">Title *</label>
+                        <label className="text-sm font-medium text-[var(--text-secondary)]">Title *</label>
                         <input
                             name="title"
                             value={formData.title}
                             onChange={handleChange}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                            className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-bold"
                             required
                         />
                     </div>
@@ -99,24 +99,24 @@ export default function CourseFormModal({
                     {/* Type + Category row */}
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-400">Type *</label>
+                            <label className="text-sm font-medium text-[var(--text-secondary)]">Type *</label>
                             <select
                                 name="type"
                                 value={formData.type}
                                 onChange={handleChange}
-                                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                                className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all appearance-none font-bold"
                             >
                                 <option value="intensive">Intensive</option>
                                 <option value="roadmap">Roadmap</option>
                             </select>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-400">Category</label>
+                            <label className="text-sm font-medium text-[var(--text-secondary)]">Category</label>
                             <select
                                 name="category"
                                 value={formData.category || ''}
                                 onChange={handleChange}
-                                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                                className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all appearance-none font-bold"
                             >
                                 <option value="">— No Category —</option>
                                 {categories.map(cat => (
@@ -128,63 +128,63 @@ export default function CourseFormModal({
 
                     {/* Description */}
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-400">Description</label>
+                        <label className="text-sm font-medium text-[var(--text-secondary)]">Description</label>
                         <textarea
                             name="description"
                             value={formData.description || ''}
                             onChange={handleChange}
                             rows={3}
                             placeholder="Short course description..."
-                            className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all resize-none"
+                            className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all resize-none placeholder-[var(--text-muted)]"
                         />
                     </div>
 
                     {/* Icon + Order row */}
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-400">Icon (emoji or name)</label>
+                            <label className="text-sm font-medium text-[var(--text-secondary)]">Icon (emoji or name)</label>
                             <input
                                 name="icon"
                                 value={formData.icon || ''}
                                 onChange={handleChange}
                                 placeholder="📚 or book"
-                                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                                className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-bold placeholder-[var(--text-muted)]"
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-400">Order Index</label>
+                            <label className="text-sm font-medium text-[var(--text-secondary)]">Order Index</label>
                             <input
                                 name="order_index"
                                 type="number"
                                 value={formData.order_index}
                                 onChange={handleChange}
-                                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                                className="w-full bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg px-4 py-2.5 text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all font-bold"
                             />
                         </div>
                     </div>
 
                     {/* Footer: Publish toggle + buttons */}
-                    <div className="flex items-center justify-between pt-4 border-t border-slate-800">
-                        <label className="flex items-center gap-3 cursor-pointer">
+                    <div className="flex items-center justify-between pt-6 border-t border-[var(--border-main)]">
+                        <label className="flex items-center gap-3 cursor-pointer group">
                             <div
-                                className={`w-12 h-6 rounded-full p-1 transition-colors ${formData.is_published ? 'bg-blue-600' : 'bg-slate-700'}`}
+                                className={`w-12 h-6 rounded-full p-1 transition-colors ${formData.is_published ? 'bg-[var(--accent-primary)]' : 'bg-[var(--border-main)]'}`}
                                 onClick={() => setFormData(prev => ({ ...prev, is_published: !prev.is_published }))}
                             >
-                                <div className={`w-4 h-4 rounded-full bg-white transform transition-transform ${formData.is_published ? 'translate-x-6' : 'translate-x-0'}`} />
+                                <div className={`w-4 h-4 rounded-full bg-white transform transition-transform ${formData.is_published ? 'translate-x-6' : 'translate-x-0'} shadow-sm`} />
                             </div>
-                            <span className="text-sm font-medium text-slate-300">
+                            <span className="text-sm font-bold text-[var(--text-main)] group-hover:text-[var(--accent-primary)] transition-colors">
                                 {formData.is_published ? 'Published' : 'Draft'}
                             </span>
                         </label>
 
                         <div className="flex items-center gap-3">
-                            <button type="button" onClick={onClose} className="px-4 py-2 text-slate-400 hover:text-white font-medium hover:bg-slate-800 rounded-lg transition-colors">
+                            <button type="button" onClick={onClose} className="px-4 py-2 text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold hover:bg-[var(--bg-muted)] rounded-lg transition-colors">
                                 Cancel
                             </button>
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow-lg shadow-blue-900/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                                className="px-6 py-2.5 bg-[var(--accent-primary)] hover:opacity-90 text-white font-bold rounded-lg shadow-lg shadow-[var(--accent-primary)]/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
                             >
                                 {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                                 {initialData ? 'Update Course' : 'Create Course'}

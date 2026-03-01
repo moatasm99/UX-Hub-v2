@@ -50,12 +50,12 @@ export default function AdminRoadmapTracksPage() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold text-white">Roadmap Tracks</h1>
-                    <p className="text-sm text-slate-400 mt-1">{tracks.length} total tracks</p>
+                    <h1 className="text-2xl font-bold text-[var(--text-main)]">Roadmap Tracks</h1>
+                    <p className="text-sm text-[var(--text-muted)] mt-1 font-medium">{tracks.length} total tracks</p>
                 </div>
                 <button
                     onClick={handleCreate}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow-lg shadow-blue-900/20 transition-all"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent-primary)] hover:opacity-90 text-white font-bold rounded-lg shadow-lg shadow-[var(--accent-primary)]/20 transition-all active:scale-95"
                 >
                     <Plus className="w-4 h-4" />
                     Add Track
@@ -64,70 +64,70 @@ export default function AdminRoadmapTracksPage() {
 
             {/* Search */}
             <div className="relative">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
                 <input
                     type="text"
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                     placeholder="Search tracks..."
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-lg text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 bg-[var(--bg-muted)] border border-[var(--border-main)] rounded-lg text-[var(--text-main)] focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] outline-none transition-all placeholder:[var(--text-muted)] font-medium"
                 />
             </div>
 
             {/* Loading / Error */}
             {isLoading && (
                 <div className="flex items-center justify-center py-16">
-                    <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
+                    <Loader2 className="w-6 h-6 text-[var(--accent-primary)] animate-spin" />
                 </div>
             )}
             {isError && (
-                <div className="p-4 bg-red-900/30 border border-red-800 rounded-lg text-red-300 text-sm">
-                    Failed to load tracks: {(error as any)?.message || 'Unknown error'}
+                <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-500 text-sm font-bold shadow-sm">
+                    ⚠️ Failed to load tracks: {(error as any)?.message || 'Unknown error'}
                 </div>
             )}
 
             {/* Table */}
             {!isLoading && !isError && (
-                <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                <div className="bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl overflow-hidden shadow-sm">
                     <table className="w-full text-left">
                         <thead>
-                            <tr className="border-b border-slate-800 text-xs font-medium text-slate-400 uppercase tracking-wider">
-                                <th className="px-6 py-3">Title</th>
-                                <th className="px-6 py-3">Slug</th>
-                                <th className="px-6 py-3 text-center">Position</th>
-                                <th className="px-6 py-3 text-center">Published</th>
-                                <th className="px-6 py-3 text-right">Actions</th>
+                            <tr className="border-b border-[var(--border-main)] bg-[var(--bg-muted)]/50 text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                                <th className="px-6 py-4">Title</th>
+                                <th className="px-6 py-4">Slug</th>
+                                <th className="px-6 py-4 text-center">Position</th>
+                                <th className="px-6 py-4 text-center">Published</th>
+                                <th className="px-6 py-4 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="divide-y divide-[var(--border-main)]">
                             {filtered.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-12 text-center text-slate-500 text-sm">
+                                    <td colSpan={5} className="px-6 py-12 text-center text-[var(--text-muted)] text-sm font-medium">
                                         {search ? 'No tracks match your search.' : 'No tracks yet. Click "Add Track" to create one.'}
                                     </td>
                                 </tr>
                             ) : (
                                 filtered.map(track => (
-                                    <tr key={track.id} className="border-b border-slate-800/60 hover:bg-slate-800/30 transition-colors">
+                                    <tr key={track.id} className="group hover:bg-[var(--bg-muted)]/50 transition-colors">
                                         <td className="px-6 py-4">
                                             <Link
                                                 to={track.id}
-                                                className="flex items-center gap-2 text-white font-medium hover:text-blue-400 transition-colors"
+                                                className="flex items-center gap-2 text-[var(--text-main)] font-bold hover:text-[var(--accent-primary)] transition-colors"
                                             >
                                                 {track.icon && <span className="text-lg">{track.icon}</span>}
                                                 {track.title}
                                             </Link>
                                         </td>
-                                        <td className="px-6 py-4 font-mono text-sm text-slate-400">{track.slug}</td>
-                                        <td className="px-6 py-4 text-center text-slate-300">{track.position}</td>
+                                        <td className="px-6 py-4 font-mono text-sm text-[var(--text-muted)]">{track.slug}</td>
+                                        <td className="px-6 py-4 text-center text-[var(--text-secondary)] font-bold">{track.position}</td>
                                         <td className="px-6 py-4 text-center">
                                             {track.is_published ? (
-                                                <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full">
+                                                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[var(--accent-emerald)] bg-[var(--accent-emerald)]/10 px-2.5 py-1 rounded-full border border-[var(--accent-emerald)]/20">
                                                     <CheckCircle2 className="w-3 h-3" />
                                                     Published
                                                 </span>
                                             ) : (
-                                                <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-400 bg-slate-700/50 px-2.5 py-1 rounded-full">
+                                                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[var(--text-muted)] bg-[var(--bg-muted)] px-2.5 py-1 rounded-full border border-[var(--border-main)]">
                                                     <XCircle className="w-3 h-3" />
                                                     Draft
                                                 </span>
@@ -137,14 +137,14 @@ export default function AdminRoadmapTracksPage() {
                                             <div className="flex items-center justify-end gap-1">
                                                 <button
                                                     onClick={() => handleEdit(track)}
-                                                    className="p-2 text-slate-400 hover:text-blue-400 hover:bg-slate-800 rounded-lg transition-colors"
+                                                    className="p-2 text-[var(--text-muted)] hover:text-[var(--accent-primary)] hover:bg-[var(--bg-muted)] rounded-lg transition-colors"
                                                     title="Edit"
                                                 >
                                                     <Edit2 className="w-4 h-4" />
                                                 </button>
                                                 <button
                                                     onClick={() => handleDeleteClick(track)}
-                                                    className="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition-colors"
+                                                    className="p-2 text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
                                                     title="Delete"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
@@ -170,23 +170,23 @@ export default function AdminRoadmapTracksPage() {
 
             {/* Delete Confirmation */}
             {deleteTarget && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-                    <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-4 shadow-2xl">
-                        <h3 className="text-lg font-bold text-white">Delete Track</h3>
-                        <p className="text-sm text-slate-300">
-                            Are you sure you want to delete <span className="font-semibold text-white">"{deleteTarget.title}"</span>? This will also delete all topics and resources under it.
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+                    <div className="w-full max-w-md bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-200">
+                        <h3 className="text-lg font-bold text-[var(--text-main)]">Delete Track</h3>
+                        <p className="text-sm text-[var(--text-secondary)] font-medium">
+                            Are you sure you want to delete <span className="font-bold text-[var(--text-main)]">"{deleteTarget.title}"</span>? This will also delete all topics and resources under it.
                         </p>
                         <div className="flex justify-end gap-3 pt-2">
                             <button
                                 onClick={() => setDeleteTarget(null)}
-                                className="px-4 py-2 text-slate-400 hover:text-white font-medium hover:bg-slate-800 rounded-lg transition-colors"
+                                className="px-4 py-2 text-[var(--text-muted)] hover:text-[var(--text-main)] font-bold hover:bg-[var(--bg-muted)] rounded-lg transition-colors"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleConfirmDelete}
                                 disabled={remove.isPending}
-                                className="px-5 py-2 bg-red-600 hover:bg-red-500 text-white font-medium rounded-lg flex items-center gap-2 disabled:opacity-50 transition-all"
+                                className="px-6 py-2 bg-red-600 hover:bg-red-500 text-white font-bold rounded-lg flex items-center gap-2 disabled:opacity-50 transition-all active:scale-95"
                             >
                                 {remove.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                                 Delete

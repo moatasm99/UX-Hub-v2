@@ -55,7 +55,7 @@ export default function AdminSiteSettingsPage() {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-[400px]">
-                <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+                <Loader2 className="w-8 h-8 text-[var(--accent-primary)] animate-spin" />
             </div>
         );
     }
@@ -67,23 +67,23 @@ export default function AdminSiteSettingsPage() {
                 <div className="flex items-center gap-4">
                     <button
                         onClick={() => navigate('/admin')}
-                        className="p-2 hover:bg-slate-800 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-blue-500"
+                        className="p-2 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-muted)] rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]"
                         aria-label="Back to dashboard"
                     >
-                        <ArrowLeft className="w-5 h-5 text-slate-400" />
+                        <ArrowLeft className="w-5 h-5" />
                     </button>
                     <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-                            <Settings className="w-6 h-6 text-blue-400" />
+                        <h1 className="text-2xl font-bold text-[var(--text-main)] flex items-center gap-3">
+                            <Settings className="w-6 h-6 text-[var(--accent-primary)]" />
                             Site Settings
                         </h1>
-                        <p className="text-sm text-slate-400 mt-1">Manage your landing page hero section</p>
+                        <p className="text-sm text-[var(--text-muted)] mt-1 font-medium">Manage your landing page hero section</p>
                     </div>
                 </div>
                 <button
                     onClick={handleSave}
                     disabled={updateMutation.isPending}
-                    className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-blue-500"
+                    className="flex items-center gap-2 px-6 py-2.5 bg-[var(--accent-primary)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-bold transition-colors focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] shadow-lg shadow-[var(--accent-primary)]/20 active:scale-95"
                 >
                     {updateMutation.isPending ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -96,19 +96,19 @@ export default function AdminSiteSettingsPage() {
 
             {/* Success/Error Messages */}
             {updateMutation.isSuccess && (
-                <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-sm font-medium">
+                <div className="p-4 bg-[var(--accent-emerald)]/10 border border-[var(--accent-emerald)]/30 rounded-xl text-[var(--accent-emerald)] text-sm font-bold shadow-sm animate-in slide-in-from-top-2 duration-300">
                     ✅ Settings saved successfully!
                 </div>
             )}
             {updateMutation.isError && (
-                <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm font-medium">
+                <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-500 text-sm font-bold shadow-sm animate-in slide-in-from-top-2 duration-300">
                     ❌ Failed to save settings. Please try again.
                 </div>
             )}
 
             {/* Hero Section Settings */}
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-6">
-                <h2 className="text-lg font-semibold text-white border-b border-slate-800 pb-4">
+            <div className="bg-[var(--bg-card)] border border-[var(--border-main)] rounded-xl p-6 space-y-6 shadow-sm">
+                <h2 className="text-lg font-bold text-[var(--text-main)] border-b border-[var(--border-main)] pb-4">
                     🎯 Hero Section
                 </h2>
 
@@ -194,14 +194,14 @@ export default function AdminSiteSettingsPage() {
 
                 {/* Description (full width textarea) */}
                 <div>
-                    <label className="block text-sm font-medium text-slate-400 mb-2">
-                        Description <span className="text-slate-600">(supports multiple paragraphs)</span>
+                    <label className="block text-sm font-semibold text-[var(--text-secondary)] mb-2">
+                        Description <span className="text-[var(--text-muted)] font-normal">(supports multiple paragraphs)</span>
                     </label>
                     <textarea
                         value={form.hero_description}
                         onChange={(e) => handleChange('hero_description', e.target.value)}
                         rows={6}
-                        className="w-full rounded-lg bg-slate-950 border border-slate-800 p-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 resize-none transition-all"
+                        className="w-full rounded-lg bg-[var(--bg-muted)] border border-[var(--border-main)] p-4 text-sm text-[var(--text-main)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] resize-none transition-all placeholder:[var(--text-muted)] font-medium"
                         placeholder="Write your hero description..."
                         dir="rtl"
                     />
@@ -223,15 +223,15 @@ function FieldInput({
 }) {
     return (
         <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">
-                {label} {required && <span className="text-red-400">*</span>}
+            <label className="block text-sm font-semibold text-[var(--text-secondary)] mb-2">
+                {label} {required && <span className="text-red-500">*</span>}
             </label>
             <input
                 type="text"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
-                className="w-full rounded-lg bg-slate-950 border border-slate-800 px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                className="w-full rounded-lg bg-[var(--bg-muted)] border border-[var(--border-main)] px-4 py-3 text-sm text-[var(--text-main)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] transition-all placeholder:[var(--text-muted)] font-medium"
             />
         </div>
     );

@@ -7,9 +7,9 @@ interface TagBadgeProps {
 }
 
 const variantStyles = {
-    primary: 'bg-blue-50 text-blue-700',
-    secondary: 'bg-gray-100 text-gray-600',
-    outline: 'border border-gray-300 text-gray-600',
+    primary: 'bg-[var(--accent-primary)]/10 text-[var(--accent-primary)]',
+    secondary: 'bg-[var(--bg-muted)] text-[var(--text-secondary)]',
+    outline: 'border border-[var(--border-main)] text-[var(--text-muted)]',
 }
 
 export function TagBadge({ label, variant = 'primary', className }: TagBadgeProps) {
