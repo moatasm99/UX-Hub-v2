@@ -1,54 +1,62 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react'
+import { Component, ErrorInfo, ReactNode } from 'react';
+import { AlertTriangle, RefreshCcw } from 'lucide-react';
 
-interface ErrorBoundaryProps {
-    children: ReactNode
-    fallback?: ReactNode
+interface Props {
+    children: ReactNode;
+    fallback?: ReactNode;
 }
 
-interface ErrorBoundaryState {
-    hasError: boolean
-    error: Error | null
+interface State {
+    hasError: boolean;
+    error: Error | null;
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-    constructor(props: ErrorBoundaryProps) {
-        super(props)
-        this.state = { hasError: false, error: null }
+export class ErrorBoundary extends Component<Props, State> {
+    public state: State = {
+        hasError: false,
+        error: null,
+    };
+
+    public static getDerivedStateFromError(error: Error): State {
+        return { hasError: true, error };
     }
 
-    static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-        return { hasError: true, error }
+    public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+        console.error('Uncaught error:', error, errorInfo);
     }
 
-    componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-        console.error('ErrorBoundary caught:', error, errorInfo)
-    }
+    private handleReset = () => {
+        this.setState({ hasError: false, error: null });
+        // Aggressive reset for production stability
+        window.location.href = window.location.origin + window.location.pathname;
+    };
 
-    render() {
+    public render() {
         if (this.state.hasError) {
-            if (this.props.fallback) {
-                return this.props.fallback
-            }
+            if (this.props.fallback) return this.props.fallback;
 
             return (
-                <div className="flex min-h-[50vh] flex-col items-center justify-center gap-4 p-8">
-                    <div className="text-5xl">⚠️</div>
-                    <h2 className="text-xl font-semibold text-red-600">
+                <div className="min-h-[400px] flex flex-col items-center justify-center p-8 text-center bg-slate-50 dark:bg-slate-900/50 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in duration-300">
+                    <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center mb-6">
+                        <AlertTriangle className="w-8 h-8 text-red-600 dark:text-red-400" />
+                    </div>
+                    <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">
                         Something went wrong
                     </h2>
-                    <p className="max-w-md text-center text-sm text-gray-500">
-                        {this.state.error?.message || 'An unexpected error occurred.'}
+                    <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-md mx-auto font-medium text-sm">
+                        The application encountered an unexpected state. We've logged the issue, and you can try reloading to continue.
                     </p>
                     <button
-                        onClick={() => this.setState({ hasError: false, error: null })}
-                        className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+                        onClick={this.handleReset}
+                        className="flex items-center gap-2 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl font-black hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-slate-200 dark:shadow-none"
                     >
-                        Try Again
+                        <RefreshCcw className="w-5 h-5" />
+                        Reload & Stabilize
                     </button>
                 </div>
-            )
+            );
         }
 
-        return this.props.children
+        return this.props.children;
     }
 }

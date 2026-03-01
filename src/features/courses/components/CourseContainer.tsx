@@ -14,8 +14,8 @@ const CourseContainer: React.FC<CourseContainerProps> = ({ course }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [completedModules, setCompletedModules] = useState<Set<number>>(new Set());
 
-    // Fetch days only when expanded (lazy load)
-    const { days, isLoading: daysLoading } = usePublishedCourseDays(isExpanded ? course.id : undefined);
+    // Fetch days immediately for instant expansion (no lazy load)
+    const { days, isLoading: daysLoading } = usePublishedCourseDays(course.id);
 
     const toggleModuleComplete = (index: number) => {
         setCompletedModules(prev => {

@@ -7,7 +7,8 @@ import { courseDaysService } from '@/services/course-days';
 import { courseLessonsService } from '@/services/course-lessons';
 import { courseTasksService } from '@/services/course-tasks';
 
-const STALE_TIME = 1000 * 30; // 30 seconds
+const STALE_TIME = 1000 * 60 * 5; // 5 minutes
+const GC_TIME = 1000 * 60 * 10; // 10 minutes
 
 // ─── Published Categories ──────────────────────
 export function usePublishedCategories() {
@@ -15,6 +16,7 @@ export function usePublishedCategories() {
         queryKey: ['public-course-categories'],
         queryFn: () => courseCategoriesService.getPublished(),
         staleTime: STALE_TIME,
+        gcTime: GC_TIME,
     });
 
     const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);
@@ -42,6 +44,7 @@ export function usePublishedCourses(categoryId: string | undefined) {
         queryFn: () => intensiveCoursesService.getPublished(categoryId!),
         enabled: !!categoryId,
         staleTime: STALE_TIME,
+        gcTime: GC_TIME,
     });
 
     const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);
@@ -74,6 +77,7 @@ export function useCourseBySlug(slug: string | undefined) {
         queryFn: () => intensiveCoursesService.getBySlug(slug!),
         enabled: !!slug,
         staleTime: STALE_TIME,
+        gcTime: GC_TIME,
     });
 
     const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);
@@ -106,6 +110,7 @@ export function usePublishedCourseDays(courseId: string | undefined) {
         queryFn: () => courseDaysService.getPublished(courseId!),
         enabled: !!courseId,
         staleTime: STALE_TIME,
+        gcTime: GC_TIME,
     });
 
     const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);
@@ -138,6 +143,7 @@ export function useCourseLessonsForDay(dayId: string | undefined) {
         queryFn: () => courseLessonsService.getAll(dayId!),
         enabled: !!dayId,
         staleTime: STALE_TIME,
+        gcTime: GC_TIME,
     });
 
     const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);
@@ -170,6 +176,7 @@ export function useCourseTasksForLesson(lessonId: string | undefined) {
         queryFn: () => courseTasksService.getAll(lessonId!),
         enabled: !!lessonId,
         staleTime: STALE_TIME,
+        gcTime: GC_TIME,
     });
 
     const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);

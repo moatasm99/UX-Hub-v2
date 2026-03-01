@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, memo } from 'react';
 import { ChevronDown, ChevronUp, Clock, CheckCircle2, Loader2 } from 'lucide-react';
 import ResourceItem from './ResourceItem';
 import TaskBadge from './TaskBadge';
@@ -12,20 +12,20 @@ interface ModuleAccordionProps {
     onToggleComplete?: () => void;
 }
 
-const ModuleAccordion: React.FC<ModuleAccordionProps> = ({
+const ModuleAccordion = memo(({
     day,
     index,
     isCompleted = false,
     onToggleComplete
-}) => {
-    const [isExpanded, setIsExpanded] = useState(index === 0);
+}: ModuleAccordionProps) => {
+    const [isExpanded, setIsExpanded] = useState(false);
 
-    // Fetch lessons for this day
-    const { lessons, isLoading: lessonsLoading } = useCourseLessonsForDay(isExpanded ? day.id : undefined);
+    // Fetch lessons for this day (Immediately for instant expansion)
+    const { lessons, isLoading: lessonsLoading } = useCourseLessonsForDay(day.id);
 
     // Get the first lesson id to fetch task (tasks are linked to lessons)
     const firstLessonId = lessons.length > 0 ? lessons[0].id : undefined;
-    const { tasks } = useCourseTasksForLesson(isExpanded && firstLessonId ? firstLessonId : undefined);
+    const { tasks } = useCourseTasksForLesson(firstLessonId);
     const task = tasks.length > 0 ? tasks[0] : null;
 
     return (
@@ -134,6 +134,8 @@ const ModuleAccordion: React.FC<ModuleAccordionProps> = ({
             )}
         </div>
     );
-};
+});
+
+ModuleAccordion.displayName = 'ModuleAccordion';
 
 export default ModuleAccordion;

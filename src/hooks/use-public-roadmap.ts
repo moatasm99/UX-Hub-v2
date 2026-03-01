@@ -5,7 +5,8 @@ import { roadmapTracksService } from '@/services/roadmap-tracks';
 import { roadmapTopicsService } from '@/services/roadmap-topics';
 import { roadmapResourcesService } from '@/services/roadmap-resources';
 
-const STALE_TIME = 1000 * 30; // 30 seconds
+const STALE_TIME = 1000 * 60 * 5; // 5 minutes
+const GC_TIME = 1000 * 60 * 10; // 10 minutes
 
 // ─── Published Tracks ──────────────────────────
 export function usePublishedTracks() {
@@ -39,10 +40,10 @@ export function usePublishedTopicsWithResources(trackId: string | undefined) {
         queryKey: ['public-roadmap-topics-with-resources', trackId],
         queryFn: () => roadmapTopicsService.getPublishedByTrackWithResources(trackId!),
         enabled: !!trackId,
-        staleTime: Infinity,
+        staleTime: STALE_TIME,
+        gcTime: GC_TIME,
         refetchOnMount: false,
         refetchOnWindowFocus: false,
-        refetchOnReconnect: false,
     });
 
     const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);
@@ -81,6 +82,7 @@ export function usePublishedTopics(trackId: string | undefined) {
         queryFn: () => roadmapTopicsService.getPublishedByTrack(trackId!),
         enabled: !!trackId,
         staleTime: STALE_TIME,
+        gcTime: GC_TIME,
     });
 
     const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);
@@ -113,6 +115,7 @@ export function usePublishedResources(topicId: string | undefined) {
         queryFn: () => roadmapResourcesService.getPublishedByTopic(topicId!),
         enabled: !!topicId,
         staleTime: STALE_TIME,
+        gcTime: GC_TIME,
     });
 
     const refetch = useCallback(() => { query.refetch(); }, [query.refetch]);
