@@ -4,6 +4,8 @@ import { BookMarked, Rocket, BookOpen, Sun, Moon, Menu, X } from 'lucide-react'
 import { useTheme } from '@/components/theme-provider'
 import { GlobalCommunityFab } from '@/features/community/components/GlobalCommunityFab'
 import { UltraCelebrationButton } from '@/components/public/UltraCelebrationButton'
+import { motion, AnimatePresence } from 'framer-motion'
+import { hoverLift } from '@/lib/motion'
 
 /* ─── Navigation Config ─── */
 const navLinks = [
@@ -53,26 +55,32 @@ export function RootLayout() {
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-6">
 
                     {/* ── Logo ── */}
-                    <Link
-                        to="/"
-                        className="flex items-center gap-3 transition-opacity hover:opacity-80"
-                        style={{ transitionDuration: 'var(--motion-fast)' }}
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
                     >
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 text-lg font-bold text-white shadow-lg shadow-purple-500/25">
-                            U
-                        </div>
-                        <div>
-                            <h1 className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-xl font-bold text-transparent">
-                                UX Learning Hub
-                            </h1>
-                            <p
-                                className="text-xs"
-                                style={{ color: 'var(--text-muted)' }}
-                            >
-                                Your path to UX mastery
-                            </p>
-                        </div>
-                    </Link>
+                        <Link
+                            to="/"
+                            className="flex items-center gap-3 transition-opacity hover:opacity-80"
+                            style={{ transitionDuration: 'var(--motion-fast)' }}
+                        >
+                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 text-lg font-bold text-white shadow-lg shadow-purple-500/25">
+                                U
+                            </div>
+                            <div>
+                                <h1 className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-xl font-bold text-transparent">
+                                    UX Learning Hub
+                                </h1>
+                                <p
+                                    className="text-xs"
+                                    style={{ color: 'var(--text-muted)' }}
+                                >
+                                    Your path to UX mastery
+                                </p>
+                            </div>
+                        </Link>
+                    </motion.div>
 
                     {/* ── Desktop Tab Navigation ── */}
                     <nav
@@ -89,23 +97,29 @@ export function RootLayout() {
 
                             const Icon = link.icon
                             return (
-                                <Link
+                                <motion.div
                                     key={link.to}
-                                    to={link.to}
-                                    className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all
-                                        focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]
-                                        ${isActive
-                                            ? `${link.activeGradient} text-white shadow-lg`
-                                            : 'hover:bg-[var(--bg-secondary)]'
-                                        }`}
-                                    style={{
-                                        transitionDuration: 'var(--motion-normal)',
-                                        color: isActive ? undefined : 'var(--text-secondary)',
-                                    }}
+                                    variants={hoverLift}
+                                    whileHover="hover"
+                                    whileTap="tap"
                                 >
-                                    <Icon className="h-4 w-4" />
-                                    <span>{link.emoji} {link.label}</span>
-                                </Link>
+                                    <Link
+                                        to={link.to}
+                                        className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all
+                                            focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]
+                                            ${isActive
+                                                ? `${link.activeGradient} text-white shadow-lg`
+                                                : 'hover:bg-[var(--bg-secondary)]'
+                                            }`}
+                                        style={{
+                                            transitionDuration: 'var(--motion-normal)',
+                                            color: isActive ? undefined : 'var(--text-secondary)',
+                                        }}
+                                    >
+                                        <Icon className="h-4 w-4" />
+                                        <span>{link.emoji} {link.label}</span>
+                                    </Link>
+                                </motion.div>
                             )
                         })}
                     </nav>
@@ -113,7 +127,10 @@ export function RootLayout() {
                     {/* ── Right Controls ── */}
                     <div className="flex items-center gap-2">
                         {/* Theme Toggle */}
-                        <button
+                        <motion.button
+                            initial={false}
+                            animate={{ rotate: isDark ? 180 : 0 }}
+                            whileTap={{ scale: 0.9 }}
                             onClick={toggleTheme}
                             className="rounded-2xl p-2.5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]"
                             style={{
@@ -123,8 +140,12 @@ export function RootLayout() {
                             }}
                             aria-label="Toggle theme"
                         >
-                            {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-                        </button>
+                            {isDark ? (
+                                <Sun className="h-5 w-5" />
+                            ) : (
+                                <Moon className="h-5 w-5" />
+                            )}
+                        </motion.button>
 
                         {/* Mobile Menu Toggle */}
                         <button
@@ -142,46 +163,47 @@ export function RootLayout() {
                     </div>
                 </div>
 
-                {/* ── Mobile Navigation ── */}
-                <div
-                    className="overflow-hidden transition-all md:hidden"
-                    style={{
-                        maxHeight: mobileMenuOpen ? '200px' : '0px',
-                        opacity: mobileMenuOpen ? 1 : 0,
-                        transitionDuration: 'var(--motion-slow)',
-                        transitionTimingFunction: 'var(--ease-out)',
-                    }}
-                >
-                    <div className="flex gap-2 px-4 pb-4">
-                        {navLinks.map((link) => {
-                            const isActive = link.to === '/#courses'
-                                ? location.pathname === '/'
-                                : location.pathname.startsWith(link.to)
-                            const Icon = link.icon
-                            return (
-                                <Link
-                                    key={link.to}
-                                    to={link.to}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl px-4 py-3 text-xs font-medium transition-all
-                                        focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]
-                                        ${isActive
-                                            ? `${link.activeGradient} text-white shadow-lg`
-                                            : ''
-                                        }`}
-                                    style={{
-                                        backgroundColor: isActive ? undefined : 'var(--bg-muted)',
-                                        color: isActive ? undefined : 'var(--text-secondary)',
-                                        transitionDuration: 'var(--motion-normal)',
-                                    }}
-                                >
-                                    <Icon className="h-3.5 w-3.5" />
-                                    <span>{link.emoji} {link.label}</span>
-                                </Link>
-                            )
-                        })}
-                    </div>
-                </div>
+                <AnimatePresence>
+                    {mobileMenuOpen && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                            className="overflow-hidden md:hidden"
+                        >
+                            <div className="flex gap-2 px-4 pb-4">
+                                {navLinks.map((link) => {
+                                    const isActive = link.to === '/#courses'
+                                        ? location.pathname === '/'
+                                        : location.pathname.startsWith(link.to)
+                                    const Icon = link.icon
+                                    return (
+                                        <Link
+                                            key={link.to}
+                                            to={link.to}
+                                            onClick={() => setMobileMenuOpen(false)}
+                                            className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl px-4 py-3 text-xs font-medium transition-all
+                                                focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]
+                                                ${isActive
+                                                    ? `${link.activeGradient} text-white shadow-lg`
+                                                    : ''
+                                                }`}
+                                            style={{
+                                                backgroundColor: isActive ? undefined : 'var(--bg-muted)',
+                                                color: isActive ? undefined : 'var(--text-secondary)',
+                                                transitionDuration: 'var(--motion-normal)',
+                                            }}
+                                        >
+                                            <Icon className="h-3.5 w-3.5" />
+                                            <span>{link.emoji} {link.label}</span>
+                                        </Link>
+                                    )
+                                })}
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </header>
 
             {/* ━━━ PAGE CONTENT ━━━ */}

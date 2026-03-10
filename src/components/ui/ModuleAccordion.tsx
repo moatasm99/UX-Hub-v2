@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { accordionVariants } from '@/lib/motion'
 import type { Module } from '@/types/database'
 import { useResourcesByModule } from '@/hooks/use-resources'
 import { useTasksByModule } from '@/hooks/use-resources'
@@ -14,35 +16,51 @@ export function ModuleAccordion({ module }: ModuleAccordionProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div className="rounded-xl border border-[var(--border-main)] bg-[var(--bg-card)] shadow-sm overflow-hidden flex flex-col">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex w-full items-center justify-between px-5 py-4 text-left transition-colors hover:bg-gray-50"
+                className="flex w-full items-center justify-between px-5 py-4 text-left transition-colors hover:bg-[var(--bg-muted)]"
             >
                 <div className="flex items-center gap-3">
                     {module.day_number != null && (
-                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold text-blue-700">
+                        <motion.span
+                            initial={{ scale: 0.9 }}
+                            animate={{ scale: 1 }}
+                            className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--accent-primary)]/10 text-sm font-semibold text-[var(--accent-primary)]"
+                        >
                             {module.day_number}
-                        </span>
+                        </motion.span>
                     )}
                     <div>
-                        <h3 className="font-medium text-gray-800">{module.title}</h3>
+                        <h3 className="font-medium text-[var(--text-main)]">{module.title}</h3>
                         {module.description && (
-                            <p className="mt-0.5 text-sm text-gray-500">
+                            <p className="mt-0.5 text-sm text-[var(--text-secondary)]">
                                 {module.description}
                             </p>
                         )}
                     </div>
                 </div>
-                <span
-                    className={`text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''
-                        }`}
+                <motion.span
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-[var(--text-tertiary)]"
                 >
                     ▼
-                </span>
+                </motion.span>
             </button>
-
-            {isOpen && <ModuleContent moduleId={module.id} />}
+            <AnimatePresence initial={false}>
+                {isOpen && (
+                    <motion.div
+                        key="content"
+                        initial="closed"
+                        animate="open"
+                        exit="closed"
+                        variants={accordionVariants}
+                    >
+                        <ModuleContent moduleId={module.id} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     )
 }
@@ -54,7 +72,7 @@ function ModuleContent({ moduleId }: { moduleId: string }) {
 
     if (resLoading || tasksLoading) {
         return (
-            <div className="space-y-3 border-t border-gray-100 px-5 py-4">
+            <div className="space-y-3 border-t border-[var(--border-main)] px-5 py-4">
                 <LoadingSkeleton className="h-6 w-1/3 rounded" />
                 <LoadingSkeleton className="h-4 w-full rounded" />
                 <LoadingSkeleton className="h-4 w-2/3 rounded" />
@@ -63,14 +81,14 @@ function ModuleContent({ moduleId }: { moduleId: string }) {
     }
 
     return (
-        <div className="space-y-4 border-t border-gray-100 px-5 py-4">
+        <div className="space-y-4 border-t border-[var(--border-main)] px-5 py-4">
             {resources && resources.length > 0 && (
                 <ResourceList resources={resources} />
             )}
             {tasks && tasks.length > 0 && <TaskBlock tasks={tasks} />}
             {(!resources || resources.length === 0) &&
                 (!tasks || tasks.length === 0) && (
-                    <p className="text-sm text-gray-400">No content available yet.</p>
+                    <p className="text-sm text-[var(--text-tertiary)]">No content available yet.</p>
                 )}
         </div>
     )

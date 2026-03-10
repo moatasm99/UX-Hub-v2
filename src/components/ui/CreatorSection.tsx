@@ -1,8 +1,11 @@
 import { Linkedin, ExternalLink } from 'lucide-react'
 import { useSiteSettings } from '@/hooks/use-site-settings'
+import { motion } from 'framer-motion'
+import { fadeInUp, staggerChildren, hoverLift, useReducedMotion } from '@/lib/motion'
 
 export function CreatorSection() {
     const { settings, isLoading } = useSiteSettings()
+    const isReduced = useReducedMotion()
 
     // ─── Loading Skeleton (matches exact hero height to prevent layout shift) ───
     if (isLoading || !settings) {
@@ -37,29 +40,35 @@ export function CreatorSection() {
         : []
 
     return (
-        <section
+        <motion.section
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerChildren(0.1)}
             className="w-full py-12 md:py-20 transition-all duration-300 rounded-[2.5rem] overflow-hidden bg-[var(--bg-card)] border border-[var(--border-main)]"
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
                 {/* Badge – centered */}
-                <div className="w-full flex justify-center mb-8">
+                <motion.div variants={fadeInUp} className="w-full flex justify-center mb-8">
                     <span
                         className="px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest bg-[var(--accent-emerald)]/10 text-[var(--accent-emerald)] border border-[var(--accent-emerald)]/20 shadow-sm"
                     >
                         {settings.hero_badge_text}
                     </span>
-                </div>
+                </motion.div>
 
                 <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
 
                     {/* Image Column */}
-                    <div className="md:w-1/3 flex justify-center md:justify-start w-full">
+                    <motion.div variants={fadeInUp} className="md:w-1/3 flex justify-center md:justify-start w-full">
                         <div className="relative group perspective-1000">
                             {/* Abstract Decor */}
-                            <div className="absolute -inset-4 bg-gradient-to-tr from-[var(--accent-primary)] to-[var(--accent-emerald)] rounded-[2rem] opacity-20 blur-2xl transition-all duration-500 group-hover:opacity-40 animate-pulse" />
+                            {!isReduced && (
+                                <div className="absolute -inset-4 bg-gradient-to-tr from-[var(--accent-primary)] to-[var(--accent-emerald)] rounded-[2rem] opacity-20 blur-2xl transition-all duration-500 group-hover:opacity-40 animate-pulse" />
+                            )}
 
                             {/* Image Container */}
-                            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2.5rem] overflow-hidden shadow-2xl ring-4 ring-[var(--border-main)] rotate-3 transition-transform duration-500 group-hover:rotate-0 group-hover:scale-105">
+                            <div className={`relative w-64 h-64 md:w-80 md:h-80 rounded-[2.5rem] overflow-hidden shadow-2xl ring-4 ring-[var(--border-main)] transition-transform duration-500 ${!isReduced ? 'rotate-3 group-hover:rotate-0 group-hover:scale-105' : ''}`}>
                                 <img
                                     key={settings.hero_image_url}
                                     src={settings.hero_image_url || '/images/creator.jpg'}
@@ -69,8 +78,9 @@ export function CreatorSection() {
                             </div>
 
                             {/* Floating Badge */}
-                            <div
-                                className="absolute -bottom-6 -right-6 px-6 py-3 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce-slow bg-[var(--bg-card)] text-[var(--text-main)]"
+                            <motion.div
+                                whileHover={isReduced ? {} : { scale: 1.1, rotate: 5 }}
+                                className={`absolute -bottom-6 -right-6 px-6 py-3 rounded-2xl shadow-xl flex items-center gap-3 bg-[var(--bg-card)] text-[var(--text-main)] ${!isReduced ? 'animate-bounce-slow' : ''}`}
                             >
                                 <span className="text-2xl">⚡</span>
                                 <div>
@@ -79,15 +89,15 @@ export function CreatorSection() {
                                     </p>
                                     <p className="font-bold">{settings.hero_experience_value}</p>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Content Column */}
                     <div className="md:w-2/3 w-full flex flex-col space-y-6">
 
                         {/* Text block – RTL */}
-                        <div className="w-full text-right" dir="rtl">
+                        <motion.div variants={fadeInUp} className="w-full text-right" dir="rtl">
                             <h2
                                 className="text-3xl md:text-5xl font-black leading-tight text-[var(--text-main)] font-display"
                             >
@@ -103,9 +113,9 @@ export function CreatorSection() {
                             >
                                 {settings.hero_role_label}
                             </p>
-                        </div>
+                        </motion.div>
 
-                        <div className="w-full space-y-6 text-right" dir="rtl">
+                        <motion.div variants={fadeInUp} className="w-full space-y-6 text-right" dir="rtl">
                             {descriptionParagraphs.map((paragraph, idx) => (
                                 <p
                                     key={idx}
@@ -114,26 +124,29 @@ export function CreatorSection() {
                                     {paragraph}
                                 </p>
                             ))}
-                        </div>
+                        </motion.div>
 
                     </div>
 
                 </div>
 
                 {/* CTA Button – centered */}
-                <div className="w-full flex justify-center mt-10">
-                    <a
+                <motion.div variants={fadeInUp} className="w-full flex justify-center mt-10">
+                    <motion.a
+                        variants={hoverLift}
+                        whileHover="hover"
+                        whileTap="tap"
                         href={settings.hero_button_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold bg-[#0A66C2] text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 hover:-translate-y-1 transition-all focus:outline-none focus:ring-4 focus:ring-blue-500/50"
+                        className="flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold bg-[#0A66C2] text-white shadow-lg shadow-blue-500/20"
                     >
                         <Linkedin className="w-5 h-5" />
                         <span>{settings.hero_button_text}</span>
                         <ExternalLink className="w-4 h-4 opacity-70" />
-                    </a>
-                </div>
+                    </motion.a>
+                </motion.div>
             </div>
-        </section>
+        </motion.section>
     )
 }

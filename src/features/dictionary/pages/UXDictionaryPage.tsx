@@ -1,7 +1,10 @@
 import { useState, useEffect, useMemo, memo, useCallback } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Search, BookOpen, Copy, Check, Link2 } from 'lucide-react';
 import { uxDictionary, LEVEL_LABELS, LEVEL_DESCRIPTIONS, type DictionaryTerm } from '@/data/ux-dictionary';
 import { CommunityFeedbackSection } from '@/features/community/components/CommunityFeedbackSection';
+import { motion } from 'framer-motion'
+import { fadeInUp, staggerChildren } from '@/lib/motion'
 
 /* ════════════════════════════════════════════════ */
 /*  Term Card Component                            */
@@ -76,10 +79,24 @@ const TermCard = memo(function TermCard({ term, highlight }: { term: DictionaryT
 /* ════════════════════════════════════════════════ */
 /*  Main Page Component                            */
 /* ════════════════════════════════════════════════ */
+function parseLevelParam(param?: string): 1 | 2 | 3 {
+    if (param === 'level2' || param === '2') return 2;
+    if (param === 'level3' || param === '3') return 3;
+    return 1;
+}
+
 export default function UXDictionaryPage() {
+    const { level: levelParam } = useParams<{ level?: string }>();
+    const navigate = useNavigate();
+    const activeLevel = parseLevelParam(levelParam);
     const [searchQuery, setSearchQuery] = useState('');
-    const [activeLevel, setActiveLevel] = useState<1 | 2 | 3>(1);
     const [activeLetter, setActiveLetter] = useState<string | null>(null);
+
+    // When level changes via URL, reset filters
+    useEffect(() => {
+        setSearchQuery('');
+        setActiveLetter(null);
+    }, [activeLevel]);
 
     // SEO
     useEffect(() => {
@@ -146,29 +163,35 @@ export default function UXDictionaryPage() {
         <div className="min-h-screen transition-colors duration-300 bg-[var(--bg-app)] text-[var(--text-main)]">
 
             {/* Hero */}
-            <section className="py-16 px-4">
+            <motion.section
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                variants={staggerChildren(0.1)}
+                className="py-16 px-4"
+            >
                 <div className="max-w-4xl mx-auto text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 mb-6">
+                    <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 mb-6">
                         <BookOpen className="w-4 h-4 text-amber-500" />
                         <span className="text-sm font-medium text-amber-700 dark:text-amber-300">
                             Comprehensive UX/UI Glossary
                         </span>
-                    </div>
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                    </motion.div>
+                    <motion.h1 variants={fadeInUp} className="text-4xl md:text-5xl font-bold mb-4">
                         <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text text-transparent">
                             📘 UX/UI Dictionary
                         </span>
-                    </h1>
-                    <p className="text-lg md:text-xl max-w-2xl mx-auto mb-4 text-[var(--text-secondary)]">
+                    </motion.h1>
+                    <motion.p variants={fadeInUp} className="text-lg md:text-xl max-w-2xl mx-auto mb-4 text-[var(--text-secondary)]">
                         Complete UX/UI glossary covering beginner to expert terminology in Product Design.
-                    </p>
-                    <p className="text-sm max-w-xl mx-auto text-[var(--text-muted)]" dir="rtl">
+                    </motion.p>
+                    <motion.p variants={fadeInUp} className="text-sm max-w-xl mx-auto text-[var(--text-muted)]" dir="rtl">
                         {LEVEL_DESCRIPTIONS[activeLevel]}
-                    </p>
+                    </motion.p>
                 </div>
 
                 {/* Search */}
-                <div className="relative max-w-xl mx-auto mt-8">
+                <motion.div variants={fadeInUp} className="relative max-w-xl mx-auto mt-8">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
                     <input
                         type="text"
@@ -178,8 +201,8 @@ export default function UXDictionaryPage() {
                         className="w-full pl-12 pr-4 py-4 rounded-3xl border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[var(--accent-primary)]/20 text-lg bg-[var(--bg-card)] border-[var(--border-main)] focus:border-[var(--accent-primary)] text-[var(--text-main)] placeholder-[var(--text-muted)]"
                         aria-label="Search dictionary"
                     />
-                </div>
-            </section>
+                </motion.div>
+            </motion.section>
 
             {/* Level Tabs + Alphabet */}
             <div className="sticky top-0 z-30 bg-[var(--glass-bg)] backdrop-blur-xl border-b border-[var(--border-main)]">
@@ -189,7 +212,7 @@ export default function UXDictionaryPage() {
                         {([1, 2, 3] as const).map(level => (
                             <button
                                 key={level}
-                                onClick={() => { setActiveLevel(level); setActiveLetter(null); setSearchQuery(''); }}
+                                onClick={() => navigate(level === 1 ? '/dictionary' : `/dictionary/level${level}`, { replace: true })}
                                 className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${activeLevel === level
                                     ? levelTabStyles[level].active
                                     : levelTabStyles[level].inactive
@@ -257,9 +280,15 @@ export default function UXDictionaryPage() {
                             <p className="text-sm text-[var(--text-disabled)]">Try a different search or level.</p>
                         </div>
                     ) : (
-                        <div className="space-y-10">
+                        <motion.div
+                            key={activeLevel}
+                            initial="initial"
+                            animate="animate"
+                            variants={staggerChildren(0.05)}
+                            className="space-y-10"
+                        >
                             {Object.entries(groupedTerms).map(([category, terms]) => (
-                                <section key={category}>
+                                <motion.section key={category} variants={fadeInUp}>
                                     <h2 className="text-lg font-bold text-[var(--text-main)] mb-4 flex items-center gap-2">
                                         <span className="w-1.5 h-6 rounded-full bg-gradient-to-b from-[var(--accent-primary)] to-[var(--accent-primary)]/80"></span>
                                         {category}
@@ -270,9 +299,9 @@ export default function UXDictionaryPage() {
                                             <TermCard key={term.slug} term={term} highlight={searchQuery} />
                                         ))}
                                     </div>
-                                </section>
+                                </motion.section>
                             ))}
-                        </div>
+                        </motion.div>
                     )}
                 </div>
 

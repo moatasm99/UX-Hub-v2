@@ -3,6 +3,9 @@ import { usePublishedTopicsWithResources } from '@/hooks/use-public-roadmap';
 import RoadmapTopicCard from './RoadmapTopicCard';
 import { RoadmapTrackDTO } from '@/services/roadmap-tracks';
 import { SafeQuery } from '@/components/common/SafeQuery';
+import { RoadmapGridSkeleton } from '@/components/ui/skeletons';
+import { motion } from 'framer-motion'
+import { fadeInUp, staggerChildren } from '@/lib/motion'
 
 interface RoadmapSectionProps {
     track: RoadmapTrackDTO;
@@ -36,11 +39,7 @@ export default function RoadmapSection({ track, searchQuery, openTopicId, onTogg
             isLoading={isLoading}
             error={isError ? new Error('Failed to load roadmap topics') : null}
             loadingFallback={
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 animate-pulse">
-                    {[1, 2, 3].map(i => (
-                        <div key={i} className="h-48 bg-[var(--bg-muted)] rounded-3xl" />
-                    ))}
-                </div>
+                <RoadmapGridSkeleton count={3} />
             }
         >
             {(topics: any[]) => (
@@ -54,19 +53,25 @@ export default function RoadmapSection({ track, searchQuery, openTopicId, onTogg
                             {topics.length} topics
                         </span>
                     </div>
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    <motion.div
+                        initial="initial"
+                        animate="animate"
+                        variants={staggerChildren(0.05)}
+                        className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+                    >
                         {topics.map((topic) => (
-                            <RoadmapTopicCard
-                                key={topic.id}
-                                topic={topic}
-                                resources={topic.roadmap_resources}
-                                trackColor={track.color}
-                                isOpen={openTopicId === topic.id}
-                                onToggle={handleToggle}
-                                topicId={topic.id}
-                            />
+                            <motion.div key={topic.id} variants={fadeInUp}>
+                                <RoadmapTopicCard
+                                    topic={topic}
+                                    resources={topic.roadmap_resources}
+                                    trackColor={track.color}
+                                    isOpen={openTopicId === topic.id}
+                                    onToggle={handleToggle}
+                                    topicId={topic.id}
+                                />
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </section>
             )}
         </SafeQuery>

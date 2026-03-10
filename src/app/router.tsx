@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { RootLayout } from '@/layouts/RootLayout'
+import { PageTransition } from '@/components/motion/PageTransition'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { LoadingSkeleton } from '@/components/ui/LoadingSkeleton'
 
@@ -61,7 +62,9 @@ const router = createBrowserRouter([
                 index: true,
                 element: (
                     <PageLoader>
-                        <LandingPage />
+                        <PageTransition>
+                            <LandingPage />
+                        </PageTransition>
                     </PageLoader>
                 ),
             },
@@ -69,7 +72,9 @@ const router = createBrowserRouter([
                 path: 'roadmap',
                 element: (
                     <PageLoader>
-                        <RoadmapPage />
+                        <PageTransition>
+                            <RoadmapPage />
+                        </PageTransition>
                     </PageLoader>
                 ),
             },
@@ -77,7 +82,9 @@ const router = createBrowserRouter([
                 path: 'roadmap/:category',
                 element: (
                     <PageLoader>
-                        <RoadmapDetailPage />
+                        <PageTransition>
+                            <RoadmapDetailPage />
+                        </PageTransition>
                     </PageLoader>
                 ),
             },
@@ -85,7 +92,19 @@ const router = createBrowserRouter([
                 path: 'dictionary',
                 element: (
                     <PageLoader>
-                        <UXDictionaryPage />
+                        <PageTransition>
+                            <UXDictionaryPage />
+                        </PageTransition>
+                    </PageLoader>
+                ),
+            },
+            {
+                path: 'dictionary/:level',
+                element: (
+                    <PageLoader>
+                        <PageTransition>
+                            <UXDictionaryPage />
+                        </PageTransition>
                     </PageLoader>
                 ),
             },

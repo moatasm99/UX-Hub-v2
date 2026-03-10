@@ -3,6 +3,9 @@ import { Rocket, Filter, Search } from 'lucide-react';
 import RoadmapSection from '../components/RoadmapSection';
 import { usePublishedTracks } from '@/hooks/use-public-roadmap';
 import { CommunityFeedbackSection } from '@/features/community/components/CommunityFeedbackSection';
+import { PageHeaderSkeleton, RoadmapTrackSkeleton } from '@/components/ui/skeletons';
+import { motion } from 'framer-motion'
+import { fadeInUp, staggerChildren } from '@/lib/motion'
 
 export default function RoadmapPage() {
     // Dynamic data
@@ -40,50 +43,54 @@ export default function RoadmapPage() {
         <div className="min-h-screen transition-colors duration-300 bg-[var(--bg-app)] text-[var(--text-main)]">
 
             {/* Hero Section */}
-            <section className="py-16 px-4">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 mb-6">
-                        <Rocket className="w-4 h-4 text-amber-500" />
-                        <span className="text-sm font-medium text-amber-700 dark:text-amber-300">
-                            Advanced Product Strategy Roadmap
-                        </span>
+            {isLoading ? (
+                <PageHeaderSkeleton />
+            ) : (
+                <motion.section
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    variants={staggerChildren(0.1)}
+                    className="py-16 px-4"
+                >
+                    <div className="max-w-4xl mx-auto text-center">
+                        <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 mb-6">
+                            <Rocket className="w-4 h-4 text-amber-500" />
+                            <span className="text-sm font-medium text-amber-700 dark:text-amber-300">
+                                Advanced Product Strategy Roadmap
+                            </span>
+                        </motion.div>
+                        <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-bold mb-4">
+                            <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text text-transparent">
+                                🚀 Product Design Roadmap
+                            </span>
+                        </motion.h2>
+                        <motion.p variants={fadeInUp} className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-[var(--text-secondary)]">
+                            Complete Product Design Roadmap covering fundamentals, product thinking, UX strategy, and advanced topics.
+                        </motion.p>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                        <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text text-transparent">
-                            🚀 Product Design Roadmap
-                        </span>
-                    </h2>
-                    <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-[var(--text-secondary)]">
-                        Complete Product Design Roadmap covering fundamentals, product thinking, UX strategy, and advanced topics.
-                    </p>
-                </div>
 
-                {/* Filters */}
-                {/* We adapt RoadmapFilters to use dynamic tracks */}
-                <DynamicRoadmapFilters
-                    tracks={tracks}
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                    selectedTrackId={selectedTrackId}
-                    setSelectedTrackId={setSelectedTrackId}
-                />
-            </section>
+                    {/* Filters */}
+                    <motion.div variants={fadeInUp}>
+                        <DynamicRoadmapFilters
+                            tracks={tracks}
+                            searchQuery={searchQuery}
+                            setSearchQuery={setSearchQuery}
+                            selectedTrackId={selectedTrackId}
+                            setSelectedTrackId={setSelectedTrackId}
+                        />
+                    </motion.div>
+                </motion.section>
+            )}
 
             {/* Main Content */}
             <main className="px-4 pb-16">
                 <div className="max-w-7xl mx-auto">
                     <div className="space-y-12">
                         {isLoading ? (
-                            <div className="space-y-12 animate-pulse">
+                            <div className="space-y-12">
                                 {[1, 2].map(i => (
-                                    <div key={i} className="space-y-4">
-                                        <div className="h-8 w-48 bg-[var(--bg-muted)] rounded"></div>
-                                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                                            {[1, 2, 3].map(j => (
-                                                <div key={j} className="h-32 bg-[var(--bg-muted)] rounded-xl"></div>
-                                            ))}
-                                        </div>
-                                    </div>
+                                    <RoadmapTrackSkeleton key={i} />
                                 ))}
                             </div>
                         ) : filteredTracks.length === 0 ? (
@@ -91,15 +98,24 @@ export default function RoadmapPage() {
                                 <p className="text-lg">No roadmap tracks found.</p>
                             </div>
                         ) : (
-                            filteredTracks.map((track) => (
-                                <RoadmapSection
-                                    key={track.id}
-                                    track={track}
-                                    searchQuery={searchQuery}
-                                    openTopicId={openTopicId}
-                                    onToggleTopic={(id: string) => setOpenTopicId(prev => prev === id ? null : id)}
-                                />
-                            ))
+                            <motion.div
+                                initial="initial"
+                                whileInView="animate"
+                                viewport={{ once: true, margin: "-100px" }}
+                                variants={staggerChildren(0.15)}
+                                className="space-y-12"
+                            >
+                                {filteredTracks.map((track) => (
+                                    <motion.div key={track.id} variants={fadeInUp}>
+                                        <RoadmapSection
+                                            track={track}
+                                            searchQuery={searchQuery}
+                                            openTopicId={openTopicId}
+                                            onToggleTopic={(id: string) => setOpenTopicId(prev => prev === id ? null : id)}
+                                        />
+                                    </motion.div>
+                                ))}
+                            </motion.div>
                         )}
                     </div>
 

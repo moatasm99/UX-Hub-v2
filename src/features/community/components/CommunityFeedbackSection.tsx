@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import { MessageSquare } from 'lucide-react';
 import { CommunitySubmissionModal } from './CommunitySubmissionModal';
+import { motion } from 'framer-motion';
+import { hoverLift } from '@/lib/motion';
 
 export function CommunityFeedbackSection() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+ 
     return (
-        <section className="mt-12 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <div className="relative group overflow-hidden rounded-3xl border-2 border-[var(--border-main)] bg-[var(--bg-card)] p-8 md:p-10 shadow-sm transition-all hover:border-[var(--accent-primary)]/30">
+        <section className="mt-12 mb-8">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="relative group overflow-hidden rounded-3xl border-2 border-[var(--border-main)] bg-[var(--bg-card)] p-8 md:p-10 shadow-sm transition-all hover:border-[var(--accent-primary)]/30"
+            >
                 {/* Background Decor */}
                 <div className="absolute top-0 right-0 -tr-y-1/2 -tr-x-1/2 w-32 h-32 bg-[var(--accent-primary)]/5 blur-[80px] rounded-full group-hover:bg-[var(--accent-primary)]/10 transition-colors" />
                 <div className="absolute bottom-0 left-0 tr-y-1/2 tr-x-1/2 w-24 h-24 bg-blue-500/5 blur-[60px] rounded-full group-hover:bg-blue-500/10 transition-colors" />
@@ -26,14 +33,17 @@ export function CommunityFeedbackSection() {
                         </p>
                     </div>
 
-                    <button
+                    <motion.button
+                        variants={hoverLift}
+                        whileHover="hover"
+                        whileTap="tap"
                         onClick={() => setIsModalOpen(true)}
-                        className="whitespace-nowrap px-8 py-4 rounded-2xl bg-[var(--text-main)] text-[var(--bg-app)] font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-[var(--text-main)]/5"
+                        className="whitespace-nowrap px-8 py-4 rounded-2xl bg-[var(--text-main)] text-[var(--bg-app)] font-bold shadow-xl shadow-[var(--text-main)]/5"
                     >
                         Send Feedback
-                    </button>
+                    </motion.button>
                 </div>
-            </div>
+            </motion.div>
 
             <CommunitySubmissionModal
                 isOpen={isModalOpen}

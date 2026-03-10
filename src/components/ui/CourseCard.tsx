@@ -1,4 +1,6 @@
 import type { Course } from '@/types/database'
+import { motion } from 'framer-motion'
+import { hoverLift } from '@/lib/motion'
 
 interface CourseCardProps {
     course: Course
@@ -6,10 +8,21 @@ interface CourseCardProps {
 
 export function CourseCard({ course }: CourseCardProps) {
     return (
-        <div className="group rounded-xl border border-[var(--border-main)] bg-[var(--bg-card)] p-6 shadow-sm transition-all hover:border-[var(--accent-primary)]/30 hover:shadow-md">
+        <motion.div
+            variants={hoverLift}
+            whileHover="hover"
+            whileTap="tap"
+            className="group cursor-pointer rounded-xl border border-[var(--border-main)] bg-[var(--bg-card)] p-6 shadow-sm transition-all hover:border-[var(--accent-primary)]/30 hover:shadow-md"
+        >
             <div className="flex items-start gap-3">
                 {course.icon && (
-                    <span className="text-2xl">{course.icon}</span>
+                    <motion.span
+                        initial={{ scale: 0.9 }}
+                        animate={{ scale: 1 }}
+                        className="text-2xl"
+                    >
+                        {course.icon}
+                    </motion.span>
                 )}
                 <div className="flex-1">
                     <h3 className="font-semibold text-[var(--text-main)] group-hover:text-[var(--accent-primary)] transition-colors">
@@ -28,7 +41,7 @@ export function CourseCard({ course }: CourseCardProps) {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

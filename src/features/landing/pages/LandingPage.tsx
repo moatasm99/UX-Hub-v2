@@ -1,9 +1,11 @@
-import { BookMarked, Loader2 } from 'lucide-react'
 import { CreatorSection } from '@/components/ui/CreatorSection'
 import { usePublishedCategories, usePublishedCourses } from '@/hooks/use-public-courses'
 import CourseContainer from '../../courses/components/CourseContainer'
 import type { CourseCategoryDTO } from '@/services/course-categories'
 import { CommunityFeedbackSection } from '@/features/community/components/CommunityFeedbackSection'
+import { CourseCardGridSkeleton, LoadingSkeleton } from '@/components/ui/skeletons'
+import { motion } from 'framer-motion'
+import { fadeInUp, staggerChildren } from '@/lib/motion'
 
 // ─── Category Section (dynamic) ───────────────────
 const CATEGORY_ICONS = ['🧠', '🎨', '✍️', '💻', '📊', '🔍', '🚀', '📱'];
@@ -38,9 +40,7 @@ function CategorySection({ category, index }: { category: CourseCategoryDTO; ind
 
             {/* Course List */}
             {isLoading ? (
-                <div className="flex items-center justify-center py-12">
-                    <Loader2 className="w-6 h-6 text-[var(--accent-primary)] animate-spin" />
-                </div>
+                <CourseCardGridSkeleton count={2} />
             ) : courses.length === 0 ? (
                 <p className="text-center text-[var(--text-muted)] py-8">No courses available yet.</p>
             ) : (
@@ -61,24 +61,29 @@ export default function LandingPage() {
     return (
         <>
             <section className="py-16 px-4">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--accent-emerald)]/10 border border-[var(--accent-emerald)]/20 mb-6 font-display">
-                        <BookMarked className="w-4 h-4 text-[var(--accent-emerald)]" />
+                <motion.div
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    variants={staggerChildren(0.1)}
+                    className="max-w-4xl mx-auto text-center"
+                >
+                    <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--accent-emerald)]/10 border border-[var(--accent-emerald)]/20 mb-6 font-display">
                         <span className="text-sm font-bold text-[var(--accent-emerald)] uppercase tracking-wider">
                             4-Month ITI Professional Diploma
                         </span>
-                    </div>
+                    </motion.div>
 
-                    <h2 className="text-4xl md:text-5xl font-black mb-4 font-display">
+                    <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-black mb-4 font-display">
                         <span className="bg-gradient-to-r from-[var(--accent-emerald)] via-[var(--accent-cyan)] to-[var(--accent-primary)] bg-clip-text text-transparent">
                             📚 Intensive Courses
                         </span>
-                    </h2>
+                    </motion.h2>
 
-                    <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-[var(--text-secondary)]">
+                    <motion.p variants={fadeInUp} className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-[var(--text-secondary)]">
                         Deep-dive courses with Video lectures, Articles, and Mandatory Tasks (V.A.T. Model).
-                    </p>
-                </div>
+                    </motion.p>
+                </motion.div>
             </section>
 
             {/* Personal Introduction */}
@@ -88,15 +93,38 @@ export default function LandingPage() {
 
             {/* Dynamic Category Sections */}
             {isLoading ? (
-                <div className="flex items-center justify-center py-20">
-                    <Loader2 className="w-8 h-8 text-[var(--accent-emerald)] animate-spin" />
+                <div className="space-y-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                    {[1, 2].map(i => (
+                        <div key={i} className="space-y-8">
+                            <div className="flex items-center gap-4 pb-4 border-b border-[var(--border-main)]">
+                                <LoadingSkeleton className="h-14 w-14 rounded-2xl" />
+                                <div className="space-y-2">
+                                    <LoadingSkeleton className="h-6 w-48 rounded" />
+                                    <LoadingSkeleton className="h-4 w-64 rounded" />
+                                </div>
+                            </div>
+                            <CourseCardGridSkeleton count={2} />
+                        </div>
+                    ))}
                 </div>
             ) : (
-                categories.map((category, index) => (
-                    <div key={category.id} id={index === 0 ? 'courses' : undefined} className="px-4 sm:px-6 lg:px-8 pb-16 max-w-7xl mx-auto scroll-mt-24">
-                        <CategorySection category={category} index={index} />
-                    </div>
-                ))
+                <motion.div
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={staggerChildren(0.15)}
+                >
+                    {categories.map((category, index) => (
+                        <motion.div
+                            key={category.id}
+                            id={index === 0 ? 'courses' : undefined}
+                            variants={fadeInUp}
+                            className="px-4 sm:px-6 lg:px-8 pb-16 max-w-7xl mx-auto scroll-mt-24"
+                        >
+                            <CategorySection category={category} index={index} />
+                        </motion.div>
+                    ))}
+                </motion.div>
             )}
 
             {/* Community Contribution Section */}

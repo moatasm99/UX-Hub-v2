@@ -4,6 +4,9 @@ import type { CourseCategoryDTO } from '@/services/course-categories'
 import { CommunityFeedbackSection } from '@/features/community/components/CommunityFeedbackSection'
 import { SafeQuery } from '@/components/common/SafeQuery';
 import { IntensiveCourseDTO } from '@/services/intensive-courses';
+import { CourseCardGridSkeleton } from '@/components/ui/skeletons';
+import { motion } from 'framer-motion'
+import { fadeInUp, staggerChildren } from '@/lib/motion'
 
 const CATEGORY_ICONS = ['🧠', '🎨', '✍️', '💻', '📊', '🔍', '🚀', '📱'];
 const CATEGORY_COLORS = [
@@ -37,11 +40,7 @@ function CategoryBlock({ category, index }: { category: CourseCategoryDTO; index
                 isLoading={isLoading}
                 error={isError ? new Error('Failed to load courses') : null}
                 loadingFallback={
-                    <div className="flex flex-col space-y-4 animate-pulse">
-                        {[1, 2].map(i => (
-                            <div key={i} className="h-32 bg-[var(--bg-muted)] rounded-3xl" />
-                        ))}
-                    </div>
+                    <CourseCardGridSkeleton count={2} />
                 }
             >
                 {(courses: IntensiveCourseDTO[]) => (
@@ -71,19 +70,35 @@ export default function CoursesListPage() {
                 isLoading={isLoading}
                 error={isError ? new Error('Failed to load categories') : null}
                 loadingFallback={
-                    <div className="space-y-12 animate-pulse">
+                    <div className="space-y-12">
                         {[1, 2].map(i => (
-                            <div key={i} className="h-64 bg-[var(--bg-muted)] rounded-3xl" />
+                            <div key={i} className="space-y-6">
+                                <div className="flex items-center gap-4 pb-4 border-b border-[var(--border-main)]">
+                                    <div className="w-14 h-14 rounded-2xl bg-[var(--bg-muted)] animate-pulse" />
+                                    <div className="space-y-2">
+                                        <div className="h-6 w-48 bg-[var(--bg-muted)] rounded animate-pulse" />
+                                        <div className="h-4 w-64 bg-[var(--bg-muted)] rounded animate-pulse" />
+                                    </div>
+                                </div>
+                                <CourseCardGridSkeleton count={2} />
+                            </div>
                         ))}
                     </div>
                 }
             >
                 {(categories: CourseCategoryDTO[]) => (
-                    <>
+                    <motion.div
+                        initial="initial"
+                        whileInView="animate"
+                        viewport={{ once: true, margin: "-100px" }}
+                        variants={staggerChildren(0.1)}
+                    >
                         {categories.map((category, index) => (
-                            <CategoryBlock key={category.id} category={category} index={index} />
+                            <motion.div key={category.id} variants={fadeInUp}>
+                                <CategoryBlock category={category} index={index} />
+                            </motion.div>
                         ))}
-                    </>
+                    </motion.div>
                 )}
             </SafeQuery>
 
